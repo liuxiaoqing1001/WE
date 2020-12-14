@@ -26,6 +26,7 @@ Springboot+SpringMVC+JPA+Hibernate+MySQL+Thymeleaf
 学生姓名	刘小青	
 专业	软件工程(ZJ)	
 班级	17示范-软通-企Java
+指导老师	于雅楠、黄雪枫
 课题综述	
 1、内容简述
 “我和你心理健康公益平台的设计与实现“是针对帮助心理障碍或者心理疾病的人来进行在线心理咨询和倾诉的需求，基于SpringBoot，BootStrap，jQuery技术设计并开发一套管理系统。通过浏览器访问实现了心理健康公益平台的线上流程的易用性、线上线下交互的便捷性、全局统计分析的可视化，数据展示的合理化。
@@ -36,7 +37,7 @@ Springboot+SpringMVC+JPA+Hibernate+MySQL+Thymeleaf
 3、对专业知识的综合训练情况
 综合企业所学开发技术及相关开发经验，在基于MVC思想的Java框架体系下构建服务器端业务逻辑功能并使用JSON数据交互机制进行前端业务逻辑的开发。
 4、开发环境（工具）
-OS：Windows10
+OS：Ubuntu 20.04.1 LTS
 Java开发：IDEA 2019.x，
 数据库：MySQL 5.7.x，
 版本管理工具：git，

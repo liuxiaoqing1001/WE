@@ -1,4 +1,4 @@
-# we_web
+# we-web
 
 > A Vue.js project
 

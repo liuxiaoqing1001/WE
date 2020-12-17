@@ -205,8 +205,64 @@ new Vue({
 </script>
 ~~~
 
-~~~ 修饰符是以半角句号 . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。例如，.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()：
+~~~ 修饰符  . 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定
+
+Vue.js 通过由点 . 表示的指令后缀来调用修饰符。
+
+.stop - 阻止冒泡
+.prevent - 阻止默认事件
+.capture - 阻止捕获
+.self - 只监听触发该元素的事件
+.once - 只触发一次
+.left - 左键事件
+.right - 右键事件
+.middle - 中间滚轮事件
+
+<!-- 阻止单击事件冒泡 -->
+<a v-on:click.stop="doThis"></a>
+<!-- 提交事件不再重载页面 -->
 <form v-on:submit.prevent="onSubmit"></form>
+<!-- 修饰符可以串联  -->
+<a v-on:click.stop.prevent="doThat"></a>
+<!-- 只有修饰符 -->
+<form v-on:submit.prevent></form>
+<!-- 添加事件侦听器时使用事件捕获模式 -->
+<div v-on:click.capture="doThis">...</div>
+<!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+<div v-on:click.self="doThat">...</div>
+
+<!-- click 事件只能点击一次，2.1.4版本新增 -->
+<a v-on:click.once="doThis"></a>
+~~~
+
+~~~ 按键修饰符 Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：
+<!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
+<input v-on:keyup.13="submit">
+
+<!-- 同上 -->
+<input v-on:keyup.enter="submit">
+<!-- 缩写语法 -->
+<input @keyup.enter="submit">
+
+全部的按键别名：
+.enter
+.tab
+.delete (捕获 "删除" 和 "退格" 键)
+.esc
+.space
+.up
+.down
+.left
+.right
+.ctrl
+.alt
+.shift
+.meta
+
+<!-- Alt + C -->
+<input @keyup.alt.67="clear">
+<!-- Ctrl + Click -->
+<div @click.ctrl="doSomething">Do something</div>
 ~~~
 
 ~~~  input 输入框中我们可以使用 v-model 指令来实现双向数据绑定
@@ -475,20 +531,308 @@ document.write('url: ' + vm.url);
 </script>
 ~~~
 
+~~~ v-on 设置事件监听 接收一个定义的方法来调用
+<div id="app">
+   <!-- `greet` 是在下面定义的方法名 -->
+  <button v-on:click="greet">Greet</button>
+</div>
+ 
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    name: 'Vue.js'
+  },
+  // 在 `methods` 对象中定义方法
+  methods: {
+    greet: function (event) {
+      // `this` 在方法里指当前 Vue 实例
+      alert('Hello ' + this.name + '!')
+      // `event` 是原生 DOM 事件
+      if (event) {
+          alert(event.target.tagName)
+      }
+    }
+  }
+})
+// 也可以用 JavaScript 直接调用方法
+app.greet() // -> 'Hello Vue.js!'
+</script>
 ~~~
+
+~~~ 内联 JavaScript 语句绑定方法
+<div id="app">
+  <button v-on:click="say('hi')">Say hi</button>
+  <button v-on:click="say('what')">Say what</button>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  methods: {
+    say: function (message) {
+      alert(message)
+    }
+  }
+})
+</script>
+~~~
+
+~~~ 监听属性：watch 实现计数器
+<div id = "app">
+    <p style = "font-size:25px;">计数器: {{ counter }}</p>
+    <button @click = "counter++" style = "font-size:25px;">点我</button>
+</div>
+<script type = "text/javascript">
+var vm = new Vue({
+    el: '#app',
+    data: {
+        counter: 1
+    }
+});
+vm.$watch('counter', function(nval, oval) {
+    alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+});
+</script>
+~~~
+
+~~~ 千米和米之间的换算
+<div id = "computed_props">
+    千米 : <input type = "text" v-model = "kilometers">
+    米 : <input type = "text" v-model = "meters">
+</div>
+<p id="info"></p>
+<script type = "text/javascript">
+    var vm = new Vue({
+    el: '#computed_props',
+    data: {
+        kilometers : 0,
+        meters:0
+    },
+    methods: {
+    },
+    computed :{
+    },
+    watch : {
+        kilometers:function(val) {
+            this.kilometers = val;
+            this.meters = this.kilometers * 1000
+        },
+        meters : function (val) {
+            this.kilometers = val/ 1000;
+            this.meters = val;
+        }
+    }
+    });
+    // $watch 是一个实例方法
+    vm.$watch('kilometers', function (newValue, oldValue) {
+    // 这个回调将在 vm.kilometers 改变后调用
+    document.getElementById ("info").innerHTML = "修改前值为: " + oldValue + "，修改后值为: " + newValue;
+})
+</script>
+~~~
+
+~~~ 样式绑定 v-bind:class 设置一个对象，从而动态的切换 class
+// div class
+<div class="active"></div>
+
+// vue
+<div id="app">
+  <div v-bind:class="{ 'active': isActive }"></div>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    isActive: true
+  }
+})
+</script>
+
+<style>
+.active {
+	width: 100px;
+	height: 100px;
+	background: green;
+}
+</style>
 
 ~~~
 
+~~~ 样式绑定 在对象中传入更多属性用来动态切换多个 class 
+// div class
+<div class="static active text-danger"></div>
+
+// vue
+<div id="app">
+  <div class="static"
+     v-bind:class="{ 'active': isActive, 'text-danger': hasError }">
+  </div>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    isActive: true,
+	hasError: true
+  }
+})
+</script>
+
+<style>
+.active {
+	width: 100px;
+	height: 100px;
+	background: green;
+}
+.text-danger {
+	background: red;
+}
+</style>
 ~~~
+
+~~~ 绑定返回对象的计算属性。一个常用且强大的模式
+<div id="app">
+  <div v-bind:class="classObject"></div>
+</div>
+<script>
+
+new Vue({
+  el: '#app',
+  data: {
+    isActive: true,
+    error: {
+      value: true,
+      type: 'fatal'
+    }
+  },
+  computed: {
+    classObject: function () {
+      return {
+  base: true,
+        active: this.isActive && !this.error.value,
+        'text-danger': this.error.value && this.error.type === 'fatal',
+      }
+    }
+  }
+})
+</script>
+
+<style>
+.base {
+  width: 100px;
+  height: 100px;
+}
+
+.active {
+  background: green;
+}
+
+.text-danger {
+  background: red;
+}
+</style>
+~~~
+
+~~~ 内联样式
+// div class
+<div style="color: green; font-size: 30px;">菜鸟教程</div>
+
+// vue
+<div id="app">
+	<div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">菜鸟教程</div>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    activeColor: 'green',
+	fontSize: 30
+  }
+})
+</script>
 
 ~~~
 
-~~~
+~~~ 直接绑定到一个样式对象，让模板更清晰
+<div id="app">
+  <div v-bind:style="styleObject">菜鸟教程</div>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    styleObject: {
+      color: 'green',
+      fontSize: '30px'
+    }
+  }
+})
+</script>
 
 ~~~
 
-~~~
+~~~ 表单
 
 ~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+~~~ 
+
+~~~
+
+
+
+
+
+
+
 
 

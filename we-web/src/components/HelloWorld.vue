@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <div class="col-1">sss</div>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>

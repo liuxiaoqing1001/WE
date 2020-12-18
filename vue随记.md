@@ -53,6 +53,11 @@ index.html	首页入口文件，你可以添加一些 meta 信息或统计代码
 package.json	项目配置文件。
 README.md	项目的说明文档，markdown 格式
 
+assets：用于存放资源文件
+components：用于存放 Vue 功能组件
+views：用于存放 Vue 视图组件
+router：用于存放 vue-router 配置
+
 .vue文件：
 <template></template>：放HTML代码
 <script></script>：放JavaScript代码
@@ -61,6 +66,27 @@ README.md	项目的说明文档，markdown 格式
 ### 将bootstrap  bootstrap-vue添加到项目中
 npm install bootstrap-vue bootstrap axios
 
+###
+遇到的问题：
+1.found 6 vulnerabilities (3 moderate, 3 high)
+  run `npm audit fix` to fix them, or `npm audit` for details
+方案：执行 npm audit fix 命令，会显示问题的详情描述
+
+正确方案：第一步：npm cache clean --force
+
+　　　　　第二步：将node_modules 依赖包删除
+
+　　　　　第三步：npm install 
+
+　　　　　第四步：npm run dev 
+
+如果上面的步骤还不行！！！
+
+那就用安装淘宝镜像：npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+　　将上边的三步改为：cnpm install ,其他步骤依旧
+
+学习element ui 登录页面：https://www.jianshu.com/p/96143f0917aa
 
 ------------------------------------------------------------------------------------
 每个Vue应用都需要通过实例化Vue来实现

@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         }
         if(StringUtils.isEmpty(user.getName()) || StringUtils.isEmpty(user.getPassword()) ||
                  StringUtils.isEmpty(user.getSex()) ||
-                StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getMobile()) ) {
+                StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getPhone()) ) {
             return REG_MSG_FAIL_INFO_NON ;
         }
         // 先进行账号是否存在检测
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 //        user.setAge(user.getAge());
         user.setSex(user.getSex());
         user.setEmail(user.getEmail());
-        user.setMobile(user.getMobile());
+        user.setPhone(user.getPhone());
 //        user.setPhotourl(user.getPhotourl());
 //        user.setRole(user.getRole());
         int r = userDao.add(user) ;
@@ -211,7 +211,7 @@ public class UserServiceImpl implements UserService {
         }
         if(StringUtils.isEmpty(user.getName()) || StringUtils.isEmpty(user.getPassword()) ||
                  StringUtils.isEmpty(user.getSex()) ||
-                StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getMobile())) {
+                StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getPhone())) {
             return REG_MSG_FAIL_INFO_NON ;
         }
         // 先进行账号是否存在检测
@@ -224,7 +224,7 @@ public class UserServiceImpl implements UserService {
 //        user.setAge(user.getAge());
         user.setSex(user.getSex());
         user.setEmail(user.getEmail());
-        user.setMobile(user.getMobile());
+        user.setPhone(user.getPhone());
 //        user.setPhotourl(user.getPhotourl());
 //        user.setRole(user.getRole());
 //        System.out.println(user);

@@ -31,10 +31,10 @@ public class UserController {
     @Autowired
     UserService userService ;
 
-    @GetMapping("/test")
-    public String testGet() {
-        return "测试一下";
-    }
+//    @GetMapping("/test")
+//    public String testGet() {
+//        return "测试一下";
+//    }
 
     /**
      * 登录
@@ -88,7 +88,7 @@ public class UserController {
 //        user.setAge(Integer.parseInt(map.get("age").toString()));
         user.setSex((String)map.get("sex"));
         user.setEmail((String)map.get("email"));
-        user.setMobile((String)map.get("mobile"));
+        user.setPhone((String)map.get("phone"));
 //        user.setPhotourl((String)map.get("photourl"));
         Integer result = userService.register(user) ;
         String msg = "" ;
@@ -170,7 +170,7 @@ public class UserController {
 //        user.setAge(Integer.parseInt(map.get("age").toString()));
         user.setSex((String)map.get("sex"));
         user.setEmail((String)map.get("email"));
-        user.setMobile((String)map.get("mobile"));
+        user.setPhone((String)map.get("mobile"));
 //        user.setPhotourl((String)map.get("photourl"));
         Integer result = userService.addRole(user) ;
         String msg = "" ;

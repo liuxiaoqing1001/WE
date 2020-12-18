@@ -58,6 +58,10 @@ README.md	项目的说明文档，markdown 格式
 <script></script>：放JavaScript代码
 <style scoped></style>：放CSS代码
 
+### 将bootstrap  bootstrap-vue添加到项目中
+npm install bootstrap-vue bootstrap axios
+
+
 ------------------------------------------------------------------------------------
 每个Vue应用都需要通过实例化Vue来实现
 1. 当一个 Vue 实例被创建时，它向 Vue 的响应式系统中加入了其 data 对象中能找到的所有的属性。当这些属性的值发生改变时，html 视图将也会产生相应的变化。

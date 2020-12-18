@@ -105,3 +105,19 @@ SpringBoot + Mybatis + Mysql + Vue
 1）背景应尽量使用浅色调，字体颜色与背景颜色的对比度应较高，同时字体字号应相对较大； 
 2）在适当位置应悬挂院校的LOGO；
 
+-------------------------------------------------------------------------------------
+    
+CREATE TABLE user (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) NOT NULL COMMENT '用户名',
+  phone varchar(255) NOT NULL COMMENT '电话',
+  password varchar(255) NOT NULL COMMENT '密码',
+  birthday date DEFAULT NULL COMMENT '生日',
+  sex varchar(10) DEFAULT NULL COMMENT '性别',
+  email varchar(50) DEFAULT NULL COMMENT '邮箱',
+  photourl varchar(60) DEFAULT NULL COMMENT '头像地址',
+  regdate datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  role int(11) DEFAULT '1' COMMENT '角色',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+

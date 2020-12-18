@@ -31,6 +31,11 @@ public class UserController {
     @Autowired
     UserService userService ;
 
+    @GetMapping("/test")
+    public String testGet() {
+        return "测试一下";
+    }
+
     /**
      * 登录
      * @param name

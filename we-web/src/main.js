@@ -22,6 +22,9 @@ Vue.use(VueAxios,axios);
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
+// // 配置请求的根路径
+// axios.defaults.baseURL = 'http://127.0.0.1:8617/api/private/v1/';
+// Vue.prototype.$http = axios;
 
 new Vue({
   el: '#app',

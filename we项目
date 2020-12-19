@@ -23,7 +23,7 @@ Springboot+SpringMVC+JPA+Hibernate+MySQL+Thymeleaf
 
 
 
-题目	“我和你“心理健康公益平台的设计与实现
+题目	“我和你”心理健康公益平台的设计与实现
 学生姓名	刘小青	
 专业	软件工程(ZJ)	
 班级	17示范-软通-企Java
@@ -120,4 +120,62 @@ CREATE TABLE user (
   role int(11) DEFAULT '1' COMMENT '角色',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+
+
+---------------------------------------------------------------------------------
+1. 
+<el-button type="info" @click="resetLoginForm">重置</el-button>
+
+// 点击重置按钮 重置表单
+    resetLoginForm () {
+      // console.log(this)
+      this.$refs.loginFormRef.resetFields()
+    }
+    
+2.  
+validate
+说明：对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个promise
+参数：Function(callback: Function(boolean, object))
+
+
+3. 
+// 点击登录按钮
+   submitLogin () {
+      this.$refs.loginFormRef.validate(async valid => {
+        // console.log(valid)
+        if (!valid) return
+        const { data: res } = await this.$http.post('login', this.loginForm) // data重定向为res
+        // console.log(res)
+        if (res.meta.status !== 200) return this.$message.error('登录失败')
+        this.$message.success('登录成功')
+        // 将登录成功之后的token保存到客户端的sessionStorage中
+        window.sessionStorage.setItem('token', res.data.token)
+        // 通过编程式导航跳转到后台主页，路由地址是 /home
+        this.$router.push('/home')
+      })
+   }
+   
+4. https://www.cnblogs.com/joe235/p/12055463.html   (从7开始)
+
+5. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

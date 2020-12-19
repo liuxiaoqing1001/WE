@@ -1,30 +1,39 @@
 <template>
-  <el-form :model="dataForm" :rules="rules"  class="login-box">
-    <img src="../assets/we_logo.png" height="100" width="100"/>
-    <h3 class="login-title">欢迎登录</h3>
-    <el-form-item label="账号" prop="username">
-      <el-input type="text" v-model="dataForm.username" placeholder="请输入用户名或手机号"></el-input>
-    </el-form-item>
-    <el-form-item label="密码" prop="password">
-      <el-input type="password" v-model="dataForm.password" placeholder="请输入密码"></el-input>
-    </el-form-item>
-    <el-form-item class="option">
-      <a href="#" class="forgot">忘记密码？</a>
-      <a href="#" class="register">尚无账号？去注册>></a>
-    </el-form-item>
-    <el-button class="loginButton" @click="submit1">登录</el-button>
-  </el-form>
+  <div>
+<!--    dataForm：是数据绑定对象，loginFormRef：是引用名称，rules：是验证规则-->
+    <el-form ref="loginFormRef" :model="loginForm" :rules="rules" class="login-box">
+      <!--头像区域-->
+      <div class="avatar_box">
+        <img src="../assets/we_logo.png" alt />
+      </div>
+<!--      <img src="../assets/we_logo.png" height="100" width="100"/>-->
+<!--      <h3 class="login-title">欢迎登录</h3>-->
+<!--      prop="username" 相当于html中的定义表单的name-->
+      <div class="form_box">
+        <el-form-item class="option" prop="username">
+          <!--        v-model="dataForm.username" 绑定数据-->
+          <el-input type="text" v-model="loginForm.username" placeholder="请输入用户名或手机号"></el-input>
+        </el-form-item>
+        <el-form-item class="option" prop="password">
+          <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item class="option">
+          <a href="#" class="forgot">忘记密码？</a>
+          <a href="#" class="register">尚无账号？去注册>></a>
+        </el-form-item>
+        <!--      @click="submit_login" 定义表单提交事件-->
+        <el-button class="loginButton" @click="submit_login">登 录</el-button>
+      </div>
+    </el-form>
 
-<!--  <el-dialog-->
-<!--    title="温馨提示"-->
-<!--    :visible.sync="dialogVisible"-->
-<!--    width="30%"-->
-<!--  >-->
-<!--    <span>请输入账号和密码</span>-->
-<!--    <span slot="footer" class="dialog-footer">-->
-<!--        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
-<!--      </span>-->
-<!--  </el-dialog>-->
+    <el-dialog title="温馨提示" :visible.sync="dialogVisible" width="30%">
+      <span>请输入正确的账号和密码</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
+
 </template>
 
 <script>
@@ -32,42 +41,107 @@
     name: "Login",
     data() {
       return {
-        dataForm: {username: '', password: ''},
+        loginForm: {
+          username: '',
+          password: ''
+        },
         // 表单验证，需要在 el-form-item 元素中增加 prop 属性
         rules: {
-          username: [{required: true, message: '账号不可为空', trigger: 'blur'}],
-          password: [{required: true, message: '密码不可为空', trigger: 'blur'}]
-        }
-        // // 对话框显示和隐藏
-        // dialogVisible: false
+          username: [
+            {
+              required: true, //表示是否必填
+              message: '账号不可为空',
+              trigger: 'blur' //表示触发时机（blur失去焦点）
+            },
+            {
+              min: 3,
+              max: 10,
+              message: '长度在 3 到 10 个字符',
+              trigger: 'blur'
+            }
+          ],
+          password: [
+            {
+              required: true,
+              message: '密码不可为空',
+              trigger: 'blur'
+            },
+            {
+              min: 6,
+              max: 15,
+              message: '长度在 6 到 15 个字符',
+              trigger: 'blur'
+            }
+          ]
+        },
+        // 对话框显示和隐藏
+        dialogVisible: false
       }
     },
     methods: {
-      submit1 () {
-        // var params = new URLSearchParams();
-        // params.append('name', this.dataForm.username);
-        // params.append('password',this.dataForm.password);
-        // this.axios.post('/user/login', params)
-        //   .then((res)=>{
-        //     if (res.data.code==0){
-        //       // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
+      submit_login () {
+        // validate 预校验
+        this.$refs.loginFormRef.validate(valid => {
+          // console.log(valid)
+          if (!valid){
+            this.dialogVisible = true;
+          }else {
+            var params = new URLSearchParams();
+            params.append('name', this.loginForm.username);
+            params.append('password',this.loginForm.password);
+            if(this.loginForm.username==="liu"){
               this.$router.push("/Main");
-          //   }
-          // })
-          // .catch((res)=>{
-          //   // this.dialogVisible = true;
-          //   console.log(res.data.message);
-          // });
+            }else {
+              this.dialogVisible = true;
+            }
+            // this.axios.post('/user/login', params)
+            //   .then((res)=>{
+            //     if (res.data.code==0){
+            //       // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
+            //       this.$router.push("/Main");
+            //     }
+            //   })
+            //   .catch((res)=>{
+            //     // this.dialogVisible = true;
+            //     console.log(res.data.message);
+            //   });
+          }
+        });
+
       }
     }
   }
 </script>
 
 <style scoped>
+  .avatar_box {
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ddd;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+  }
+
+  .form_box{
+    margin-top: 100px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    /*background: #eee;*/
+  }
+
   .login-box {
     border: 1px solid #DCDFE6;
     width: 350px;
-    margin: 120px auto;
+    margin: 130px auto;
     padding: 35px 35px 15px 35px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -83,6 +157,7 @@
 
   .option{
     width: 100%;
+    margin-top: 45px;
   }
 
   .forgot{

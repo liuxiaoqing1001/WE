@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Login from '../views/Login'
-import Main from '../views/Main'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Main from '../views/UserMain'
+import Header from '../components/AHeader'
+import Footer from '../components/AFooter'
 
 Vue.use(Router);
 
@@ -17,9 +17,9 @@ export default new Router({
     // },
     {
       // 登录页
-      path: '/',
+      path: '/',        //访问路径
       name: 'login',
-      component: Login
+      component: Login  //跳转页面
     },
     {
       // 首页

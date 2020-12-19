@@ -2256,8 +2256,22 @@ vm.$watch('products.id', function(nval, oval) {
 </script>
 ~~~
 
-~~~ 
 
+
+
+------------------------------------------------------------------------------------
+element ui
+
+~~~ 
+常用的组件总结：
+<el-input>标签相当于input框；
+<el-radio>标签相当于radio框；
+<el-chekbox>标签相当于chekbox框；
+<el-upload>标签相当于file上传文件；
+<el-form>定义表单，
+<el-form-item>定义表单中的项；
+<el-table></el-table>定义表格相当于table，
+<el-table-column>定义一行，相当于<td>，可以绑定数据，动态显示表格
 ~~~
 
 ~~~ 

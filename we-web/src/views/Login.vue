@@ -83,29 +83,18 @@
         // validate 预校验
         this.$refs.loginFormRef.validate(valid => {
           // console.log(valid)
-          if (!valid){
-            this.dialogVisible = true;
-          }else {
-            var params = new URLSearchParams();
-            params.append('name', this.loginForm.username);
-            params.append('password',this.loginForm.password);
-            if(this.loginForm.username==="liu"){
-              this.$router.push("/Main");
-            }else {
-              this.dialogVisible = true;
-            }
-            // this.axios.post('/user/login', params)
-            //   .then((res)=>{
-            //     if (res.data.code==0){
-            //       // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
-            //       this.$router.push("/Main");
-            //     }
-            //   })
-            //   .catch((res)=>{
-            //     // this.dialogVisible = true;
-            //     console.log(res.data.message);
-            //   });
-          }
+          // if (!valid){
+          //   this.dialogVisible = true;
+          // }else {
+          //   var params = new URLSearchParams();
+          //   params.append('name', this.loginForm.username);
+          //   params.append('password',this.loginForm.password);
+          //   if(this.loginForm.username==="liu"){
+              this.$router.push("/AdminMain");
+          //   }else {
+          //     this.dialogVisible = true;
+          //   }
+          // }
         });
 
       }

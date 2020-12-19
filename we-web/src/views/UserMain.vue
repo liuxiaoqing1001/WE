@@ -39,7 +39,7 @@
 
 <script>
     export default {
-      name: 'Main',
+      name: 'UserMain',
       data () {
         return {
           active: 'home'

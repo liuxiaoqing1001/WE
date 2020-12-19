@@ -16,6 +16,7 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao ;
+
     @Override
     public Map<String, Object> loginCheck(String name, String pwd) {
         Map<String , Object> map = new HashMap<>() ;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
         }
         // 账号存在，登录检查
         User u = userDao.select(name , DigestUtils.md5DigestAsHex(pwd.getBytes())) ;
-        System.out.println(u);
+//        System.out.println(u);
         if(u == null) {
             map.put(KEY_MSG , LOGIN_MSG_FAIL_ERROR) ;
             return map ;
@@ -48,13 +49,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer register(User user) {
-        System.out.println(user.toString());
+//        System.out.println(user.toString());
         if(null == user) {
             return REG_MSG_FAIL_INFO_NON ;
         }
-        if(StringUtils.isEmpty(user.getName()) || StringUtils.isEmpty(user.getPassword()) ||
-                 StringUtils.isEmpty(user.getSex()) ||
-                StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getPhone()) ) {
+        if(StringUtils.isEmpty(user.getName())
+                || StringUtils.isEmpty(user.getPassword())
+                || StringUtils.isEmpty(user.getPhone()) ) {
             return REG_MSG_FAIL_INFO_NON ;
         }
         // 先进行账号是否存在检测
@@ -64,12 +65,7 @@ public class UserServiceImpl implements UserService {
         }
         // 注册
         user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
-//        user.setAge(user.getAge());
-        user.setSex(user.getSex());
-        user.setEmail(user.getEmail());
         user.setPhone(user.getPhone());
-//        user.setPhotourl(user.getPhotourl());
-//        user.setRole(user.getRole());
         int r = userDao.add(user) ;
         if(r > 0) {
             return REG_MSG_OK ;

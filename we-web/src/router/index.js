@@ -3,6 +3,8 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Login from '../views/Login'
 import Main from '../views/Main'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 Vue.use(Router);
 

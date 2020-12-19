@@ -18,6 +18,7 @@
 
 <!--          @open="handleOpen"-->
 <!--          @close="handleClose"-->
+<!--            545c64-->
 <!--          unique-opened属性：  表示是否只保持一个子菜单的展开  默认为false-->
 <!--          collapse属性： 表示是否水平折叠收起菜单（仅在 mode 为 vertical 时可用）  默认为false-->
 <!--          collapse-transition属性： 表示是否开启折叠动画   默认是true开启状态-->
@@ -26,7 +27,7 @@
             default-active="1-1"
             class="el-menu-vertical-demo"
 
-            background-color="#545c64"
+            background-color="#333744"
             text-color="#fff"
             active-text-color="#ffd04b"
             :unique-opened="true"
@@ -127,6 +128,7 @@
 
 <style scoped>
   .home-container {
+    min-height: 910px;
     height: 100%;
   }
 

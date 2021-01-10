@@ -1,25 +1,12 @@
 package com.example.liu.weidea.controller;
 
-import com.example.liu.weidea.bean.Page;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Map;
 
 //import com.isoft.video.util.FileUtil;

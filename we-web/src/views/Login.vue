@@ -12,10 +12,15 @@
       <div class="form_box">
         <el-form-item class="option" prop="username">
           <!--        v-model="dataForm.username" 绑定数据-->
-          <el-input type="text" v-model="loginForm.username" placeholder="请输入用户名或手机号"></el-input>
+          <el-input type="text" v-model="loginForm.username" placeholder="请输入用户名或手机号">
+<!--            prefix首部、suffix尾部-->
+            <i slot="prefix" class="el-input__icon el-icon-user"></i>
+          </el-input>
         </el-form-item>
         <el-form-item class="option" prop="password">
-          <el-input type="password" v-model="loginForm.password" placeholder="请输入密码"></el-input>
+          <el-input type="password" v-model="loginForm.password" placeholder="请输入密码">
+            <i slot="prefix" class="el-input__icon el-icon-lock"></i>
+          </el-input>
         </el-form-item>
         <el-form-item class="option">
           <a href="#" class="forgot">忘记密码？</a>
@@ -81,23 +86,30 @@
     methods: {
       submit_login () {
         // validate 预校验
-        this.$refs.loginFormRef.validate(valid => {
+        this.$refs.loginFormRef.validate(async valid => {
           // console.log(valid)
-          // if (!valid){
-          //   this.dialogVisible = true;
-          // }else {
-          //   var params = new URLSearchParams();
-          //   params.append('name', this.loginForm.username);
-          //   params.append('password',this.loginForm.password);
-          //   if(this.loginForm.username==="liu"){
+          if (!valid){
+            // this.dialogVisible = true;
+            this.$message.error('请填写信息！！！');
+          }else {
+            // const {data:res} = await this.$http.post('login',this.loginForm);
+            // if (res.meta.status!==200){
+            //   this.$message.error('信息不正确！！！登录失败');
+            // }else {
+              this.$message.success('登录成功');
+              // // 将登录成功之后的token保存到客户端的sessionStorage中
+              // window.sessionStorage.setItem('token',res.data.token);
               this.$router.push("/AdminMain");
-          //   }else {
-          //     this.dialogVisible = true;
-          //   }
-          // }
+            // }
+          }
         });
 
-      }
+      },
+      // // 点击重置按钮 重置表单
+      // resetLoginForm () {
+      //   // console.log(this)
+      //   this.$refs.loginFormRef.resetFields()
+      // }
     }
   }
 </script>

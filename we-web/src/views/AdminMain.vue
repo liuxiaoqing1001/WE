@@ -40,17 +40,24 @@
                 <span>用户管理</span>
               </template>
               <el-menu-item-group>
-                <template slot="title">普通用户管理</template>
-                <el-menu-item index="1-1">用户列表</el-menu-item>
-                <el-menu-item index="1-2">添加用户</el-menu-item>
+                <el-submenu index="1-1">
+                  <template slot="title">普通用户</template>
+                  <el-menu-item index="1-1-1">用户列表</el-menu-item>
+                  <el-menu-item index="1-1-2">添加用户</el-menu-item>
+                </el-submenu>
               </el-menu-item-group>
-              <el-menu-item-group title="自愿者管理">
-                <el-menu-item index="1-3">自愿者审核</el-menu-item>
+              <el-menu-item-group>
+                <el-submenu index="1-2">
+                  <template slot="title">自愿者</template>
+                  <el-menu-item  index="1-2-1">自愿者审核</el-menu-item>
+                </el-submenu>
               </el-menu-item-group>
-              <el-submenu index="1-4">
-                <template slot="title">管理员设置</template>
-                <el-menu-item index="1-4-1">管理员列表</el-menu-item>
-              </el-submenu>
+              <el-menu-item-group>
+                <el-submenu index="1-3">
+                  <template slot="title">管理员设置</template>
+                  <el-menu-item index="1-3-1">管理员列表</el-menu-item>
+                </el-submenu>
+              </el-menu-item-group>
             </el-submenu>
             <el-menu-item index="2">
               <i class="el-icon-menu"></i>

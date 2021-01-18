@@ -2260,7 +2260,8 @@ vm.$watch('products.id', function(nval, oval) {
 
 
 ------------------------------------------------------------------------------------
-element ui
+ElementUI：
+https://www.cnblogs.com/webdom/p/12083806.html
 
 ~~~ 
 常用的组件总结：
@@ -2274,8 +2275,12 @@ element ui
 <el-table-column>定义一行，相当于<td>，可以绑定数据，动态显示表格
 ~~~
 
-~~~ 
+~~~ <el-input>
+prefix-icon首部、suffix-icon尾部
+https://blog.csdn.net/qq_40741855/article/details/89450382
 
+<i slot="prefix" class="el-input__icon el-icon-lock"></i>
+<i slot="suffix" class="el-input__icon el-icon-user"></i>
 ~~~
 
 ~~~ 

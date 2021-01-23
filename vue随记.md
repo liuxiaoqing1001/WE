@@ -2256,12 +2256,402 @@ vm.$watch('products.id', function(nval, oval) {
 </script>
 ~~~
 
+~~~订阅者模式（模仿Vue的双向绑定和声明式渲染）
+Object.defineProperty()进行数据劫持
+···
+//在console.log(book.name)同时,直接给书加一个书号
+var Book = {};
+var name = '';
+Object.defineProperty(Book,'name',{
+    set:function(value) {
+        name = value;
+        console.log('你取了一个书名叫:'+value);
+    },
+    get:function() {
+        console.log('get方法被监听到');
+        return '<'+name+'>';
+    }
+});
+Book.name = '人性的弱点';  //你取了一个书名叫:人性的弱点
+console.log(Book.name);　//<人性的弱点>
+···
+解释：
+通过Object.defineProperty( )这个方法设置了Book对象的name属性，对其get和set方法进行重写操作，get方法在获得name属性时被调用，set方法在设置name属性时被触发．所以在执行Book.name='人性的弱点'　这个语句时调用set方法，输出你取了一个书名叫：人性的弱点．当调用console.log(Book.name)时触发get方法，输出＜人性的弱点＞
+
+实例：订阅者模式（模仿Vue的双向绑定和声明式渲染）
+https://www.cnblogs.com/lishanlei/p/8423407.html
+1.实现一个监听器Observer，用来劫持并监听所有属性，如果有变动的，就通知订阅者。
+数据监听器的核心方法就是Object.defineProperty( )，通过遍历循环对所有属性值进行监听，并对其进行Object.defineProperty( )处理
+需要一个可以容纳消息订阅者的消息订阅器Dep，订阅器主要收集消息订阅者，然后在属性变化时执行相应订阅者的更新函数，那么消息订阅器Dep需要有一个容器，用来存放消息订阅者
+···
+//对所有属性都要蒋婷,递归遍历所有属性
+function defineReactive(data,key,val) {
+    observe(val);  //递归遍历所有的属性
+    var dep = new Dep();	//添加订阅器Dep
+    Object.defineProperty(data,key,{
+        enumerable:true,         //当且仅当该属性的 configurable 为 true 时，该属性描述符才能够被改变，同时该属性也能从对应的对象上被删除。
+        configurable:true,       //当且仅当该属性的enumerable为true时，该属性才能够出现在对象的枚举属性中
+        get:function() {
+            if(是否需要添加订阅者){		//Watcher初始化触发
+	dep.addSub(watcher);	//在这里添加订阅者
+            }
+            return val;
+        },
+        set:function(newVal) {
+            if(val===newWal){
+                return;
+            }
+            val = newVal;
+            console.log('属性'+key+'已经被监听,现在值为:"'+newVal.toString()+'"');
+            dep.notify();		//如果数据变化、通知所有订阅者
+        }
+    })
+}
+
+function observe(data) {
+    if(!data || typeof data !== 'object') {
+        return;
+    }
+    Object.keys(data).forEach(function(key){
+        defineReactive(data,key,data[key]);
+    });
+}
+
+function Dep(){
+    this.subs=[];
+}
+
+//prototype 属性使您有能力向对象添加属性和方法
+//prototype这个属性只有函数对象才有，具体的说就是构造函数具有.只要你声明定义了一个函数对象，这个prototype就会存在
+//对象实例是没有这个属性
+Dep.prototype = {                        
+    addSub:function(sub) {
+        this.subs.push(sub);
+    },
+    notify:function() {
+        this.subs.forEach(function(sub) {
+            sub.update();        //通知每个订阅者检查更新
+        })
+    }
+}
+Dep.target = null;
+
+var library = {
+    book1: {
+        name: ''
+    },
+    book2: ''
+};
+observe(library);
+library.book1.name = 'vue权威指南'; // 属性name已经被监听了，现在值为：“vue权威指南”
+library.book2 = '没有此书籍';  // 属性book2已经被监听了，现在值为：“没有此书籍”
+···
+2.实现一个订阅者Watcher，可以收到属性的变化通知并执行相应的函数，从而更新视图。
+获取对应的属性值，就可以通过Object.defineProperty( )触发对应的get来执行添加订阅者的操作,订阅者Wahcher在初始化时要将自己添加到订阅器Dep中
+```
+function Watcher(vm,exp,cb) {
+    this.vm = vm;    //指向SelfVue的作用域
+    this.exp = exp;  //绑定属性的key值
+    this.cb = cb;    //闭包
+    this.value = this.get();
+}
+
+Watcher.prototype = {
+    update:function() {
+        this.run();
+    },
+    run:function() {
+        var value = this.vm.data[this.exp];
+        var oldVal = this.value;
+        if(value !== oldVal) {
+            this.value = value;
+            this.cb.call(this.vm,value,oldVal);
+        }
+    },
+    get:function() {
+        Dep.target = this;                   // 缓存自己
+        var value = this.vm.data[this.exp];  // 强制执行监听器里的get函数
+        Dep.target = null;                   // 释放自己
+        return value;
+    }
+}
+```
+```需要对监听器Observer中的defineReactive()做稍微的调整
+function defineReactive(data,key,val) {
+    observe(val);
+    var dep = new Dep();
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            if(Dep.target) {   //判断是否需要添加订阅者
+                 dep.addSub(Dep.target);
+            }
+            return val;
+        },
+        set: function(newVal) {
+            if (val === newVal) {
+                return;
+            }
+            val = newVal;
+            console.log('属性' + key + '已经被监听了，现在值为：“' + newVal.toString() + '”');
+            dep.notify(); // 如果数据变化，通知所有订阅者
+        }
+    });
+}
+```
+```
+//将Observer和Watcher关联起来
+function SelfVue(data,el,exp) {
+    var self = this;
+    this.data = data;
+    //Object.keys() 方法会返回一个由一个给定对象的自身可枚举属性组成的数组
+    Object.keys(data).forEach(function(key) {
+        self.proxyKeys(key);     //绑定代理属性
+    });
+    observe(data);
+    el.innerHTML = this.data[exp];   // 初始化模板数据的值
+    new Watcher(this,exp,function(value) {
+        el.innerHTML = value;
+    });
+    return this;
+}
+
+SelfVue.prototype = {
+    proxyKeys:function(key) {
+        var self = this;
+        Object.defineProperty(this,key,{
+            enumerable:false,
+            configurable:true,
+            get:function proxyGetter() {
+                return self.data[key];
+            },
+            set:function proxySetter(newVal) {
+                self.data[key] = newVal;
+            } 
+        });
+    }
+}
+```
+在页面上new一个SelfVue，就可以实现双向绑定了
+```
+<body>
+    <h1 id="name"{{name}}></h1>
+</body>
+
+<script src="../js/observer.js"></script>
+<script src="../js/Watcher.js"></script>
+<script src="../js/SelfVue.js"></script>
+
+<script>
+     var ele = document.querySelector('#name');
+     var selfVue = new SelfVue({
+         name:'hello world'
+     },ele,'name');
+
+     window.setTimeout(function() {
+         console.log('name值改变了');
+         selfVue.name = 'byebye world';
+     },2000);
+</script>
+```
+3.实现一个解析器Compile，可以扫描和解析每个节点的相关指令，并根据初始化模板数据以及初始化相应的订阅器
+3.1解析模板指令，并替换模板数据，初始化视图
+解析模板，首先要获得dom元素，然后对含有dom元素上含有指令的节点进行处理，这个过程对dom元素的操作比较繁琐，所以我们可以先建一个fragment片段，将需要解析的dom元素存到fragment片段中在做处理
+```
+nodeToFragment:function(el) {
+        var fragment = document.createDocumentFragment();   //createdocumentfragment()方法创建了一虚拟的节点对象，节点对象包含所有属性和方法。
+        var child = el.firstChild;
+        while(child) {
+            // 将Dom元素移入fragment中
+            fragment.appendChild(child);
+            child = el.firstChild;
+        }
+        return fragment;
+    }
+```
+3.2将模板指令对应的节点绑定对应的更新函数，初始化相应的订阅器
+```遍历所有节点，对含有指令的节点进行特殊的处理，这里我们先处理最简单的情况，只对带有 '{{变量}}' 这种形式的指令进行处理
+//遍历各个节点,对含有相关指定的节点进行特殊处理
+    compileElement:function(el) {
+        var childNodes = el.childNodes;   //childNodes属性返回节点的子节点集合，以 NodeList 对象。
+        var self = this;
+        //slice() 方法可从已有的数组中返回选定的元素。
+        [].slice.call(childNodes).forEach(function(node) {
+            var reg = /\{\{(.*)\}\}/;
+            var text = node.textContent;  //textContent 属性设置或返回指定节点的文本内容
+            if(self.isTextNode(node) && reg.test(text)) {      //判断是否符合{{}}的指令
+                //exec() 方法用于检索字符串中的正则表达式的匹配。
+                //返回一个数组，其中存放匹配的结果。如果未找到匹配，则返回值为 null。
+                self.compileText(node,reg.exec(text)[1]);
+            }
+            if(node.childNodes && node.childNodes.length) {
+                self.compileElement(node);    //继续递归遍历子节点
+            }
+        });
+    },
+    compileText:function(node,exp) {
+        var self = this;
+        var initText = this.vm[exp];
+        this.updateText(node,initText);    // 将初始化的数据初始化到视图中
+        new Watcher(this.vm,exp,function(value) {
+            self.updateText(node,value);
+        });
+
+    },
+    updateText:function(node,value) {
+        node.textContent = typeof value == 'undefined' ? '': value;
+    },
+```
+将解析器Compile与监听器Observer和订阅者Watcher关联起来
+```修改SelfVue函数
+function SelfVue(options) {
+    var self = this;
+    this.vm = this;
+    this.data = options.data;
+    Object.keys(this.data).forEach(function(key) {
+        self.proxyKeys(key);     //绑定代理属性
+    });
+    observe(options.data);
+    new Compile(options.el,this.vm);
+    return this;
+}
+```
+
+···可以随便命名各种变量进行双向绑定
+<body>
+    <div id="app">
+        <h1>{{title}}</h1>
+        <h2>{{name}}</h2>
+        <h3>{{content}}</h3>
+    </div>
+</body>
+<script src="../js/observer2.js"></script>
+<script src="../js/Watcher1.js"></script>
+<script src="../js/compile1.js"></script>
+<script src="../js/index3.js"></script>
+
+
+<script>
+    var selfVue = new SelfVue({
+        el:'#app',
+        data:{
+            title:'aaa',
+            name:'bbb',
+            content:'ccc'
+        }
+    });
+    window.setTimeout(function() {
+        selfVue.title = 'ddd';
+        selfVue.name = 'eee';
+        selfVue.content = 'fff'
+    },2000);
+</script>
+···
+4.添加一个v-model指令和事件指令的解析编译，对于这些节点使用函数compile进行解析处理
+```
+compile:function(node) {
+        var nodeAttrs = node.attributes;   //attributes 属性返回指定节点的属性集合，即 NamedNodeMap。
+        var self = this;
+        //Array.prototype属性表示Array构造函数的原型，并允许为所有Array对象添加新的属性和方法。
+        //Array.prototype本身就是一个Array
+        Array.prototype.forEach.call(nodeAttrs,function(attr) {
+            var attrName = attr.name;      //添加事件的方法名和前缀:v-on:click="onClick" ,则attrName = 'v-on:click' id="app" attrname= 'id'
+            if(self.isDirective(attrName)) {     
+                var exp = attr.value;      //添加事件的方法名和前缀:v-on:click="onClick" ,exp = 'onClick'
+
+                //substring() 方法用于提取字符串中介于两个指定下标之间的字符。返回值为一个新的字符串
+                //dir = 'on:click'
+                var dir = attrName.substring(2);  
+                if(self.isEventDirective(dir)) {   //事件指令
+                    self.compileEvent(node,self.vm,exp,dir);
+                }else {          //v-model指令
+                     self.compileModel(node,self.vm,exp,dir);
+                }
+
+                node.removeAttribute(attrName);
+            }
+        });
+    }
+```
+注意：compile函数是挂载Compile原型上的，它首先遍历所有节点属性，然后再判断属性是否是指令属性，如果是的话再区分是哪种指令，再进行相应的处理
+
+···修改SelfVue
+function SelfVue(options) {
+    var self = this;
+    this.data = options.data;
+    this.methods = options.methods;
+    Object.keys(this.data).forEach(function(key) {
+        self.proxyKeys(key);    
+    });
+    observe(options.data);
+    new Compile(options.el,this);
+    options.mounted.call(this);
+}
+
+
+5. 测试
+```
+<body>
+    <div id="app">
+            <h2>{{title}}</h2>
+            <input v-model="name">
+            <h1>{{name}}</h1>
+            <button v-on:click="clickMe">click me!</button>
+    </div>
+</body>
+
+<script src="../js/observer3.js"></script>
+<script src="../js/Watcher1.js"></script>
+<script src="../js/compile2.js"></script>
+<script src="../js/index4.js"></script>
+<script>
+    new SelfVue({
+        el: '#app',
+        data: {
+            title: 'hello world',
+            name: 'canfoo'
+        },
+        methods: {
+            clickMe: function () {
+                this.title = 'hello world';
+            }
+        },
+        mounted: function () {
+            window.setTimeout(() => {
+                this.title = '你好';
+            }, 1000);
+        }
+    });
+</script>
+```
+···
+~~~
 
 
 
 ------------------------------------------------------------------------------------
 ElementUI：
 https://www.cnblogs.com/webdom/p/12083806.html
+
+后台管理1（设计）
+https://github.com/lin-xin/vue-manage-system
+
+后台管理2（设计）
+https://zhuanlan.zhihu.com/p/105707216
+https://github.com/PanJiaChen/vue-admin-template
+
+搭建网站
+https://blog.csdn.net/xuehu837769474/article/details/81984937
+
+博客网站（借鉴轮播图）（文章专区）
+https://github.com/surmon-china/surmon.me
+
+搭建项目（axios请求封装）
+https://blog.csdn.net/hxf6060/article/details/88311907
+
+vue+springboot前后端分离数据交互
+https://www.cnblogs.com/xiaoxineryi/p/12369740.html
 
 ~~~ 
 常用的组件总结：

@@ -4,7 +4,9 @@ import Router from 'vue-router'
 import Login from '../views/Login'
 import UserMain from '../views/UserMain'
 import AdminMain from '../views/AdminMain'
-import Users from "../components/Users";
+import User from "../components/User";
+import Admin from "../components/Admin";
+import Volunteer from "../components/Volunteer";
 
 Vue.use(Router);
 
@@ -27,17 +29,20 @@ export default new Router({
       path: '/AdminMain',
       name: 'AdminMain',
       component: AdminMain,
-      redirect: '/Users',//重定向
+      redirect: '/User',//重定向
       children:[//子路由
         {
-          path: '/Users',
-          component: Users
+          path: '/User',
+          component: User
+        },
+        {
+          path: '/Volunteer',
+          component: Volunteer
+        },
+        {
+          path: '/Admin',
+          component: Admin
         }
-        // ,
-        // {
-        //   path: '/HelloWorld',
-        //   component: HelloWorld
-        // }
       ]
     }
   ]

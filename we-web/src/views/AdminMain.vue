@@ -29,7 +29,7 @@
       <el-container>
         <!-- 侧边栏 -->
         <el-aside :width="isCollapse ? '64px' : '180px'">
-          <div class="toggle-button" @click="toggleCollapse">| | |</div>
+          <div class="toggle-button" @click="toggleCollapse">...</div>
 
 <!--          @open="handleOpen"-->
 <!--          @close="handleClose"-->
@@ -52,17 +52,17 @@
                 <i class="el-icon-user"></i>
                 <span>用户管理</span>
               </template>
-              <el-menu-item index="1-1">
+              <el-menu-item index="11">
                 <template slot="title">
                   <span class="secondNav">普通用户</span>
                 </template>
               </el-menu-item>
-              <el-menu-item index="1-2">
+              <el-menu-item index="12">
                 <template slot="title">
                   <span class="secondNav">自愿者</span>
                 </template>
               </el-menu-item>
-              <el-menu-item index="1-3">
+              <el-menu-item index="13">
                 <template slot="title">
                   <span class="secondNav">管理员设置</span>
                 </template>

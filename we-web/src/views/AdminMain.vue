@@ -38,6 +38,7 @@
 <!--          collapse属性： 表示是否水平折叠收起菜单（仅在 mode 为 vertical 时可用）  默认为false-->
 <!--          collapse-transition属性： 表示是否开启折叠动画   默认是true开启状态-->
 <!--          router属性： 表示是否使用 vue-router 的模式，启用该模式会在激活导航时以 index 作为 path 进行路由跳转   默认为false-->
+<!--          default-active：绑定$route.path的值-->
           <el-menu
             default-active="1-1"
             background-color="#333744"
@@ -46,29 +47,30 @@
             :unique-opened="true"
             :collapse="isCollapse"
             :collapse-transition="false"
-            :router="true">
+            :router="true"
+            :default-active="$route.path">
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-user"></i>
                 <span>用户管理</span>
               </template>
-              <el-menu-item index="11">
+              <el-menu-item index="/User" >
                 <template slot="title">
                   <span class="secondNav">普通用户</span>
                 </template>
               </el-menu-item>
-              <el-menu-item index="12">
+              <el-menu-item index="/Volunteer" >
                 <template slot="title">
                   <span class="secondNav">自愿者</span>
                 </template>
               </el-menu-item>
-              <el-menu-item index="13">
+              <el-menu-item index="/Admin" >
                 <template slot="title">
                   <span class="secondNav">管理员设置</span>
                 </template>
               </el-menu-item>
             </el-submenu>
-            <el-menu-item index="2">
+            <el-menu-item index="2" >
               <i class="el-icon-menu"></i>
               <span slot="title">模块管理</span>
             </el-menu-item>
@@ -77,7 +79,7 @@
               <i class="el-icon-document"></i>
               <span slot="title">数据统计</span>
             </el-menu-item>
-            <el-menu-item index="4">
+            <el-menu-item index="4" >
               <i class="el-icon-setting"></i>
               <span slot="title">系统设置</span>
             </el-menu-item>
@@ -102,6 +104,7 @@
         // 菜单是否折叠
         isCollapse: false,
         searchCriteria: '',
+        activePath:''
       }
     },
     methods: {
@@ -177,7 +180,7 @@
     cursor: pointer;
   }
 
-  .el-aside {
+  el-aside {
     background: #333744;
   }
 

@@ -18,8 +18,8 @@
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>个人信息</el-dropdown-item>
-              <el-dropdown-item>退出登录</el-dropdown-item>
+              <el-dropdown-item @click.native="modifyPwd">修改密码</el-dropdown-item>
+              <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </span>
@@ -28,17 +28,16 @@
       <!-- 主体 -->
       <el-container>
         <!-- 侧边栏 -->
-        <el-aside :width="isCollapse ? '64px' : '180px'">
+        <el-aside :width="isCollapse ? '64px' : '200px'">
           <div class="toggle-button" @click="toggleCollapse">...</div>
 
 <!--          @open="handleOpen"-->
 <!--          @close="handleClose"-->
-<!--            545c64-->
 <!--          unique-opened属性：  表示是否只保持一个子菜单的展开  默认为false-->
 <!--          collapse属性： 表示是否水平折叠收起菜单（仅在 mode 为 vertical 时可用）  默认为false-->
 <!--          collapse-transition属性： 表示是否开启折叠动画   默认是true开启状态-->
 <!--          router属性： 表示是否使用 vue-router 的模式，启用该模式会在激活导航时以 index 作为 path 进行路由跳转   默认为false-->
-<!--          default-active：绑定$route.path的值-->
+<!--          default-active：绑定$route.path的值,刷新页面不改变当前导航路径-->
           <el-menu
             default-active="1-1"
             background-color="#333744"
@@ -115,7 +114,10 @@
         // // 清空token
         // window.sessionStorage.clear('token');
         // 跳转到登录页
-        this.$router.push('/')
+        this.$router.push('/');
+      },
+      modifyPwd(){
+
       },
       // 点击切换左侧菜单的折叠与展开
       toggleCollapse() {
@@ -180,7 +182,7 @@
     cursor: pointer;
   }
 
-  el-aside {
+  .el-aside {
     background: #333744;
   }
 

@@ -2637,7 +2637,7 @@ https://www.cnblogs.com/webdom/p/12083806.html
 后台管理1（设计）
 https://github.com/lin-xin/vue-manage-system
 
-后台管理2（设计）
+后台管理2（简易设计）
 https://zhuanlan.zhihu.com/p/105707216
 https://github.com/PanJiaChen/vue-admin-template
 

@@ -4,8 +4,8 @@
       <el-header>
         <!--面包屑导航区域-->
         <el-breadcrumb >
-          <el-breadcrumb-item :to="{ path: '/AdminMain' }">用户管理</el-breadcrumb-item>
-          <el-breadcrumb-item>普通用户</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/User' }">自愿者管理</el-breadcrumb-item>
+          <el-breadcrumb-item>自愿者</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
 
@@ -18,12 +18,12 @@
               <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
           </el-col>
-          <el-col :span="4">
-            <el-button type="primary">添加用户</el-button>
-          </el-col>
+<!--          <el-col :span="4">-->
+<!--            <el-button type="primary">添加自愿者</el-button>-->
+<!--          </el-col>-->
         </el-row>
       </el-card>
-      <!--用户列表区域-->
+      <!--自愿者列表区域-->
       <!--    边框：border属性，设置为true即可启用-->
       <!--    隔行变色：stripe属性,创建带斑马纹的表格，默认为false，设置为true即为启用-->
       <el-table :data="userList" style="width: 100%" border stripe>
@@ -51,12 +51,12 @@
 
 <script>
   export default {
-    name: "User",
+    name: "Volunteer",
     data(){
       return{
-        userList:[],//用户列表
-        total:0,//用户总数
-        //获取用户列表的参数对象
+        userList:[],//自愿者列表
+        total:0,//自愿者总数
+        //获取自愿者列表的参数对象
         queryInfo:{
           query:'',//查询参数
           pagenum:1,//当前页码

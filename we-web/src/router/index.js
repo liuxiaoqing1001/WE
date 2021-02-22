@@ -4,9 +4,12 @@ import Router from 'vue-router'
 import Login from '../views/Login'
 import UserMain from '../views/UserMain'
 import AdminMain from '../views/AdminMain'
-import User from "../components/User";
-import Admin from "../components/Admin";
-import Volunteer from "../components/Volunteer";
+import User from "../components/Admin/User";
+import Admin from "../components/Admin/Admin";
+import Volunteer from "../components/Admin/Volunteer";
+import Model from "../components/Admin/Model";
+import Data from "../components/Admin/Data";
+import Setting from "../components/Admin/Setting";
 
 Vue.use(Router);
 
@@ -42,6 +45,18 @@ export default new Router({
         {
           path: '/Admin',
           component: Admin
+        },
+        {
+          path: '/Model',
+          component: Model
+        },
+        {
+          path: '/Data',
+          component: Data
+        },
+        {
+          path: '/Setting',
+          component: Setting
         }
       ]
     }

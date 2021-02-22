@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <h3>管理员组件</h3>
-  </div>
+
 </template>
 
 <script>
     export default {
-        name: "Admin"
+        name: "Main"
     }
 </script>
 

@@ -4,7 +4,7 @@
       <el-header>
         <!--面包屑导航区域-->
         <el-breadcrumb >
-          <el-breadcrumb-item :to="{ path: '/User' }">自愿者管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/User' }">用户管理</el-breadcrumb-item>
           <el-breadcrumb-item>自愿者</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>

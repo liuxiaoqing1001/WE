@@ -23,8 +23,8 @@
           </el-input>
         </el-form-item>
         <el-form-item class="option">
-          <a href="#" class="forgot">忘记密码？</a>
-          <a href="#" class="register">尚无账号？去注册>></a>
+          <a @click="ModifyPwd" class="forgot" style="color: blue">忘记密码？</a>
+          <a @click="Register" class="register" style="color: blue">尚无账号？去注册>></a>
         </el-form-item>
         <!--      @click="submit_login" 定义表单提交事件-->
         <el-button class="loginButton" @click="submit_login">登 录</el-button>
@@ -99,12 +99,20 @@
               this.$message.success('登录成功');
               // // 将登录成功之后的token保存到客户端的sessionStorage中
               // window.sessionStorage.setItem('token',res.data.token);
-              this.$router.push("/AdminMain");
+              // this.$router.push("/AdminMain");
+              this.$router.push("/UserMain");
             // }
           }
         });
 
       },
+      ModifyPwd(){
+        this.$router.push("/ModifyPwd");
+      },
+      Register(){
+        this.$router.push("/Register");
+      }
+
       // // 点击重置按钮 重置表单
       // resetLoginForm () {
       //   // console.log(this)

@@ -28,7 +28,7 @@
       <!-- 主体 -->
       <el-container>
         <!-- 侧边栏 -->
-        <el-aside :width="isCollapse ? '64px' : '200px'">
+        <el-aside :width="isCollapse ? '64px' : '180px'">
           <div class="toggle-button" @click="toggleCollapse">...</div>
 
 <!--          @open="handleOpen"-->
@@ -78,10 +78,17 @@
               <i class="el-icon-document"></i>
               <span slot="title">数据统计</span>
             </el-menu-item>
-            <el-menu-item index="/Setting" >
-              <i class="el-icon-setting"></i>
-              <span slot="title">系统设置</span>
-            </el-menu-item>
+            <el-submenu index="4">
+              <template slot="title">
+                <i class="el-icon-setting"></i>
+                <span>系统设置</span>
+              </template>
+              <el-menu-item index="/Setting" >
+                <template slot="title">
+                  <span class="secondNav">xxx</span>
+                </template>
+              </el-menu-item>
+            </el-submenu>
           </el-menu>
         </el-aside>
         <!-- 右侧内容主体 -->
@@ -117,7 +124,7 @@
         this.$router.push('/');
       },
       modifyPwd(){
-
+        this.$router.push('/modifyPwd');
       },
       // 点击切换左侧菜单的折叠与展开
       toggleCollapse() {

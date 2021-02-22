@@ -4,7 +4,7 @@
       <el-header>
         <!--面包屑导航区域-->
         <el-breadcrumb >
-          <el-breadcrumb-item :to="{ path: '/User' }">管理员管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/User' }">用户管理</el-breadcrumb-item>
           <el-breadcrumb-item>管理员设置</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
 import Login from '../views/Login'
 import UserMain from '../views/UserMain'
 import AdminMain from '../views/AdminMain'
@@ -10,6 +9,8 @@ import Volunteer from "../components/Admin/Volunteer";
 import Model from "../components/Admin/Model";
 import Data from "../components/Admin/Data";
 import Setting from "../components/Admin/Setting";
+import ModifyPwd from "../views/ModifyPwd";
+import Register from "../views/Register";
 
 Vue.use(Router);
 
@@ -59,6 +60,18 @@ export default new Router({
           component: Setting
         }
       ]
+    },
+    {
+      // 修改密码
+      path: '/ModifyPwd',
+      name: 'ModifyPwd',
+      component: ModifyPwd
+    },
+    {
+      // 注册
+      path: '/Register',
+      name: 'Register',
+      component: Register
     }
   ]
 })

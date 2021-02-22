@@ -329,7 +329,21 @@ validate
 
 5. https://www.cnblogs.com/joe235/p/12058170.html		(从4开始)
 
-6. https://www.cnblogs.com/joe235/p/12068661.html		(从8开始)
+6. https://www.cnblogs.com/joe235/p/12068661.html		(从8开始)管理
+	https://github.com/lin-xin/vue-manage-system
+	https://zhuanlan.zhihu.com/p/105707216	（vue-admin-template）
+	https://github.com/PanJiaChen/vue-admin-template
+7. 用户
+	在线聊天springboot+vue+websocket
+	https://www.cnblogs.com/zhengqing/p/11988541.html
+
+	多人聊天（无websocket）
+	https://blog.csdn.net/aikou2915/article/details/102244920
+
+	https://blog.csdn.net/shushengyey/article/details/111398004
+
+	仿微信网页版
+	https://www.bilibili.com/video/bv1qa4y1s7sg/
 
 
 

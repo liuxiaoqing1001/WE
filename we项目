@@ -26,6 +26,14 @@ Springboot+SpringMVC+JPA+Hibernate+MySQL+Thymeleaf
 -----------------------------------------------------------------------------------
 ===================================================================================
 -----------------------------------------------------------------------------------
+
+后台管理1（设计）
+https://github.com/lin-xin/vue-manage-system
+
+后台管理2（设计）
+https://zhuanlan.zhihu.com/p/105707216
+https://github.com/PanJiaChen/vue-admin-template
+
 在线聊天springboot+vue+websocket
 https://www.cnblogs.com/zhengqing/p/11988541.html
 
@@ -344,6 +352,38 @@ validate
 
 	仿微信网页版
 	https://www.bilibili.com/video/bv1qa4y1s7sg/
+
+	博客网站（借鉴轮播图）（文章专区）
+	https://github.com/surmon-china/surmon.me
+
+	搭建项目（axios请求封装）
+	https://blog.csdn.net/hxf6060/article/details/88311907
+
+	vue+springboot前后端分离数据交互
+	https://www.cnblogs.com/xiaoxineryi/p/12369740.html
+
+	websocket原理
+	https://www.cnblogs.com/nnngu/p/9347635.html
+	http://www.ruanyifeng.com/blog/2017/05/websocket.html
+
+	聊天
+	https://blog.csdn.net/qq_41941875/article/details/103573497
+	https://www.imooc.com/article/297091?block_id=tuijian_wz
+	https://segmentfault.com/a/1190000021203056?utm_source=tag-newest
+
+	博客模板
+	https://github.com/ganganlee/vue-blog
+	https://zhuanlan.zhihu.com/p/102077861
+
+	树洞（已下载zip包）
+	https://my.oschina.net/ly81/blog/3107092
+	https://gitee.com/IanLew/tree-hole/tree/master
+
+	github博主
+	https://github.com/biaochenxuying
+	https://github.com/biaochenxuying/blog
+	
+8. 画图
 
 
 

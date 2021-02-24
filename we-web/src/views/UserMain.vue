@@ -4,7 +4,7 @@
       <!-- 头部 -->
       <el-header>
         <div>
-<!--          <img src="../assets/we_logo.png" alt="">-->
+          <img src="../assets/we_logo_1.png" alt="">
           <span class="logo">WE</span>
         </div>
         <nav v-bind:class="active" v-on:click.prevent>
@@ -14,17 +14,15 @@
           <a href="#" class="services" v-on:click="makeActive('services')">树洞</a>
           <a href="#" class="contact" v-on:click="makeActive('contact')">自愿者专区</a>
         </nav>
-        <el-input placeholder="请输入内容" style="width: 300px">
-          <el-button slot="append" icon="el-icon-search" ></el-button>
-        </el-input>
-        <!--        <span style="float:right;padding:5px;margin-left:2%;width:20%">-->
-        <!--          <el-input placeholder="请输入关键字" v-model="searchCriteria" @click="handleIconClick"></el-input>-->
-        <!--        </span>-->
+
+<!--        <el-input placeholder="请输入内容" style="width: 300px">-->
+<!--          <el-button slot="append" icon="el-icon-search" ></el-button>-->
+<!--        </el-input>-->
         <span style="float:right;padding-top:10px;margin-right:1%">
           <el-dropdown trigger="click">
-            <span class="el-dropdown-link" style="font-size: 18px">
+            <span class="el-dropdown-link">
               user
-              <i class="el-icon-caret-bottom el-icon--right"></i>
+              <i class="el-icon-caret-bottom el-icon--right" style="color: blue"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="modifyPwd">修改密码</el-dropdown-item>
@@ -39,7 +37,7 @@
         <el-main>
           <!--路由占位符-->
           <p>{{active}}</p>
-<!--          <router-view></router-view>-->
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -83,19 +81,16 @@
       // 点击菜单使用的函数
       methods: {
         makeActive: function(item){
-          switch (item) {
-            case 'home':
-              this.active = this.$router.push('/ModifyPwd');
-              break;
-            case 'projects':
-              break;
-
-          }
+          // switch (item) {
+          //   case 'home':
+          //     this.active = this.$router.push('/ModifyPwd');
+          //     break;
+          //   case 'projects':
+          //     break;
+          //
+          // }
           // 模型改变，视图会自动更新
           this.active = item;
-        },
-        handleIconClick(ev) {
-          console.log(ev);
         },
         logout() {
           // // 清空token
@@ -119,7 +114,7 @@
   }
 
   .el-header {
-    color: #42b983;
+    color: mediumseagreen;
     display: flex;
     justify-content: space-between;
     padding-left: 0;
@@ -143,7 +138,7 @@
   }
 
   .logo{
-    margin-left: 30px;
+    /*margin-left: 30px;*/
     font-size: x-large;
   }
 
@@ -240,7 +235,7 @@
 
   nav a:last-child{
     border-radius:0 2px 2px 0;
-    margin-right: 30px;
+    margin-right: 100px;
   }
 
   nav.home .home,
@@ -248,16 +243,13 @@
   nav.services .services,
   nav.contact .contact{
     color: mediumseagreen;
-    /*background-color: mediumseagreen;*/
+    font-size: medium;
   }
 
-  p{
-    font-size:22px;
-    font-weight:bold;
-    color:#7d9098;
+  .el-dropdown-link{
+    color: mediumseagreen;
+    font-size: 18px;
   }
-
-
 
   /*p b{*/
   /*  color:#ffffff;*/

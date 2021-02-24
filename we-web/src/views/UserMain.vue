@@ -4,8 +4,8 @@
       <!-- 头部 -->
       <el-header>
         <div>
-          <img src="../assets/we_logo.png" alt="">
-          <span>“我和你”心理健康公益平台</span>
+<!--          <img src="../assets/we_logo.png" alt="">-->
+          <span class="logo">WE</span>
         </div>
         <nav v-bind:class="active" v-on:click.prevent>
           <!-- 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 -->
@@ -14,6 +14,9 @@
           <a href="#" class="services" v-on:click="makeActive('services')">树洞</a>
           <a href="#" class="contact" v-on:click="makeActive('contact')">自愿者专区</a>
         </nav>
+        <el-input placeholder="请输入内容" style="width: 300px">
+          <el-button slot="append" icon="el-icon-search" ></el-button>
+        </el-input>
         <!--        <span style="float:right;padding:5px;margin-left:2%;width:20%">-->
         <!--          <el-input placeholder="请输入关键字" v-model="searchCriteria" @click="handleIconClick"></el-input>-->
         <!--        </span>-->
@@ -101,7 +104,8 @@
           this.$router.push('/');
         },
         modifyPwd(){
-          this.$router.push('/modifyPwd');
+          // this.$router.push('/modifyPwd');
+          this.$router.push("/AdminMain");
         }
       }
     }
@@ -137,6 +141,12 @@
   span {
     margin-left: 10px;
   }
+
+  .logo{
+    margin-left: 30px;
+    font-size: x-large;
+  }
+
 
 
   /**{*/
@@ -246,6 +256,8 @@
     font-weight:bold;
     color:#7d9098;
   }
+
+
 
   /*p b{*/
   /*  color:#ffffff;*/

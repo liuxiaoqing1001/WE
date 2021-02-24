@@ -124,7 +124,8 @@
         this.$router.push('/');
       },
       modifyPwd(){
-        this.$router.push('/modifyPwd');
+        // this.$router.push('/modifyPwd');
+        this.$router.push("/UserMain");
       },
       // 点击切换左侧菜单的折叠与展开
       toggleCollapse() {

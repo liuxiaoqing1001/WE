@@ -7,13 +7,13 @@
           <img src="../assets/we_logo_1.png" alt="">
           <span class="logo">WE</span>
         </div>
-        <nav v-bind:class="active" v-on:click.prevent>
-          <!-- 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 -->
-          <a href="#" class="home" v-on:click="makeActive('home')">首页</a>
-          <a href="#" class="projects" v-on:click="makeActive('projects')">分类</a>
-          <a href="#" class="services" v-on:click="makeActive('services')">树洞</a>
-          <a href="#" class="contact" v-on:click="makeActive('contact')">自愿者专区</a>
-        </nav>
+<!--        <nav v-bind:class="active" v-on:click.prevent>-->
+<!--          &lt;!&ndash; 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 &ndash;&gt;-->
+<!--          <a href="#" class="home" v-on:click="makeActive('home')">首页</a>-->
+<!--          <a href="#" class="projects" v-on:click="makeActive('projects')">分类</a>-->
+<!--          <a href="#" class="services" v-on:click="makeActive('services')">树洞</a>-->
+<!--          <a href="#" class="contact" v-on:click="makeActive('contact')">自愿者专区</a>-->
+<!--        </nav>-->
 
 <!--        <el-input placeholder="请输入内容" style="width: 300px">-->
 <!--          <el-button slot="append" icon="el-icon-search" ></el-button>-->
@@ -75,23 +75,23 @@
       name: 'UserMain',
       data () {
         return {
-          active: 'home'
+          // active: 'home'
         }
       },
       // 点击菜单使用的函数
       methods: {
-        makeActive: function(item){
-          // switch (item) {
-          //   case 'home':
-          //     this.active = this.$router.push('/ModifyPwd');
-          //     break;
-          //   case 'projects':
-          //     break;
-          //
-          // }
-          // 模型改变，视图会自动更新
-          this.active = item;
-        },
+        // makeActive: function(item){
+        //   // switch (item) {
+        //   //   case 'home':
+        //   //     this.active = this.$router.push('/ModifyPwd');
+        //   //     break;
+        //   //   case 'projects':
+        //   //     break;
+        //   //
+        //   // }
+        //   // 模型改变，视图会自动更新
+        //   this.active = item;
+        // },
         logout() {
           // // 清空token
           // window.sessionStorage.clear('token');

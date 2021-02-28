@@ -26,6 +26,11 @@ Vue.config.productionTip = false;
 axios.defaults.baseURL = 'http://127.0.0.1:8617/api/private/v1/';
 Vue.prototype.$http = axios;
 
+// 路由跳转
+Vue.prototype.$goRoute = function (index) {
+  this.$router.push(index)
+};
+
 new Vue({
   el: '#app',
   // 启用路由

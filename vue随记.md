@@ -2703,15 +2703,234 @@ https://blog.csdn.net/qq_40741855/article/details/89450382
     }
   }
 </script>
+<style scoped>
+
+  ul li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  /*a:hover可用于设置当鼠标悬停在超链接之上时超链接的样式*/
+  ul li a:hover{
+    cursor: pointer;
+    color: blue;
+    font-size: medium;
+    /*background-color: #138bec;*/
+    /*border: 1px solid #138bec;*/
+  }
+
+  ul li a:active{
+    cursor: pointer;
+    color: mediumseagreen;
+    font-size: medium;
+  }
+
+  ul li a{
+    display:inline-block;
+    /*padding: 18px 30px;*/
+    /*color: mediumseagreen;*/
+    /*font-weight:bold;*/
+    color: black;
+    font-size:16px;
+    text-decoration:none !important;
+    line-height:1;
+    text-transform: uppercase;
+    background-color:transparent;
+    margin-right: 20px;
+
+    -webkit-transition:background-color 0.25s;
+    -moz-transition:background-color 0.25s;
+    transition:background-color 0.25s;
+  }
+
+  ul li a:first-child{
+    border-radius:2px 0 0 2px;
+  }
+
+  ul li a:last-child{
+    border-radius:0 2px 2px 0;
+    margin-right: 10px;
+  }
+
+</style>
+
+main.js
+Vue.prototype.$goRoute = function (index) {
+  this.$router.push(index)
+}
 ~~~
 
 ~~~ 导航2 router-demo_wisewrong
 https://www.cnblogs.com/wisewrong/p/6277262.html
+<template>
+<ul>
+      <li v-for="item in links"  @click="makeActive(item.name)" >
+       <a :class="{active:activeIndex===item.name}" v-on:click="$goRoute(item.route) ">{{item.text}}</a>
+     </li>
+</ul>
+</template>
+<script>
+    export default {
+      name: 'UserMain',
+      data () {
+        return {
+          activeIndex: 'Home',
+          links: [
+            {
+              text: '首页',
+              name: 'Home',
+              route: '/Home'
+            },
+            {
+              text: '分类',
+              name: 'Sort',
+              route: '/Sort'
+            },
+            {
+              text: '树洞',
+              name: 'TreeHole',
+              route: '/TreeHole'
+            },
+            {
+              text: '咨询中心',
+              name: 'ChatRoom',
+              route: '/ChatRoom'
+            }
+          ]
+        }
+      },
+      // 点击菜单使用的函数
+      methods: {
+        makeActive: function(item){
+          // 模型改变，视图会自动更新
+          this.activeIndex = item;
+        }
+      }
+  }
+</script>
+<style scoped>
 
+  ul li {
+    display: inline-block;
+    margin-right: 10px;
+    list-style: none;
+  }
+
+  /*a:hover可用于设置当鼠标悬停在超链接之上时超链接的样式*/
+  ul li a:hover{
+    cursor: pointer;
+    color: blue;
+    font-size: medium;
+    /*background-color: #138bec;*/
+    /*border: 1px solid #138bec;*/
+  }
+
+  ul li a{
+    display:inline-block;
+    /*padding: 18px 30px;*/
+    /*color: mediumseagreen;*/
+    /*font-weight:bold;*/
+    color: black;
+    font-size:16px;
+    text-decoration:none !important;
+    line-height:1;
+    text-transform: uppercase;
+    background-color:transparent;
+    margin-right: 20px;
+
+    -webkit-transition:background-color 0.25s;
+    -moz-transition:background-color 0.25s;
+    transition:background-color 0.25s;
+  }
+
+  ul li a:first-child{
+    border-radius:2px 0 0 2px;
+  }
+
+  ul li a:last-child{
+    border-radius:0 2px 2px 0;
+    margin-right: 10px;
+  }
+
+  .active {
+    color: mediumseagreen;
+    font-size: medium;
+    /*background-color: #2c3e50;*/
+  }
+
+</style>
 ~~~
 
-~~~ 
+~~~ 导航3 无切换组件，可和导航1结合
+<template>
+<nav v-bind:class="active" v-on:click.prevent>
+          <!-- 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 -->
+          <a href="#" class="home" v-on:click="makeActive('home')">首页</a>
+          <a href="#" class="sort" v-on:click="makeActive('sort')">分类</a>
+          <a href="#" class="treeHole" v-on:click="makeActive('treeHole')">树洞</a>
+          <a href="#" class="chatRoom" v-on:click="makeActive('chatRoom')">咨询中心</a>
+</nav>
+</template>
 
+<script>
+export default {
+data () {
+        return {
+          active: 'home',
+        }
+},
+
+methods: {
+        makeActive: function(item){ 
+          // 模型改变，视图会自动更新
+          this.active = item;
+        }
+}
+}
+</script>
+<style scoped>
+  nav{
+    /*display:inline-block;*/
+    /*margin:0 auto;*/
+    /*background-color: silver;*/
+    /*box-shadow:0 1px 1px #ccc;*/
+    border-radius:2px;
+  }
+
+  nav a{
+    display:inline-block;
+    /*padding: 18px 30px;*/
+    color:#000;
+    /*font-weight:bold;*/
+    font-size:16px;
+    text-decoration:none !important;
+    line-height:1;
+    text-transform: uppercase;
+    background-color:transparent;
+    margin-right: 20px;
+
+    -webkit-transition:background-color 0.25s;
+    -moz-transition:background-color 0.25s;
+    transition:background-color 0.25s;
+  }
+
+  nav a:first-child{
+    border-radius:2px 0 0 2px;
+  }
+
+  nav a:last-child{
+    border-radius:0 2px 2px 0;
+    margin-right: 100px;
+  }
+
+  nav.home .home,
+  nav.sort .sort,
+  nav.treeHole .treeHole,
+  nav.chatRoom .chatRoom{
+    color: mediumseagreen;
+    font-size: medium;
+  }
+</style>
 ~~~
 
 ~~~ 

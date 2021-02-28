@@ -7,14 +7,11 @@
           <img src="../assets/we_logo_1.png" alt="">
           <span class="logo">WE</span>
         </div>
-        <nav v-bind:class="active" v-on:click.prevent>
-          <!-- 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 -->
-          <a href="#" class="home" v-on:click="makeActive('home')">首页</a>
-          <a href="#" class="sort" v-on:click="makeActive('sort')">分类</a>
-          <a href="#" class="treeHole" v-on:click="makeActive('treeHole')">树洞</a>
-          <a href="#" class="chatRoom" v-on:click="makeActive('chatRoom')">咨询中心</a>
-        </nav>
-
+        <ul>
+          <li v-for="item in links"  @click="makeActive(item.name)" >
+            <a :class="{active:activeIndex===item.name}" v-on:click="$goRoute(item.route) ">{{item.text}}</a>
+          </li>
+        </ul>
 <!--        <el-input placeholder="请输入内容" style="width: 300px">-->
 <!--          <el-button slot="append" icon="el-icon-search" ></el-button>-->
 <!--        </el-input>-->
@@ -30,15 +27,12 @@
             </el-dropdown-menu>
           </el-dropdown>
         </span>
-        <!--        <el-button type="info" @click="logout">退出</el-button>-->
       </el-header>
       <!-- 主体 -->
       <el-container>
         <el-main>
-<!--          &lt;!&ndash;路由占位符&ndash;&gt;-->
-<!--          <p>{{active}}</p>-->
-          <div :is='myComponent'/>
-<!--          <router-view></router-view>-->
+          <!--路由占位符-->
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -46,41 +40,41 @@
 </template>
 
 <script>
-  import chatRoom from "../components/User/ChatRoom";
-  import sort from "../components/User/Sort";
-  import treeHole from "../components/User/TreeHole";
     export default {
       name: 'UserMain',
-      components:{
-        sort,
-        treeHole
-      },
       data () {
         return {
-          active: 'home',
-          myComponent: 'treeHole'
+          activeIndex: 'Home',
+          links: [
+            {
+              text: '首页',
+              name: 'Home',
+              route: '/Home'
+            },
+            {
+              text: '分类',
+              name: 'Sort',
+              route: '/Sort'
+            },
+            {
+              text: '树洞',
+              name: 'TreeHole',
+              route: '/TreeHole'
+            },
+            {
+              text: '咨询中心',
+              name: 'ChatRoom',
+              route: '/ChatRoom'
+            }
+          ]
         }
       },
 
       // 点击菜单使用的函数
       methods: {
         makeActive: function(item){
-          // switch (item) {
-          //   case 'home':
-          //
-          //     // this.active = this.$router.push('/ModifyPwd');
-          //     break;
-          //   case 'sort':
-          //     break;
-          //   case 'treeHole':
-          //     break;
-          //   case 'chatRoom':
-          //     break;
-          // }
           // 模型改变，视图会自动更新
-          this.active = item;
-          this.myComponent = item;
-
+          this.activeIndex = item;
         },
         logout() {
           // // 清空token
@@ -104,7 +98,7 @@
   }
 
   .el-header {
-    color: mediumseagreen;
+    /*color: mediumseagreen;*/
     display: flex;
     justify-content: space-between;
     padding-left: 0;
@@ -129,22 +123,31 @@
 
   .logo{
     /*margin-left: 30px;*/
+    color: mediumseagreen;
     font-size: x-large;
   }
 
-  nav{
-    /*display:inline-block;*/
-    /*margin:0 auto;*/
-    /*background-color: silver;*/
-    /*box-shadow:0 1px 1px #ccc;*/
-    border-radius:2px;
+  ul li {
+    display: inline-block;
+    margin-right: 10px;
+    list-style: none;
   }
 
-  nav a{
+  /*a:hover可用于设置当鼠标悬停在超链接之上时超链接的样式*/
+  ul li a:hover{
+    cursor: pointer;
+    color: blue;
+    font-size: medium;
+    /*background-color: #138bec;*/
+    /*border: 1px solid #138bec;*/
+  }
+
+  ul li a{
     display:inline-block;
     /*padding: 18px 30px;*/
-    color:#000;
+    /*color: mediumseagreen;*/
     /*font-weight:bold;*/
+    color: black;
     font-size:16px;
     text-decoration:none !important;
     line-height:1;
@@ -157,19 +160,16 @@
     transition:background-color 0.25s;
   }
 
-  nav a:first-child{
+  ul li a:first-child{
     border-radius:2px 0 0 2px;
   }
 
-  nav a:last-child{
+  ul li a:last-child{
     border-radius:0 2px 2px 0;
-    margin-right: 100px;
+    margin-right: 10px;
   }
 
-  nav.home .home,
-  nav.sort .sort,
-  nav.treeHole .treeHole,
-  nav.chatRoom .chatRoom{
+  .active {
     color: mediumseagreen;
     font-size: medium;
   }

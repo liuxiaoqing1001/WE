@@ -10,10 +10,12 @@ import Model from "../components/Admin/Model";
 import Data from "../components/Admin/Data";
 import Setting from "../components/Admin/Setting";
 import ModifyPwd from "../components/Other/ModifyPwd";
+import PersonalCenter from "../components/Other/PersonalCenter";
 import Register from "../components/Other/Register";
-import ChatRoom from "../components/User/ChatRoom";
-import Sort from "../components/User/Sort";
+import Counseling from "../components/User/Counseling";
+import Square from "../components/User/Square";
 import TreeHole from "../components/User/TreeHole";
+import VolunteerZone from "../components/User/VolunteerZone";
 import Home from "../components/User/Home";
 
 Vue.use(Router);
@@ -44,14 +46,30 @@ export default new Router({
           component: TreeHole
         },
         {
-          name: Sort,
-          path: '/Sort',
-          component: Sort
+          name: Square,
+          path: '/Square',
+          component: Square
         },
         {
-          name: ChatRoom,
-          path: '/ChatRoom',
-          component: ChatRoom
+          name: Counseling,
+          path: '/Counseling',
+          component: Counseling
+        },
+        {
+          name: VolunteerZone,
+          path: '/VolunteerZone',
+          component: VolunteerZone
+        },
+        {
+          // 修改密码
+          path: '/ModifyPwd',
+          name: 'ModifyPwd',
+          component: ModifyPwd
+        },
+        {
+          path: '/PersonalCenter',
+          name: 'PersonalCenter',
+          component: PersonalCenter
         }
       ]
     },
@@ -93,12 +111,6 @@ export default new Router({
           component: Setting
         }
       ]
-    },
-    {
-      // 修改密码
-      path: '/ModifyPwd',
-      name: 'ModifyPwd',
-      component: ModifyPwd
     },
     {
       // 注册

@@ -8,13 +8,13 @@
           <span class="logo">WE</span>
         </div>
         <ul>
-          <li v-for="item in links"  @click="makeActive(item.name)" >
+          <li class="topNav" v-for="item in links"  @click="makeActive(item.name)" >
             <a :class="{active:activeIndex===item.name}" v-on:click="$goRoute(item.route) ">{{item.text}}</a>
           </li>
         </ul>
-<!--        <el-input placeholder="请输入内容" style="width: 300px">-->
+        <el-input placeholder="请输入内容" style="width: 300px">
 <!--          <el-button slot="append" icon="el-icon-search" ></el-button>-->
-<!--        </el-input>-->
+        </el-input>
         <span style="float:right;padding-top:10px;margin-right:1%">
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
@@ -22,6 +22,7 @@
               <i class="el-icon-caret-bottom el-icon--right" style="color: blue"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="personalCenter">个人中心</el-dropdown-item>
               <el-dropdown-item @click.native="modifyPwd">修改密码</el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
@@ -52,9 +53,9 @@
               route: '/Home'
             },
             {
-              text: '分类',
-              name: 'Sort',
-              route: '/Sort'
+              text: '广场',
+              name: 'Square',
+              route: '/Square'
             },
             {
               text: '树洞',
@@ -63,8 +64,13 @@
             },
             {
               text: '咨询中心',
-              name: 'ChatRoom',
-              route: '/ChatRoom'
+              name: 'Counseling',
+              route: '/Counseling'
+            },
+            {
+              text: '自愿者专区',
+              name: 'VolunteerZone',
+              route: '/VolunteerZone'
             }
           ]
         }
@@ -82,9 +88,11 @@
           // 跳转到登录页
           this.$router.push('/');
         },
+        personalCenter(){
+          this.$router.push("/PersonalCenter");
+        },
         modifyPwd(){
-          // this.$router.push('/modifyPwd');
-          this.$router.push("/AdminMain");
+          this.$router.push('/ModifyPwd');
         }
       }
     }
@@ -127,10 +135,9 @@
     font-size: x-large;
   }
 
-  ul li {
+  .topNav{
     display: inline-block;
     margin-right: 10px;
-    list-style: none;
   }
 
   /*a:hover可用于设置当鼠标悬停在超链接之上时超链接的样式*/

@@ -1,10 +1,10 @@
 <template>
-<h3>修改密码</h3>
+<div>sss</div>
 </template>
 
 <script>
     export default {
-        name: "ModifyPwd"
+        name: "Counseling"
     }
 </script>
 

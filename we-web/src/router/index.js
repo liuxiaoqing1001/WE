@@ -11,6 +11,9 @@ import Data from "../components/Admin/Data";
 import Setting from "../components/Admin/Setting";
 import ModifyPwd from "../views/ModifyPwd";
 import Register from "../views/Register";
+import ChatRoom from "../components/User/ChatRoom";
+import Sort from "../components/User/Sort";
+import TreeHole from "../components/User/TreeHole";
 
 Vue.use(Router);
 
@@ -26,7 +29,25 @@ export default new Router({
       // 用户首页
       path: '/UserMain',
       name: 'UserMain',
-      component: UserMain
+      component: UserMain,
+      redirect: "/TreeHole",
+      children:[
+        {
+          name: TreeHole,
+          path: '/TreeHole',
+          component: TreeHole
+        },
+        {
+          name: Sort,
+          path: '/Sort',
+          component: Sort
+        },
+        {
+          name: ChatRoom,
+          path: '/ChatRoom',
+          component: ChatRoom
+        }
+      ]
     },
     {
       // 管理首页

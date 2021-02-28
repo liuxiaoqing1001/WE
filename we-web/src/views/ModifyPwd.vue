@@ -1,13 +1,15 @@
-<template>
-<h3>修改密码</h3>
-</template>
 
-<script>
-    export default {
-        name: "ModifyPwd"
-    }
-</script>
 
-<style scoped>
+<!--<template>-->
+<!--<h3>修改密码</h3>-->
+<!--</template>-->
 
-</style>
+<!--<script>-->
+<!--    export default {-->
+<!--        name: "ModifyPwd"-->
+<!--    }-->
+<!--</script>-->
+
+<!--<style scoped>-->
+
+<!--</style>-->

@@ -7,13 +7,13 @@
           <img src="../assets/we_logo_1.png" alt="">
           <span class="logo">WE</span>
         </div>
-<!--        <nav v-bind:class="active" v-on:click.prevent>-->
-<!--          &lt;!&ndash; 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 &ndash;&gt;-->
-<!--          <a href="#" class="home" v-on:click="makeActive('home')">首页</a>-->
-<!--          <a href="#" class="projects" v-on:click="makeActive('projects')">分类</a>-->
-<!--          <a href="#" class="services" v-on:click="makeActive('services')">树洞</a>-->
-<!--          <a href="#" class="contact" v-on:click="makeActive('contact')">自愿者专区</a>-->
-<!--        </nav>-->
+        <nav v-bind:class="active" v-on:click.prevent>
+          <!-- 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 -->
+          <a href="#" class="home" v-on:click="makeActive('home')">首页</a>
+          <a href="#" class="sort" v-on:click="makeActive('sort')">分类</a>
+          <a href="#" class="treeHole" v-on:click="makeActive('treeHole')">树洞</a>
+          <a href="#" class="chatRoom" v-on:click="makeActive('chatRoom')">咨询中心</a>
+        </nav>
 
 <!--        <el-input placeholder="请输入内容" style="width: 300px">-->
 <!--          <el-button slot="append" icon="el-icon-search" ></el-button>-->
@@ -35,63 +35,53 @@
       <!-- 主体 -->
       <el-container>
         <el-main>
-          <!--路由占位符-->
-          <p>{{active}}</p>
-          <router-view></router-view>
+<!--          &lt;!&ndash;路由占位符&ndash;&gt;-->
+<!--          <p>{{active}}</p>-->
+          <div :is='myComponent'/>
+<!--          <router-view></router-view>-->
         </el-main>
       </el-container>
     </el-container>
   </div>
-<!--  <div id="main">-->
-<!--    <div class="loop">-->
-<!--      <span class="logo">-->
-<!--        <img src="../assets/we_logo.png" height="50" width="50"/>-->
-<!--        <span>“我和你”心理健康公益平台</span>-->
-<!--      </span>-->
-<!--      <span class="el-icon-user user">-->
-<!--        <el-button class="loginOR">登录</el-button>-->
-<!--        /<el-button class="loginOR">注册</el-button>-->
-<!--      </span>-->
-<!--    </div>-->
-<!--    <div class="content">-->
-<!--      <nav v-bind:class="active" v-on:click.prevent>-->
-<!--        &lt;!&ndash; 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 &ndash;&gt;-->
-<!--        <a href="#" class="home" v-on:click="makeActive('home')">Home</a>-->
-<!--        <a href="#" class="projects" v-on:click="makeActive('projects')">Projects</a>-->
-<!--        <a href="#" class="services" v-on:click="makeActive('services')">Services</a>-->
-<!--        <a href="#" class="contact" v-on:click="makeActive('contact')">Contact</a>-->
-<!--      </nav>-->
-<!--      &lt;!&ndash; 激活的菜单样式为  active 类 &ndash;&gt;-->
-<!--      &lt;!&ndash; 为了阻止链接在点击时跳转，我们使用了 "prevent" 修饰符 (preventDefault 的简称)。 &ndash;&gt;-->
-
-<!--      &lt;!&ndash; 以下 "active" 变量会根据当前选中的值来自动变换 &ndash;&gt;-->
-<!--      <p>您选择了 <b>{{active}} 菜单</b></p>-->
-<!--    </div>-->
-<!--  </div>-->
 </template>
 
 <script>
+  import chatRoom from "../components/User/ChatRoom";
+  import sort from "../components/User/Sort";
+  import treeHole from "../components/User/TreeHole";
     export default {
       name: 'UserMain',
+      components:{
+        sort,
+        treeHole
+      },
       data () {
         return {
-          // active: 'home'
+          active: 'home',
+          myComponent: 'treeHole'
         }
       },
+
       // 点击菜单使用的函数
       methods: {
-        // makeActive: function(item){
-        //   // switch (item) {
-        //   //   case 'home':
-        //   //     this.active = this.$router.push('/ModifyPwd');
-        //   //     break;
-        //   //   case 'projects':
-        //   //     break;
-        //   //
-        //   // }
-        //   // 模型改变，视图会自动更新
-        //   this.active = item;
-        // },
+        makeActive: function(item){
+          // switch (item) {
+          //   case 'home':
+          //
+          //     // this.active = this.$router.push('/ModifyPwd');
+          //     break;
+          //   case 'sort':
+          //     break;
+          //   case 'treeHole':
+          //     break;
+          //   case 'chatRoom':
+          //     break;
+          // }
+          // 模型改变，视图会自动更新
+          this.active = item;
+          this.myComponent = item;
+
+        },
         logout() {
           // // 清空token
           // window.sessionStorage.clear('token');
@@ -142,68 +132,6 @@
     font-size: x-large;
   }
 
-
-
-  /**{*/
-  /*  margin:0;*/
-  /*  padding:0;*/
-  /*}*/
-
-  /*body{*/
-  /*  font:15px/1.3 'Open Sans', sans-serif;*/
-  /*  color: #5e5b64;*/
-  /*  text-align:center;*/
-  /*}*/
-
-  /*.logo{*/
-  /*  float: left;*/
-  /*  margin-left: 100px;*/
-  /*  font-size: 16px;*/
-  /*  margin-bottom: 10px;*/
-  /*}*/
-
-  /*.search{*/
-  /*  float: left;*/
-  /*  width: 350px;*/
-  /*  margin: 20px auto auto 200px;*/
-  /*  border-radius: 5px;*/
-  /*  -webkit-border-radius: 5px;*/
-  /*  -moz-border-radius: 5px;*/
-  /*  box-shadow: 0 0 5px #909399;*/
-  /*}*/
-
-  /*.user{*/
-  /*  float: right;*/
-  /*  margin-right: 150px;*/
-  /*  font-size: 17px;*/
-  /*  margin-top: 35px;*/
-  /*}*/
-
-  /*.loginOR{*/
-  /*  margin-left: 7px;*/
-  /*}*/
-
-  /*!*.content{*!*/
-  /*!*  margin-top: 20px;*!*/
-  /*!*}*!*/
-
-  /*a, a:visited {*/
-  /*  outline:none;*/
-  /*  color: black;*/
-  /*}*/
-
-  /*a:hover{*/
-  /*  text-decoration:none;*/
-  /*}*/
-
-  /*section, footer, header, aside, nav{*/
-  /*  display: block;*/
-  /*}*/
-
-  /*.content{*/
-  /*  margin-top: 40px;*/
-  /*}*/
-
   nav{
     /*display:inline-block;*/
     /*margin:0 auto;*/
@@ -239,9 +167,9 @@
   }
 
   nav.home .home,
-  nav.projects .projects,
-  nav.services .services,
-  nav.contact .contact{
+  nav.sort .sort,
+  nav.treeHole .treeHole,
+  nav.chatRoom .chatRoom{
     color: mediumseagreen;
     font-size: medium;
   }
@@ -251,13 +179,4 @@
     font-size: 18px;
   }
 
-  /*p b{*/
-  /*  color:#ffffff;*/
-  /*  display:inline-block;*/
-  /*  padding:5px 10px;*/
-  /*  background-color: mediumseagreen;*/
-  /*  border-radius:2px;*/
-  /*  text-transform:uppercase;*/
-  /*  font-size:18px;*/
-  /*}*/
 </style>

@@ -2673,11 +2673,40 @@ https://blog.csdn.net/qq_40741855/article/details/89450382
 <i slot="suffix" class="el-input__icon el-icon-user"></i>
 ~~~
 
-~~~ 
+~~~ 导航1
+<template>
+  <div style="margin-top:60px;">
+    <h1  @click="change1('Sort')">111</h1>
+    <h1 @click="change1('TreeHole')"> 222</h1>
+    <div :is='myComponent'>
+    </div>
+  </div>
+</template>
 
+<script>
+  import Sort from "../components/User/Sort";
+  import TreeHole from "../components/User/TreeHole";
+  export default {
+    components:{
+      Sort,
+      TreeHole
+    },
+    data () {
+      return {
+        myComponent: 'Sort'
+      }
+    },
+    methods: {
+      change1(menu){
+        this.myComponent = menu
+      },
+    }
+  }
+</script>
 ~~~
 
-~~~ 
+~~~ 导航2 router-demo_wisewrong
+https://www.cnblogs.com/wisewrong/p/6277262.html
 
 ~~~
 

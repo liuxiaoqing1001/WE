@@ -36,6 +36,7 @@
           <router-view></router-view>
         </el-main>
       </el-container>
+      <el-footer>Footer</el-footer>
     </el-container>
   </div>
 </template>
@@ -112,6 +113,13 @@
     padding-left: 0;
     align-items: center;
     font-size: 20px;
+  }
+
+  .el-footer {
+    background-color: silver;
+    color: mediumseagreen;
+    text-align: center;
+    line-height: 60px;
   }
 
   div {

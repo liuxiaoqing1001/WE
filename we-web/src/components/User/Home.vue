@@ -26,7 +26,7 @@
 
 <script>
     export default {
-        name: "Home",
+      name: "Home",
       data() {
         return{
           dataList:[
@@ -65,7 +65,7 @@
         runInv() {
           this.timer = setInterval(() => {
             this.gotoPage(this.nextIndex)
-          }, 1000)
+          }, 1000);
         }
       }
     }

@@ -2,13 +2,12 @@
   <div >
     <div class="container">
       <transition name="fade">
-<!--        <aside v-if="menuStatus" class="left-wrapper">-->
-<!--          <div class="left-wrapper-fixed">-->
-<!--            <div class="user-wrapper">-->
-<!--              <img src="../../assets/logo.png" height="200" width="200"/>-->
-<!--              <p class="user-name">ganganlee</p>-->
-<!--              <p class="user-email">ganganlee@outlook.com</p>-->
-<!--            </div>-->
+        <aside v-if="menuStatus" class="left-wrapper">
+          <div class="left-wrapper-fixed">
+            <div class="user-wrapper">
+              <img src="../../assets/we_logo.png" height="200" width="200"/>
+
+            </div>
 <!--            <div class="menu-wrapper">-->
 <!--              <ul>-->
 <!--                <li :class="{'li-active':active=='blog'}" @click="changeMenu('blog','/blog')">-->
@@ -29,18 +28,18 @@
 <!--                </li>-->
 <!--              </ul>-->
 <!--            </div>-->
-<!--          </div>-->
-<!--        </aside>-->
+          </div>
+        </aside>
       </transition>
       <div class="main-wrapper">
-        <div class="nav-wrapper" :class="{'nav-shadow':navShadow}" >
-          <i class="iconfont" :class="{'icon-close move-right' :menuStatus, 'icon-menu move-left':!menuStatus}" @click="asideStatus()"></i>
-          <i class="iconfont icon-share"></i>
-          <i class="iconfont icon-search search-i" :class="{'search-opacity':searchStatus}" @click="searchStatus = !searchStatus"></i>
-          <div class="search-wrapper" :class="searchStatus?'width-amplify':'width-narrow'">
-            <input type="text" placeholder="输入感兴趣的关键字">
-          </div>
-        </div>
+<!--        <div class="nav-wrapper" :class="{'nav-shadow':navShadow}" >-->
+<!--          <i class="iconfont" :class="{'icon-close move-right' :menuStatus, 'icon-menu move-left':!menuStatus}" @click="asideStatus()"></i>-->
+<!--          <i class="iconfont icon-share"></i>-->
+<!--          <i class="iconfont icon-search search-i" :class="{'search-opacity':searchStatus}" @click="searchStatus = !searchStatus"></i>-->
+<!--          <div class="search-wrapper" :class="searchStatus?'width-amplify':'width-narrow'">-->
+<!--            <input type="text" placeholder="输入感兴趣的关键字">-->
+<!--          </div>-->
+<!--        </div>-->
         <router-view/>
 
       </div>
@@ -71,8 +70,7 @@
         // 监听窗口滚动
         isScroll(){
           var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-          if(scrollTop == 0)
-          {
+          if(scrollTop == 0) {
             //滚动条为0
             this.navShadow = false;
           }else {
@@ -85,9 +83,7 @@
         asideStatus(){
           this.menuStatus = !this.menuStatus;
           let self = this;
-          if(this.menuStatus)
-          {
-
+          if(this.menuStatus) {
             let interval = setInterval(function () {
               self.navPadding +=1;
               if(self.navPadding >= 240)
@@ -153,7 +149,7 @@
     padding: 0 15px;
   }
   .user-wrapper{
-    padding: 20px;
+    padding: 80px;
     height: 200px;
     /*background-image: url();*/
     background-position: center;

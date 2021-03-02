@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-container class="home-container">
+    <el-container class="userMainContainer">
       <!-- 头部 -->
-      <el-header>
+      <el-header class="navHeader">
         <div>
           <img src="../assets/we_logo_1.png" alt="">
           <span class="logo">WE</span>
@@ -30,13 +30,16 @@
         </span>
       </el-header>
       <!-- 主体 -->
-      <el-container>
+      <el-container class="mainContainer">
         <el-main>
           <!--路由占位符-->
           <router-view></router-view>
         </el-main>
       </el-container>
-      <el-footer>Footer</el-footer>
+      <el-footer>
+        liuxiaoqing©2020-2021
+        Sign by <a href="">vue</a>  and <a href="">springboot</a>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -101,9 +104,30 @@
 
 <style scoped>
 
-  .home-container {
+  .userMainContainer {
     min-height: 910px;
     height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /*.mainContainer{*/
+  /*  !*height: calc(100vh - 1.2rem);*!*/
+  /*  !*overflow-y: scroll;*!*/
+  /*  !*-webkit-overflow-scrolling: touch;*!*/
+  /*  */
+  /*}*/
+
+  .navHeader{
+    height: 56px;
+    background: beige;
+    color: #fff;
+    line-height: 56px;
+    position: fixed;
+    /*top: 0;*/
+    z-index: 1;
+    width: 100%;
+    left: 0;
   }
 
   .el-header {

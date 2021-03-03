@@ -37,8 +37,8 @@
         </el-main>
       </el-container>
       <el-footer>
-        liuxiaoqing©2020-2021
-        Sign by <a href="">vue</a>  and <a href="">springboot</a>
+        liuXiaoQing © 2020-2021
+        Sign by <a href="">vue</a>  and <a href="">springBoot</a>
       </el-footer>
     </el-container>
   </div>

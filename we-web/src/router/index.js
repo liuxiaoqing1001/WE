@@ -14,6 +14,7 @@ import PersonalCenter from "../components/Other/PersonalCenter";
 import Register from "../components/Other/Register";
 import Counseling from "../components/User/Counseling";
 import Square from "../components/User/Square";
+import Article from "../components/User/Airticle";
 import TreeHole from "../components/User/TreeHole";
 import VolunteerZone from "../components/User/VolunteerZone";
 import Home from "../components/User/Home";
@@ -48,7 +49,15 @@ export default new Router({
         {
           name: Square,
           path: '/Square',
-          component: Square
+          component: Square,
+          redirect: "/Article",
+          children:[
+            {
+              name: Article,
+              path: '/Article',
+              component: Article
+            }
+          ]
         },
         {
           name: Counseling,

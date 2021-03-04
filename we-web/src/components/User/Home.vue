@@ -15,6 +15,16 @@
             </ul>
           </div>
         </div>
+        <div class="banner_theme">
+          <div class="item_theme">
+            <img src="../../assets/1.jpeg" height="640" width="1024"/>
+          </div>
+        </div>
+        <div class="banner_theme">
+          <div class="item_theme">
+            <img src="../../assets/1.jpeg" height="640" width="1024"/>
+          </div>
+        </div>
       </el-header>
       <!-- 主体 -->
       <el-main>
@@ -125,5 +135,15 @@
   }
   .current {
     color: #ff6700;
+  }
+  .banner_theme{
+    width: 100%;
+    position: relative;
+    margin-top: 130px;
+  }
+  .item_theme{
+    width: 100%;
+    max-height: 960px;
+    background-color: #4a5064;
   }
 </style>

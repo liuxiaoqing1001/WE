@@ -30,7 +30,7 @@
         </span>
       </el-header>
       <!-- 主体 -->
-      <el-container class="mainContainer">
+      <el-container class="mainContainer" >
         <el-main>
           <!--路由占位符-->
           <router-view></router-view>
@@ -111,12 +111,9 @@
     overflow: hidden;
   }
 
-  /*.mainContainer{*/
-  /*  !*height: calc(100vh - 1.2rem);*!*/
-  /*  !*overflow-y: scroll;*!*/
-  /*  !*-webkit-overflow-scrolling: touch;*!*/
-  /*  */
-  /*}*/
+  .mainContainer{
+
+  }
 
   .navHeader{
     height: 56px;

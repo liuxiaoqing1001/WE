@@ -4,28 +4,19 @@
       <transition name="fade">
         <aside class="left-wrapper">
           <div class="left-wrapper-fixed">
-            <div class="user-wrapper">
+            <div class="menu-wrapper">
               <img src="../../assets/square_logo.png" height="200" width="200"/>
               <p class="tips">放飞心灵...</p>
               <p class="tips">...快乐自我</p>
             </div>
             <div class="menu_left">
+
               <ul>
+                <p class="tips_ul">让心灵沐浴阳光，让快乐充溢胸膛。</p>
                 <li class="leftNav" v-for="li_item in links" @click="changeMenu(li_item.name)" >
                   <a :class="{menuActive:menuIndex===li_item.name}" v-on:click="$goRoute(li_item.route) ">{{li_item.text}}</a>
                 </li>
               </ul>
-<!--              <ul>-->
-<!--                <li :class="{'li-active':active==='Home'}" @click="changeMenu('Home','/Home')">-->
-<!--                  <p>Home</p>-->
-<!--                </li>-->
-<!--                <li :class="{'li-active':active==='archives'}" @click="changeMenu('archives','/archives')">-->
-<!--                  <p>Archives</p>-->
-<!--                </li>-->
-<!--                <li :class="{'li-active':active==='tag'}" @click="changeMenu('tag','/tag')">-->
-<!--                  <p>Tag</p>-->
-<!--                </li>-->
-<!--              </ul>-->
             </div>
           </div>
         </aside>
@@ -58,6 +49,36 @@
             },
             {
               text: '家庭关系',
+              name: 'Article',
+              route: '/Article'
+            },
+            {
+              text: '个人社交',
+              name: 'Article',
+              route: '/Article'
+            },
+            {
+              text: '热点',
+              name: 'Article',
+              route: '/Article'
+            },
+            {
+              text: '心理健康',
+              name: 'Article',
+              route: '/Article'
+            },
+            {
+              text: '性心理',
+              name: 'Article',
+              route: '/Article'
+            },
+            {
+              text: '职场技能',
+              name: 'Article',
+              route: '/Article'
+            },
+            {
+              text: '成长学习',
               name: 'Article',
               route: '/Article'
             }
@@ -135,15 +156,17 @@
   .container{
     display: flex;
     min-height: 100vh;
+    width: 600px;
   }
   .left-wrapper{
-    flex:  0 0 240px;
+    flex:  0 0 300px;
     width: 240px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    box-shadow: 0 2px 25px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    margin-left: 100px;
   }
   .left-wrapper-fixed{
     position: fixed;
-    width: 240px;
+    width: 300px;
     height: 100%;
     z-index: 2;
   }
@@ -151,16 +174,18 @@
     flex: 1;
     background: #f6f6f6;
     padding: 0 15px;
+    margin-right: 100px;
   }
-  .user-wrapper{
+  .menu-wrapper{
     padding: 80px;
     height: 200px;
     /*background-image: url();*/
     background-position: center;
   }
-  .user-wrapper img{
-    width: 80px;
-    height: 80px;
+  .menu-wrapper img{
+    margin-top: 40px;
+    width: 100px;
+    height: 100px;
     border: 2px solid #fff;
     border-radius: 50%;
     overflow: hidden;
@@ -172,15 +197,29 @@
     line-height: 24px;
     color: #42b983;
   }
+  .tips_ul{
+    padding-top: 4px;
+    font-size: 14px;
+    line-height: 24px;
+    color: #909399;
+    margin-bottom: 30px;
+  }
   .menu_left{
-    margin-top: 30px;
+    margin-top: 20px;
     padding: 20px 0;
   }
 
   .leftNav{
     display: inline-block;
     margin-right: 10px;
+    margin-top: 20px;
   }
+
+  ul{
+    margin-left: 10px;
+    margin-top: 100px;
+  }
+
   ul li a:hover{
     cursor: pointer;
     color: blue;

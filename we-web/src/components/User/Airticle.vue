@@ -1,14 +1,14 @@
 <template>
   <div class="article">
-    <header>
-      <div class="explain">
-        <h1>gangan Blog</h1>
-        <h5>学习弯道超车技术</h5>
-      </div>
-    </header>
+<!--    <header>-->
+<!--      <div class="explain">-->
+<!--        <h1>gangan Blog</h1>-->
+<!--        <h5>学习弯道超车技术</h5>-->
+<!--      </div>-->
+<!--    </header>-->
     <div class="index-wrapper">
       <ul>
-        <li class="blog-wrapper" @click="$parent.location('/details')">
+        <li class="blog-wrapper" @click="$goRoute('/Detail')">
           <p class="blog-time">2018年07月30日</p>
           <h3 class="blog-title">基于 MIME 类型的服务端推送</h3>
           <div class="blog-content">
@@ -93,6 +93,7 @@
   .article{
     width: 1100px;
     margin-right: 100px;
+    margin-top: 60px;
   }
   .explain{
     margin-top: 100px;
@@ -106,6 +107,8 @@
     padding: 12px 12px 0;
     background: #fff;
     border-radius: 3px;
+    text-align: left;
+    list-style: none;
     box-shadow: 0 1px 2px rgba(151,151,151,0.58);
   }
   .blog-time{

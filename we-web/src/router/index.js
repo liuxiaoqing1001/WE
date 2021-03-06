@@ -18,6 +18,7 @@ import Article from "../components/User/Airticle";
 import TreeHole from "../components/User/TreeHole";
 import VolunteerZone from "../components/User/VolunteerZone";
 import Home from "../components/User/Home";
+import Detail from "../components/User/Detail";
 
 Vue.use(Router);
 
@@ -55,7 +56,15 @@ export default new Router({
             {
               name: Article,
               path: '/Article',
-              component: Article
+              component: Article,
+              redirect: "/Detail",
+              children:[
+                {
+                  name: Detail,
+                  path: '/Detail',
+                  component: Detail
+                }
+              ]
             }
           ]
         },

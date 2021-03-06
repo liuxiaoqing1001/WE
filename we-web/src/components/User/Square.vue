@@ -10,7 +10,6 @@
               <p class="tips">...快乐自我</p>
             </div>
             <div class="menu_left">
-
               <ul>
                 <p class="tips_ul">让心灵沐浴阳光，让快乐充溢胸膛。</p>
                 <li class="leftNav" v-for="li_item in links" @click="changeMenu(li_item.name)" >

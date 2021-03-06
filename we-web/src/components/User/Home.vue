@@ -25,6 +25,16 @@
             <img src="../../assets/1.jpeg" height="640" width="1024"/>
           </div>
         </div>
+        <div class="banner_theme">
+          <div class="item_theme">
+            <img src="../../assets/1.jpeg" height="640" width="1024"/>
+          </div>
+        </div>
+        <div class="banner_theme">
+          <div class="item_theme">
+            <img src="../../assets/1.jpeg" height="640" width="1024"/>
+          </div>
+        </div>
       </el-main>
     </el-container>
   </div>

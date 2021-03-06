@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-container class="home-container">
-      <!-- 头部 -->
-      <el-header>
+      <!-- 主体 -->
+      <el-main>
         <div class="banner">
           <div class="item">
             <img :src="dataList[currentIndex]">
@@ -25,10 +25,6 @@
             <img src="../../assets/1.jpeg" height="640" width="1024"/>
           </div>
         </div>
-      </el-header>
-      <!-- 主体 -->
-      <el-main>
-
       </el-main>
     </el-container>
   </div>

@@ -141,6 +141,7 @@
     color: mediumseagreen;
     text-align: center;
     line-height: 60px;
+    margin-top: 50px;
   }
 
   div {

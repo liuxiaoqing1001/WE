@@ -174,7 +174,8 @@
     flex: 1;
     background: #f6f6f6;
     padding: 0 15px;
-    margin-right: 100px;
+
+    /*width: 800px;*/
   }
   .menu-wrapper{
     padding: 80px;

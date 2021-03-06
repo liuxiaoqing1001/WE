@@ -56,15 +56,12 @@ export default new Router({
             {
               name: Article,
               path: '/Article',
-              component: Article,
-              redirect: "/Detail",
-              children:[
-                {
-                  name: Detail,
-                  path: '/Detail',
-                  component: Detail
-                }
-              ]
+              component: Article
+            },
+            {
+              name: Detail,
+              path: '/Detail',
+              component: Detail
             }
           ]
         },

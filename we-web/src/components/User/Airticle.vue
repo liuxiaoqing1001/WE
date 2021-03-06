@@ -8,7 +8,7 @@
 <!--    </header>-->
     <div class="index-wrapper">
       <ul>
-        <li class="blog-wrapper" @click="$goRoute('/Detail')">
+        <li class="blog-wrapper" v-on:click="$goRoute('/Detail')">
           <p class="blog-time">2018年07月30日</p>
           <h3 class="blog-title">基于 MIME 类型的服务端推送</h3>
           <div class="blog-content">

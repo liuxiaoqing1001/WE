@@ -12,8 +12,8 @@
             <div class="menu_left">
               <ul>
                 <p class="tips_ul">让心灵沐浴阳光，让快乐充溢胸膛。</p>
-                <li class="leftNav" v-for="li_item in links" @click="changeMenu(li_item.name)" >
-                  <a :class="{menuActive:menuIndex===li_item.name}" v-on:click="$goRoute(li_item.route) ">{{li_item.text}}</a>
+                <li class="leftNav" v-for="li_item in li_links" @click="changeMenu(li_item.name)" >
+                  <a :class="{active:menuIndex===li_item.name}" v-on:click="$goRoute(li_item.route) ">{{li_item.text}}</a>
                 </li>
               </ul>
             </div>
@@ -35,7 +35,7 @@
           //当前选中菜单
           // active      :'Home',
           menuIndex: 'Article',
-          links: [
+          li_links: [
             {
               text: '心理科普',
               name: 'Article',
@@ -125,9 +125,9 @@
         //   }
         // },
         // 路由跳转
-        location(url){
-          this.$router.push({path:url});
-        },
+        // location(url){
+        //   this.$router.push({path:url});
+        // },
 
         // //单击菜单修改菜单样式
         // changeMenu(active,url){
@@ -260,8 +260,8 @@
     margin-right: 10px;
   }
 
-  .menuActive {
-    color: mediumseagreen;
-    /*font-size: medium;*/
-  }
+  /*.active {*/
+  /*  color: mediumseagreen;*/
+  /*  font-size: medium;*/
+  /*}*/
 </style>

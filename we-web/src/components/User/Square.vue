@@ -29,7 +29,7 @@
 
 <script>
     export default {
-        name: "Square",
+      name: "Square",
       data () {
         return {
           //当前选中菜单
@@ -260,8 +260,8 @@
     margin-right: 10px;
   }
 
-  /*.active {*/
-  /*  color: mediumseagreen;*/
-  /*  font-size: medium;*/
-  /*}*/
+  .active {
+    color: mediumseagreen;
+    font-size: medium;
+  }
 </style>

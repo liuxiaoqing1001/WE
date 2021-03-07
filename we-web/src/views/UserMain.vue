@@ -75,6 +75,11 @@
               text: '自愿者专区',
               name: 'VolunteerZone',
               route: '/VolunteerZone'
+            },
+            {
+              text: '其他',
+              name: 'Other',
+              route: '/Other'
             }
           ]
         }

@@ -17,6 +17,7 @@ import Square from "../components/User/Square";
 import Article from "../components/User/Airticle";
 import TreeHole from "../components/User/TreeHole";
 import VolunteerZone from "../components/User/VolunteerZone";
+import Other from "../components/User/Other";
 import Home from "../components/User/Home";
 import Detail from "../components/User/Detail";
 
@@ -45,7 +46,15 @@ export default new Router({
         {
           name: TreeHole,
           path: '/TreeHole',
-          component: TreeHole
+          component: TreeHole,
+          redirect: "/Other",
+          children:[
+            {
+              name: Other,
+              path: '/Other',
+              component: Other
+            }
+          ]
         },
         {
           name: Square,

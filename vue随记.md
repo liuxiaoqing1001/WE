@@ -2933,8 +2933,18 @@ methods: {
 </style>
 ~~~
 
-~~~ 
+~~~ 星空3D效果
+https://blog.csdn.net/weixin_44103786/article/details/105809746
+https://blog.csdn.net/qq_43477721/article/details/105673189
 
+transform: perspective(400px) rotateZ(20deg) rotateX(-40deg) rotateY(0);
+perspective属性指定了观察者与z=0平面的距离，使具有三维位置变换的元素产生透视效果。z>0的三维元素比正常大，而z<0时，比正常小，大小程度由该属性的值决定。当为元素定义perspective属性时，其子元素会获得透视效果，而不是元素本身。
+perspective-origin: 50% 100%; 定义 3D 元素所基于的 X 轴和 Y 轴。该属性允许您改变 3D 元素的底部位置。当为元素定义 perspective-origin 属性时，其子元素会获得透视效果，而不是元素本身。注释：该属性必须与 perspective 属性一同使用，而且只影响 3D 转换元素。
+backface-visibility 属性定义当元素不面向屏幕时是否可见。如果在旋转元素不希望看到其背面时，该属性很有用。
+scale(x,y) 定义 2D 缩放转换。
+————————————————
+版权声明：本文为CSDN博主「淘淘是只大憨狗」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_43477721/article/details/105673189
 ~~~
 
 ~~~ 

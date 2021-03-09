@@ -36,10 +36,7 @@
           <router-view></router-view>
         </el-main>
       </el-container>
-      <el-footer>
-        liuXiaoQing © 2020-2021
-        Sign by <a href="">vue</a>  and <a href="">springBoot</a>
-      </el-footer>
+
     </el-container>
   </div>
 </template>
@@ -139,14 +136,6 @@
     padding-left: 0;
     align-items: center;
     font-size: 20px;
-  }
-
-  .el-footer {
-    background-color: silver;
-    color: mediumseagreen;
-    text-align: center;
-    line-height: 60px;
-    margin-top: 50px;
   }
 
   div {

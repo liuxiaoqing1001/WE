@@ -27,7 +27,7 @@
       // components:{ball},
       data() {
         return {
-          starsCount:1000,//数量
+          starsCount:2000,//数量
           distance:200,//间距
         }
       },
@@ -59,7 +59,7 @@
     font-size: 3px;
   }
   ::after{
-     content: ';';
+     content: '。';
      position: absolute;
      left: 50%;
      transform: translateX(-50%);
@@ -67,7 +67,7 @@
      width:2px;
      height:2px;
      background: blue;
-     border-radius:100%;
+     border-radius:50%;
     color: snow;
     font-size: 1px;
   }
@@ -83,7 +83,7 @@
   .star{
     width: 2px;
     height: 2px;
-    background: mediumseagreen;
+    background: snow;
     position: absolute;
     top: 0;
     left: 50px;

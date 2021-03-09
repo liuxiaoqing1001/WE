@@ -20,6 +20,7 @@ import VolunteerZone from "../components/User/VolunteerZone";
 import Other from "../components/User/Other";
 import Home from "../components/User/Home";
 import Detail from "../components/User/Detail";
+import MentalTest from "../components/User/MentalTest";
 
 Vue.use(Router);
 
@@ -94,6 +95,11 @@ export default new Router({
           path: '/PersonalCenter',
           name: 'PersonalCenter',
           component: PersonalCenter
+        },
+        {
+          name: MentalTest,
+          path: '/MentalTest',
+          component: MentalTest
         }
       ]
     },

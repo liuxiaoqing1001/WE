@@ -4,18 +4,22 @@
       <transition name="fade">
         <aside class="left-wrapper">
           <div class="left-wrapper-fixed">
-            <div class="menu-wrapper">
+            <div class="menu-title">
               <img src="../../assets/square_logo.png" height="200" width="200"/>
               <p class="tips">放飞心灵...</p>
               <p class="tips">...快乐自我</p>
             </div>
-            <div class="menu_left">
+            <div class="menu_medium">
               <ul>
                 <p class="tips_ul">让心灵沐浴阳光，让快乐充溢胸膛。</p>
                 <li class="leftNav" v-for="li_item in li_links" @click="changeMenu(li_item.name)" >
                   <a :class="{active:menuIndex===li_item.name}" v-on:click="$goRoute(li_item.route) ">{{li_item.text}}</a>
                 </li>
               </ul>
+            </div>
+            <div class="menu-bottom">
+              liuXiaoQing © 2020-2021<br/>
+              Sign by <a href="">vue</a>  and <a href="">springBoot</a>
             </div>
           </div>
         </aside>
@@ -176,13 +180,13 @@
 
     /*width: 800px;*/
   }
-  .menu-wrapper{
+  .menu-title{
     padding: 80px;
     height: 200px;
     /*background-image: url();*/
     background-position: center;
   }
-  .menu-wrapper img{
+  .menu-title img{
     margin-top: 40px;
     width: 100px;
     height: 100px;
@@ -204,9 +208,22 @@
     color: #909399;
     margin-bottom: 30px;
   }
-  .menu_left{
+  .menu_medium{
     margin-top: 20px;
     padding: 20px 0;
+  }
+  .menu-bottom{
+    font-size: smaller;
+    color: #909399;
+    margin-top: 200px;
+    /*bottom:0px;*/
+    /*margin:0px;*/
+    /*float:left;*/
+    /*width:100%;*/
+  }
+
+  .menu-bottom a{
+    color: blue;
   }
 
   .leftNav{

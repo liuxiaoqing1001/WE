@@ -48,14 +48,6 @@ export default new Router({
           name: TreeHole,
           path: '/TreeHole',
           component: TreeHole,
-          redirect: "/Other",
-          children:[
-            {
-              name: Other,
-              path: '/Other',
-              component: Other
-            }
-          ]
         },
         {
           name: Square,
@@ -84,6 +76,11 @@ export default new Router({
           name: VolunteerZone,
           path: '/VolunteerZone',
           component: VolunteerZone
+        },
+        {
+          name: Other,
+          path: '/Other',
+          component: Other
         },
         {
           // 修改密码

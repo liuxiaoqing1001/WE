@@ -20,7 +20,7 @@
             <img src="../../assets/iconfont/left.png" @click="gotoPage(prevIndex)"/>
           </div>
           <div class="page2" v-if="this.dataList.length > 1">
-            <img src="../../assets/iconfont/right.png" @click="gotoPage(prevIndex)"/>
+            <img src="../../assets/iconfont/right.png" @click="gotoPage(nextIndex)"/>
           </div>
         </div>
         <div class="banner_theme">
@@ -67,6 +67,12 @@
       }
 
     },
+    //定时器
+    mounted() {
+      this.timer = setInterval(() => {
+        this.gotoPage(this.nextIndex)
+      }, 3000);
+    },
     methods: {
       gotoPage(index) {
         this.currentIndex = index;
@@ -89,12 +95,6 @@
           return this.currentIndex + 1;
         }
       },
-      //定时器
-      mounted() {
-        this.timer = setInterval(() => {
-          this.gotoPage(this.nextIndex)
-        }, 1000);
-      }
     }
   }
 </script>
@@ -172,7 +172,7 @@
     height: 100px;
   }
   .banner .page ul {
-    transform:rotate(-180deg);
+    /*transform:rotate(-180deg);*/
   }
   .indexDot{
     display: inline-block;

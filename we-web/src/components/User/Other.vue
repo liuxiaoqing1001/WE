@@ -1,130 +1,96 @@
 <template>
-  <div class="slide-img clear" id="slide-img">
-    <!--用tran这个class控制ul是否含有过渡效果，样式已经写好-->
-    <ul :style="{'width':(listWidth*list.length)+'px','transform':'translate3d(-'+(listWidth*nowIndex)+'px,0,0)'}">
-      <!--遍历出来的图片-->
-      <li v-for="(li,index) in list" :style="{'width':listWidth+'px'}">
-        <a href="javascript:;">
-          <img :src="list[nowIndex]" class="slider-img"/>
-        </a>
-      </li>
-    </ul>
-    <div class="slide-option">
-      <span v-for="(li,index) in list" :class="{'active':index===nowIndex}"></span>
+  <div class="aaaa">
+    <div class="div" v-for="(son,index) in list_a" :key="index">
+      <div class="question">问题:{{son.question }}</div>
+      <div class="type">类型：{{son.type=== 1 ? '单选' : '多选' }}</div>
+      <div v-if="son.type === 1" class="answer">
+        <li v-for="(sson,index1) in son.answer" :key="index1" >
+          <span>{{sson.value}}</span>
+          <input type="radio" :name="son.name"  :value="sson.value" @change="get_radio_value(index)" v-model="checkedValue[index]" >
+        </li>
+        <div style="clear: both"></div>
+      </div>
+      <div v-else class="answer">
+        <li v-for="(sson,index1) in son.answer" :key="index1">
+          <span>{{sson.value}}</span>
+          <input type="checkbox" :name="son.name" :value="sson.value" @change="get_checkbox_value(index)" v-model="checkedValue1" >
+        </li>
+      </div>
+      <hr>
     </div>
-    <div class="slide-arrow">
-      <div class="arrow-left" @click.stop="switchDo('reduce')"></div>
-      <div class="arrow-right" @click.stop="switchDo"></div>
-    </div>
+    <button @click="btnfun">提交</button>
   </div>
 </template>
 
 <script>
     export default {
-        name: "Other",
-      data(){
+      name: "Other",
+      data: function () {
         return {
-          nowIndex: 0,
-          listWidth: '1000',
-          list: [
-            'https://i1.mifile.cn/a4/xmad_15535933141925_ulkYv.jpg',
-            'https://i1.mifile.cn/a4/xmad_15532384207972_iJXSx.jpg',
-            'https://i1.mifile.cn/a4/xmad_15517939170939_oiXCK.jpg',
-            '../../assets/1.jpeg', '../../assets/1.png', '../../assets/2.jpeg', '../../assets/square_logo.png'
-          ],
-          timer:null
+          all_list: [],
+          checkedValue: [], // 绑定单选框的值
+          checkedValue1: [] // 绑定复选框的值
         }
       },
+      props: ['list_a'],
       methods: {
-        //滑动操作
-        switchDo(reduce){
-          clearInterval(this.timer);
-          //根据reduce判断this.nowIndex的增加或者减少！
-          if(reduce==='reduce'){
-            //如果是第一张，就返回最后一张
-            if(this.nowIndex===0){
-              this.nowIndex=this.list.length-1;
-            }
-            else{
-              this.nowIndex--;
+        btnfun: function () {
+          // 获取input框的值
+          console.log(this.all_list)
+          // 如果答案长度不匹配list_a
+          // this.all_list = this.all_list.null
+          // console.log(this.all_list)
+          for (var i = 0; i < this.all_list.length; i++) {
+            if (this.all_list[i] === '' || typeof (this.all_list[i]) === 'undefined') {
+              this.all_list.splice(i, 1)
             }
           }
-          else{
-            //如果是最后一张，就返回第一张
-            if(this.nowIndex===this.list.length-1){
-              this.nowIndex=0;
-            }
-            else{
-              this.nowIndex++;
-            }
+          // 循环
+          if (this.list_a.length !== this.all_list.length) {
+            console.log('答案没有选择完毕')
+          } else {
+            console.log('答案选择完毕')
+            // 传值给调用页面
+            this.$emit('transfer', this.all_list)
           }
-          let _this=this;
-          this.timer=setInterval(function () {
-            _this.switchDo();
-          },4000)
-
         },
-      },
-      mounted(){
-        let _this=this;
-        this.timer=setInterval(function () {
-          _this.switchDo();
-        },4000)
+        get_radio_value: function (index) {
+          // 获取当前radio当前值
+          console.log((index + 1) + '题' + this.checkedValue)
+          this.all_list[index] = this.checkedValue[index]
+        },
+        get_checkbox_value: function (index) {
+          // 获取当前复选框的值
+          console.log((index + 1) + '题' + this.checkedValue1)
+          this.all_list[index] = this.checkedValue1
+        }
       }
     }
 </script>
 
 <style scoped>
-  .slide-img {
-    width: 1000px;
-    height: 500px;
-    overflow: hidden;
-    position: relative;
-    margin: 20px auto;
+  li{
+    list-style: none;
   }
-
-  ul {
-    transition: all .5s ease;
+  .div{
+    margin: 6px 0px;
   }
-
-  li {
+  .question {
+    width:300px;
+    text-align: left;
+  }
+  .type{
+    width:200px;
+    text-align: left;
+  }
+  .answer li{
+    width:100%;
+    height: 20px;
+  }
+  .answer span{
     float: left;
   }
-
-  .slide-arrow div {
-    width: 50px;
-    height: 100px;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    background: url("http://i1.bvimg.com/1949/4d860a3067fab23b.jpg") no-repeat;
-  }
-
-  .arrow-right {
-    transform: rotate(180deg);
-    right: 0;
-  }
-
-  .arrow-left {
-    left: 0;
-  }
-  .slide-option{
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    left: 0;
-    text-align: center;
-  }
-  .slide-option span{
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border-radius: 100%;
-    background: #ccc;
-    margin: 0 10px;
-  }
-  .slide-option .active{
-    background: #09f;
+  .answer input{
+    float: right;
   }
 </style>

@@ -21,6 +21,7 @@ import Other from "../components/User/Other";
 import Home from "../components/User/Home";
 import Detail from "../components/User/Detail";
 import MentalTest from "../components/User/MentalTest";
+import MentalTest2 from "../components/User/MentalTest2";
 
 Vue.use(Router);
 
@@ -97,6 +98,11 @@ export default new Router({
           name: MentalTest,
           path: '/MentalTest',
           component: MentalTest
+        },
+        {
+          name: MentalTest2,
+          path: '/MentalTest2',
+          component: MentalTest2
         }
       ]
     },

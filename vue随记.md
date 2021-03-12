@@ -2942,13 +2942,134 @@ perspective属性指定了观察者与z=0平面的距离，使具有三维位置
 perspective-origin: 50% 100%; 定义 3D 元素所基于的 X 轴和 Y 轴。该属性允许您改变 3D 元素的底部位置。当为元素定义 perspective-origin 属性时，其子元素会获得透视效果，而不是元素本身。注释：该属性必须与 perspective 属性一同使用，而且只影响 3D 转换元素。
 backface-visibility 属性定义当元素不面向屏幕时是否可见。如果在旋转元素不希望看到其背面时，该属性很有用。
 scale(x,y) 定义 2D 缩放转换。
-————————————————
-版权声明：本文为CSDN博主「淘淘是只大憨狗」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/qq_43477721/article/details/105673189
 ~~~
 
-~~~ 
+~~~ 轮播图
+<div class="banner">
+          <div class="item">
+            <img :src="dataList[currentIndex]">
+          </div>
+          <div class="page" v-if="this.dataList.length > 1">
+            <ul>
+              <li v-for="(item,index) in dataList" @click="gotoPage(index)" >
+                <span class="indexDot" :class="{'current':currentIndex === index}"/>
+              </li>
+            </ul>
+          </div>
+          <div class="page1" v-if="this.dataList.length > 1">
+            <img src="../../assets/iconfont/left.png" @click="gotoPage(prevIndex)"/>
+          </div>
+          <div class="page2" v-if="this.dataList.length > 1">
+            <img src="../../assets/iconfont/right.png" @click="gotoPage(nextIndex)"/>
+          </div>
+</div>
+data() {
+      return{
+        dataList:[
+          'https://i1.mifile.cn/a4/xmad_15535933141925_ulkYv.jpg',
+          'https://i1.mifile.cn/a4/xmad_15532384207972_iJXSx.jpg',
+          'https://i1.mifile.cn/a4/xmad_15517939170939_oiXCK.jpg'
+        ],
+        currentIndex: 0,   //默认显示图片
+        timer: null    //定时器
+      }
 
+    },
+    //定时器
+    mounted() {
+      this.timer = setInterval(() => {
+        this.gotoPage(this.nextIndex)
+      }, 3000);
+    },
+    methods: {
+      gotoPage(index) {
+        this.currentIndex = index;
+      }
+    },
+    computed: {
+      //上一张
+      prevIndex() {
+        if(this.currentIndex === 0) {
+          return this.dataList.length - 1;
+        }else{
+          return this.currentIndex - 1;
+        }
+      },
+      //下一张
+      nextIndex() {
+        if(this.currentIndex === this.dataList.length - 1) {
+          return 0;
+        }else {
+          return this.currentIndex + 1;
+        }
+      },
+    }
+
+ul li {
+    list-style: none;
+    /*float: left;*/
+    width: 30px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    color: rgba(255,255,255,.8);
+    font-size: 14px;
+    margin-left: auto;
+    display: inline;
+    margin-right: auto;
+  }
+  .banner {
+    width: 100%;
+    position: relative;
+  }
+  .banner img {
+    width: 100%;
+    display: block;
+  }
+  .banner .page {
+    /*background: rgba(0,0,0,.5);*/
+    position: absolute;
+    text-align: center;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  .banner .page1{
+    position: absolute;
+    text-align: center;
+    font-size: 100px;
+    color: silver;
+    left: 50px;
+    bottom: 50%;
+    width: 60px;
+  }
+  .banner .page2{
+    position: absolute;
+    text-align: center;
+    font-size: 100px;
+    color: silver;
+    right: 50px;
+    bottom: 50%;
+    width: 60px;
+  }
+  .page1 img,.page2 img{
+    height: 100px;
+  }
+  .banner .page ul {
+    /*transform:rotate(-180deg);*/
+  }
+  .indexDot{
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    background: #ccc;
+    margin: 0 10px;
+  }
+  .current {
+    background: #ff6700;
+  }
 ~~~
 
 ~~~ 

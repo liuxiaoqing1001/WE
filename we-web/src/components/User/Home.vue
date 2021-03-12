@@ -9,11 +9,9 @@
           </div>
           <div class="page" v-if="this.dataList.length > 1">
             <ul>
-              <!--              <li @click="gotoPage(prevIndex)">&lt;</li>-->
               <li v-for="(item,index) in dataList" @click="gotoPage(index)" >
                 <span class="indexDot" :class="{'current':currentIndex === index}"/>
               </li>
-              <!--              <li @click="gotoPage(nextIndex)">&gt;</li>-->
             </ul>
           </div>
           <div class="page1" v-if="this.dataList.length > 1">

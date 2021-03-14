@@ -30,22 +30,26 @@
 
       <div v-if="showIndex===1" class="bulletFrame">
         <el-button @click="del()" type="danger" size="mini" icon="" style="font-size: medium;float: right">X</el-button>
-        <div class="talkAbout">
+        <div v-if="!isWrite" class="talkAbout">
           <div class="word">
             <span>x<br>xx<br>xxx<br></span>
           </div>
           <div class="option">
 <!--            <i v-if="!isPraise" class="el-icon-star-off praise"></i>-->
 <!--            <i v-else class="el-icon-star-on praise" style="color: darkred"></i>-->
-            <i class="el-icon-edit comment"></i>
+            <i @click="comment()" class="el-icon-edit comment"></i>
           </div>
         </div>
+        <div v-else>
+          <textarea class="write" placeholder="To:亲爱的陌生人"></textarea>
+          <button @click="send2()" type="button" class="btn_say">发送</button>
+        </div>
       </div>
-
       <div v-if="showIndex===2" class="bulletFrame">
         <el-button @click="del()" type="danger" size="mini" icon="" style="font-size: medium;float: right">X</el-button>
         <div>
-          <textarea class="write"></textarea>
+          <textarea class="write" placeholder="To:未来的自己"></textarea>
+          <button @click="send1()" type="button" class="btn_say">发送</button>
         </div>
       </div>
     </div>
@@ -74,7 +78,7 @@
       data() {
         return {
           showIndex: 0,
-          isPraise: false
+          isWrite: false
         }
       },
       methods: {
@@ -88,6 +92,18 @@
         },
         del:function () {
           this.showIndex=0;
+        },
+        send1:function () {
+          this.showIndex=0;
+          this.$message.success('发送成功');
+        },
+        send2:function () {
+          this.isWrite=false;
+          this.$message.success('发送成功');
+        },
+        comment:function () {
+          this.isWrite=true;
+          this.$message.success('评论');
         }
       },
     }
@@ -173,7 +189,7 @@
   .talkAbout{
     /*background: white;*/
     width: 90%;
-    max-height: 30%;
+    height: 90%;
     /*position: absolute;*/
     /*left: 5%;*/
     /*top: 10%;*/
@@ -197,7 +213,11 @@
   }
 
   .write{
-
+    width: 85%;
+    height: 200px;
+    max-height: 80%;
+    margin-left: 30px;
+    margin-top: 50px;
   }
 
 </style>

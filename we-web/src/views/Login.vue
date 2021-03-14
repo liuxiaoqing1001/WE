@@ -4,7 +4,7 @@
     <el-form ref="loginFormRef" :model="loginForm" :rules="rules" class="login-box">
       <!--头像区域-->
       <div class="avatar_box">
-        <img src="../assets/we_logo.png" alt />
+        <img src="../assets/logo/we_logo.png" alt />
       </div>
 <!--      <img src="../assets/we_logo.png" height="100" width="100"/>-->
 <!--      <h3 class="login-title">欢迎登录</h3>-->

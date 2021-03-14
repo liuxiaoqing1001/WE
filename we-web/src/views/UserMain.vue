@@ -4,7 +4,7 @@
       <!-- 头部 -->
       <el-header class="navHeader">
         <div>
-          <img src="../assets/we_logo_1.png" alt="">
+          <img src="../assets/logo/we_logo_1.png" alt="">
           <span class="logo">WE</span>
         </div>
         <ul>

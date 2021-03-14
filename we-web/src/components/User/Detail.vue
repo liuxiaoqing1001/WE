@@ -15,8 +15,8 @@
         <!--用户昵称-->
         <span class="user-name">
           {{user_name}}
-          <img v-if="sex==1" src="../../assets/square_logo.png" style="width: 14px;margin-right: -14px;">
-          <img v-if="sex==0" src="../../assets/square_logo.png" style="width: 14px;margin-right: -14px;">
+          <img v-if="sex==1" src="../../assets/logo/square_logo.png" style="width: 14px;margin-right: -14px;">
+          <img v-if="sex==0" src="../../assets/logo/square_logo.png" style="width: 14px;margin-right: -14px;">
         </span>
         <!--关注信息-->
         <table class="user-follow" cellspacing="0" cellpadding="0" border="0">

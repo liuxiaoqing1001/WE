@@ -13,6 +13,11 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+// 星空粒子插件
+import VueParticles from 'vue-particles'
+
+Vue.use(VueParticles);
+
 // 安装路由
 Vue.use(VueRouter);
 

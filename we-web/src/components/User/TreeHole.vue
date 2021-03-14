@@ -1,44 +1,94 @@
 <template>
   <div>
     <div class="main">
-      <div class="stars">
-        <div class="star" v-for="(item,index) in starsCount" :key="index" ref="star"></div>
+      <vue-particles color="#ffffff" :particleOpacity="0.7" :particlesNumber="15"
+                     shapeType="star" :particleSize="4" linesColor="#ffffff" :linesWidth="2"
+                     :lineLinked="true" :lineOpacity="0.4" :linesDistance="150" :moveSpeed="1"
+                     :hoverEffect="true" hoverMode="grab" :clickEffect="true" clickMode="push"></vue-particles>
+      <div class="tips">
+        嘿~你好呀！<br>
+        见字如面，<br>
+        我是未来的你，很高兴遇见你！<br>
+        我知道，生而为人，每个人都有自己要经历的伤痛与苦难。<br>
+        所以，我想看见你，<br>
+        看见你的孤独、无助、悲伤、痛苦、快乐、希望……<br>
+        和你站在一起，去面对这世界的狂风暴雨，<br>
+        希望你在这里，可以做回从前那个少年，<br>
+        难过了就哭，开心时就笑，累了就停下来休息，充满电就继续前行，<br>
+        永远年轻，永远纯粹，永远朝气蓬勃，永远热泪盈眶，<br>
+        仰望星空，脚踏实地，<br>
+        世界和我爱着你！<br>
       </div>
-      <div class="content">
-        <div class="top"><img src="../../assets/we_logo.png"></div>
-        <div class="bottom"><img src="../../assets/square_logo.png"></div>
-        <div class="left"><img src="../../assets/we_logo.png"></div>
-        <div class="right"><img src="../../assets/we_logo_1.png"></div>
-        <div class="front"><img src="../../assets/we_logo_black.png"></div>
-        <div class="after"><img src="../../assets/we_logo_1.png"></div>
+
+      <div v-if="showIndex===0" class="listen_say">
+        <div class="tip">
+          告诉星星，也许会得到你想要的，放心，没人知道你是谁
+        </div>
+        <button @click="listen()" type="button" class="btn_listen">聆听</button>
+        <button @click="say()" type="button" class="btn_say">倾诉</button>
       </div>
-      <div class="option">
-        告诉星星，也许会得到你想要的，放心，没人知道你是谁
+
+      <div v-if="showIndex===1" class="bulletFrame">
+        <el-button @click="del()" type="danger" size="mini" icon="" style="font-size: medium;float: right">X</el-button>
+        <div class="talkAbout">
+          <div class="word">
+            <span>x<br>xx<br>xxx<br></span>
+          </div>
+          <div class="option">
+<!--            <i v-if="!isPraise" class="el-icon-star-off praise"></i>-->
+<!--            <i v-else class="el-icon-star-on praise" style="color: darkred"></i>-->
+            <i class="el-icon-edit comment"></i>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="showIndex===2" class="bulletFrame">
+        <el-button @click="del()" type="danger" size="mini" icon="" style="font-size: medium;float: right">X</el-button>
+        <div>
+          <textarea class="write"></textarea>
+        </div>
       </div>
     </div>
-
   </div>
+<!--  color: String类型。默认'#dedede'。粒子颜色。-->
+<!--  particleOpacity: Number类型。默认0.7。粒子透明度。-->
+<!--  particlesNumber: Number类型。默认80。粒子数量。-->
+<!--  shapeType: String类型。默认'circle'。可用的粒子外观类型有："circle","edge","triangle", "polygon","star"。-->
+<!--  particleSize: Number类型。默认80。单个粒子大小。-->
+<!--  linesColor: String类型。默认'#dedede'。线条颜色。-->
+<!--  linesWidth: Number类型。默认1。线条宽度。-->
+<!--  lineLinked: 布尔类型。默认true。连接线是否可用。-->
+<!--  lineOpacity: Number类型。默认0.4。线条透明度。-->
+<!--  linesDistance: Number类型。默认150。线条距离。-->
+<!--  moveSpeed: Number类型。默认3。粒子运动速度。-->
+<!--  hoverEffect: 布尔类型。默认true。是否有hover特效。-->
+<!--  hoverMode: String类型。默认true。可用的hover模式有: "grab", "repulse", "bubble"。-->
+<!--  clickEffect: 布尔类型。默认true。是否有click特效。-->
+<!--  clickMode: String类型。默认true。可用的click模式有: "push", "remove", "repulse", "bubble"-->
+
 </template>
 
 <script>
-  // import ball from "TreeHole";
     export default {
-        name: "TreeHole",
-      // components:{ball},
+      name: "TreeHole",
       data() {
         return {
-          starsCount:2000,//数量
-          distance:200,//间距
+          showIndex: 0,
+          isPraise: false
         }
       },
-      mounted() {
-        let starArr=this.$refs.star;
-        starArr.forEach(item=>{
-          var speed = 0.2+(Math.random()*1);
-          var distance = this.distance+(Math.random()*300);
-          item.style.transformOrigin=`0 0 ${distance}px`;
-          item.style.transform=`translate3d(0,0,-${distance}px) rotateY(${(Math.random()*360)}deg) rotateX(${(Math.random()*-50)}deg) scale(${speed},${speed})`;
-        })
+      methods: {
+        listen:function(){
+          this.showIndex=1;
+          this.$message.success('聆听');
+        },
+        say:function(i){
+          this.showIndex=2;
+          this.$message.success('倾诉');
+        },
+        del:function () {
+          this.showIndex=0;
+        }
       },
     }
 </script>
@@ -47,100 +97,107 @@
   .main {
     width: 100%;
     min-width: 1200px;
-    height: 900px;
+    height: 100%;
     /*background-color: #fff;*/
-    background: radial-gradient(ellipse at bottom, #090a0f 0%, #000000 100%);
+    /*background: radial-gradient(ellipse at bottom, #090a0f 0%, #000000 100%);*/
+    background-image: url("https://img.zcool.cn/community/010d1d57620dde0000012e7e2aa1e7.jpg@3000w_1l_0o_100sh.jpg");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
     overflow: hidden;
     filter: drop-shadow(0 0 10px white);
-    position: relative;
+    /*position: relative;*/
   }
-  .option{
+  .tips{
     color: white;
-    font-size: 3px;
-  }
-  ::after{
-     content: '。';
-     position: absolute;
-     left: 50%;
-     transform: translateX(-50%);
-     bottom: -28px;
-     width:2px;
-     height:2px;
-     background: blue;
-     border-radius:50%;
-    color: snow;
-    font-size: 1px;
-  }
-  .stars {
-    transform: perspective(500px);
-    transform-style: preserve-3d;
+    font-size: 15px;
+    text-align: left;
     position: absolute;
-    perspective-origin: 50% 100%;
+    left: 3%;
+    bottom: 5%;
+  }
+  .listen_say{
+    color: white;
+    font-size: 15px;
+    /*text-align: left;*/
+    position: absolute;
     left: 50%;
-    animation: rotate 800s infinite linear;
-    bottom: -256px;
+    top: 40%;
+    /*bottom: 50%;*/
   }
-  .star{
-    width: 2px;
-    height: 2px;
-    background: snow;
-    position: absolute;
-    top: 0;
-    left: 50px;
-    backface-visibility: hidden;
-  }
-  /*@-webkit-keyframes rotate {*/
-  /*  from {*/
-  /*    transform: rotateX(0deg) rotateY(0deg);*/
-  /*  }*/
-  /*  to {*/
-  /*    transform: rotateX(360deg) rotateY(360deg);*/
-  /*  }*/
-  /*}*/
-  @keyframes rotate {
-    from{
-      transform: perspective(400px) rotateZ(0deg) rotateX(0deg) rotateY(0deg);
-    }
-    to{
-      transform: perspective(400px) rotateZ(360deg) rotateX(360deg) rotateY(360deg);
-    }
-  }
-  .content{
-    width:200px;
-    height:200px;
-    transform-style:preserve-3d;
-    transform: rotateX(-30deg) rotateY(-80deg);
-    position:relative;
-    margin:200px auto;
-    animation: rotate linear 90s infinite;
+  .btn_listen,.btn_say{
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    height: 36px;
+    line-height: 36px;
+    min-width: 88px;
+    transition-duration: .3s;
+    transition-timing-function: cubic-bezier(.23,1,.32,1);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    text-decoration: none;
+    text-transform: uppercase;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    color: rgba(0,0,0,.87);
+    -webkit-box-flex: 0;
+    -webkit-flex-shrink: 0;
+    -ms-flex: 0 0 auto;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    /*margin: 0;*/
+    margin-top: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+    outline: 0;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 1px 6px rgba(0,0,0,.117647), 0 1px 4px rgba(0,0,0,.117647);
   }
 
-  .content div{
-    width:200px;
-    height:200px;
+  .bulletFrame{
+    background:rgba(312,500,500,0.5);
+    width: 750px;
+    height: 400px;
+    border-radius: 10px;
     position: absolute;
-    opacity:.8;
+    left: 25%;
+    top: 30%;
   }
-  .content>div>img{
-    width:100px;
-    height:100px;
+
+  .talkAbout{
+    /*background: white;*/
+    width: 90%;
+    max-height: 30%;
+    /*position: absolute;*/
+    /*left: 5%;*/
+    /*top: 10%;*/
+    margin-left: 30px;
+    margin-top: 20px;
+    text-align: left;
   }
-  .content .top{
-    transform: rotateX(90deg) translateZ(100px);
+
+  .word{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 25px;
   }
-  .content .left{
-    transform: rotateY(-90deg) translateZ(100px);
+
+  .option{
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
-  .content .bottom{
-    transform: rotateX(-90deg) translateZ(100px);
+
+  .write{
+
   }
-  .content .right{
-    transform: rotateY(90deg) translateZ(100px);
-  }
-  .content .front{
-    transform: rotateY(0deg) translateZ(100px);
-  }
-  .content .after{
-    transform: translateZ(-100px) rotateY(180deg);
-  }
+
 </style>

@@ -5,7 +5,7 @@
         <aside class="left-wrapper">
           <div class="left-wrapper-fixed">
             <div class="menu-title">
-              <img src="../../assets/square_logo.png" height="200" width="200"/>
+              <img src="../../assets/logo/square_logo.png" height="200" width="200"/>
               <p class="tips">放飞心灵...</p>
               <p class="tips">...快乐自我</p>
             </div>

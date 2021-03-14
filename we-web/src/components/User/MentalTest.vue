@@ -1,4 +1,13 @@
 <template>
+
+<!--  考虑：-->
+<!--    每题的每个答案的分数值-->
+<!--    最终的答题情况形成文件发给咨询师-->
+<!--    匹配咨询师，跳转聊天页面-->
+<!--    咨询结束，用户给出评分，咨询师给出结论-->
+<!--    -->
+<!--    咨询师的总评分算法-->
+
   <main class="ui-page-body">
     <div v-if="!isFinish" class="ui-page-container" style="max-width: 1000px;">
       <div class="simple-answer-card">
@@ -28,7 +37,7 @@
             <li class="item">
               <label class="form-check-label">
                 <input @change="setAnswer(question.id)" v-model="answer" type="radio" class="form-check-input"
-                       name="item" id="" value="checkedValue" :value="itemIndexs[i]">
+                       name="item" id="" value="checkedValue" :value="itemIndexes[i]">
                 <!--              <span class="badge badge-pill badge-danger mr-2">{{itemIndexs[i]}}</span>-->
                 {{item}}
               </label>
@@ -37,7 +46,7 @@
         </ul>
 
         <div class="op">
-          <button v-if="progress==0" disabled type="button" class="ui-raised-button btn btn-danger btn-block disabled">上一题</button>
+          <button v-if="progress===0" disabled type="button" class="ui-raised-button btn btn-danger btn-block disabled">上一题</button>
           <button v-else @click="prev()" type="button" class="ui-raised-button btn btn-danger btn-block">上一题</button>
           <button v-if="isLast" @click="submit()" type="button" class="ui-raised-button btn btn-primary btn-block">提交</button>
           <button v-else @click="next()" type="button" class="ui-raised-button btn btn-success btn-block">下一题</button>
@@ -48,18 +57,17 @@
 
     <!-- 显示答案 -->
     <div v-else class="container">
-      <div class="jumbotron">
-        <hr class="my-2">
-        <table class="table table-bordered table-striped">
-          <tbody>
-          <!-- 总计 -->
-          <tr class="text-center h3 ">
-            <td colspan="3">总成绩</td>
-            <td > {{score}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+<!--      <div class="jumbotron">-->
+<!--        <table class="table table-bordered table-striped">-->
+<!--          <tbody>-->
+<!--          &lt;!&ndash; 总计 &ndash;&gt;-->
+<!--          <tr class="text-center h3 ">-->
+<!--            <td colspan="3">总成绩</td>-->
+<!--            <td > {{score}}</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
     </div>
   </main>
 </template>
@@ -75,7 +83,7 @@
         size: 0,
         answer: '',
         answers: new Map(),
-        itemIndexs: ['A', 'B', 'C', 'D', 'E', 'F'],
+        itemIndexes: ['A', 'B', 'C', 'D', 'E', 'F'],
         questionList: [
           {
             id: 1,
@@ -106,6 +114,36 @@
             title: '最好的前端框架？',
             items: ['Angular', 'Vue', 'React', 'Java'],
             answer: 'B'
+          },
+          {
+            id: 6,
+            title: '平均每天的睡眠时间',
+            items: ['小于4小时', '4-6小时', '7-8小时', '大于8小时'],
+            answer: 'C'
+          },
+          {
+            id: 7,
+            title: '关于睡眠，您属于下列哪种情况',
+            items: ['无', '经常失眠', '依靠药物才能入眠'],
+            answer: 'A'
+          },
+          {
+            id: 8,
+            title: '关于运动，您属于下列哪种情况',
+            items: ['经常运动','中度运动', '轻度运动', '极轻度运动'],
+            answer: 'A'
+          },
+          {
+            id: 9,
+            title: '您是否有以下吸烟情况',
+            items: ['无','不得已情况才吸烟', '每天少于一包', '每天多于一包'],
+            answer: 'A'
+          },
+          {
+            id: 10,
+            title: '您是否有以下饮酒情况',
+            items: ['无','不得已情况才饮酒', '偶尔小酌几杯', '不喝难受'],
+            answer: 'A'
           }
         ]
       }
@@ -113,12 +151,20 @@
     methods: {
       submit:function(){
         // 答题完毕，提交答案
-        this.isFinish=true;
+        // this.isFinish=true;
         for (const q of this.questionList) {
           if(q.answer===this.answers.get(q.id)){
-            this.score+=20;
+            this.score+=10;
           }
         }
+        if(this.score===0){
+          this.$message.error('为了更好地为您开启心灵之旅，请认真对待人生的每一次测试');
+        }else {
+          this.isFinish=true;
+          this.$message.success('已为您成功匹配咨询师');
+          this.$router.push("/ChatRoom");
+        }
+
       },
       skip:function(i){
         this.progress=i;

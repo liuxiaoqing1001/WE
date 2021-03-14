@@ -5,7 +5,7 @@
       <!-- 头部 -->
       <el-header>
         <div>
-          <img src="../assets/we_logo_black.png" alt="">
+          <img src="../assets/logo/we_logo_black.png" alt="">
           <span>“我和你”心理健康公益平台<span style="font-size: 10px">·管理员后台·</span></span>
         </div>
 <!--        <span style="float:right;padding:5px;margin-left:2%;width:20%">-->

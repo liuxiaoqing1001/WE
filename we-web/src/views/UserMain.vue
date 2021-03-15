@@ -65,8 +65,8 @@
             },
             {
               text: '咨询中心',
-              name: 'Counseling',
-              route: '/Counseling'
+              name: 'Consulting',
+              route: '/Consulting'
             },
             {
               text: '自愿者专区',

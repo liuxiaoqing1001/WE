@@ -1,4 +1,5 @@
 <template>
+<!--  开启咨询服务，匹配咨询师，跳转聊天室（新页面）（一对一咨询）-->
   <div class="body">
     <div class="text">
       <h1 v-on:click="$goRoute('/MentalTest')">{{testText}}</h1>
@@ -9,7 +10,7 @@
 
 <script>
     export default {
-      name: "Counseling",
+      name: "Consulting",
       data () {
         return {
           nowIndex:0,

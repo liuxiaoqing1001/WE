@@ -12,15 +12,19 @@ import Setting from "../components/Admin/Setting";
 import ModifyPwd from "../components/Other/ModifyPwd";
 import PersonalCenter from "../components/Other/PersonalCenter";
 import Register from "../components/Other/Register";
-import Counseling from "../components/User/Counseling";
+import Consulting from "../components/User/Consulting";
 import Square from "../components/User/Square";
-import Article from "../components/User/Airticle";
+import Article from "../components/User/Article";
 import TreeHole from "../components/User/TreeHole";
 import VolunteerZone from "../components/User/VolunteerZone";
+import VolunteerCenter from "../components/User/VolunteerCenter";
 import Other from "../components/User/Other";
 import Home from "../components/User/Home";
 import Detail from "../components/User/Detail";
 import MentalTest from "../components/User/MentalTest";
+import VCenter from "../components/User/Volunteer/VCenter";
+import VArticle from "../components/User/Volunteer/VArticle";
+import VConsulting from "../components/User/Volunteer/VConsulting";
 
 Vue.use(Router);
 
@@ -68,9 +72,9 @@ export default new Router({
           ]
         },
         {
-          name: Counseling,
-          path: '/Counseling',
-          component: Counseling
+          name: Consulting,
+          path: '/Consulting',
+          component: Consulting
         },
         {
           name: VolunteerZone,
@@ -144,6 +148,29 @@ export default new Router({
       path: '/Register',
       name: 'Register',
       component: Register
+    },
+    {
+      name: VolunteerCenter,
+      path: '/VolunteerCenter',
+      component: VolunteerCenter,
+      redirect: '/VCenter',//重定向
+      children:[//子路由
+        {
+          name: 'VCenter',
+          path: '/VCenter',
+          component: VCenter
+        },
+        {
+          name: 'VArticle',
+          path: '/VArticle',
+          component: VArticle
+        },
+        {
+          name: 'VConsulting',
+          path: '/VConsulting',
+          component: VConsulting
+        },
+      ]
     }
   ]
 })

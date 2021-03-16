@@ -161,6 +161,10 @@
     min-height: 100vh;
     width: 600px;
   }
+  /*flex属性默认是0 1 auto */
+  /* flex-grow为0，则存在剩余空间也不放大*/
+  /* flex-shrink为1，则空间不足该项目缩小*/
+  /* flex-basis为auto，则该项目本来的大小*/
   .left-wrapper{
     flex:  0 0 300px;
     width: 240px;

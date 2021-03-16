@@ -28,7 +28,12 @@
         </div>
         <div class="banner_theme">
           <div class="item_theme">
-            <img src="../../assets/image/1.jpeg" height="640" width="1024"/>
+            <img src="https://img.zcool.cn/community/010d1d57620dde0000012e7e2aa1e7.jpg@3000w_1l_0o_100sh.jpg"
+                 height="100%" width="100%" />
+            <div class="tip">
+              置身于这个宇宙中，也许星星懂，将它视作树洞，倾诉心声，放心，没人知道你是谁
+            </div>
+            <a class="intoTH" @click="intoTH()">>>>前往树洞</a>
           </div>
         </div>
         <div class="banner_theme">
@@ -38,7 +43,11 @@
         </div>
         <div class="banner_theme">
           <div class="item_theme">
-            <img src="../../assets/image/1.jpeg" height="640" width="1024"/>
+            <img src="../../assets/background/background.jpeg" height="700" width="80%" style="float: right"/>
+            <div class="tipV">
+              诚邀您欢迎加入平台自愿者咨询师
+            </div>
+            <a class="intoV" @click="intoV()">>>>进入专区</a>
           </div>
         </div>
       </el-main>
@@ -74,6 +83,12 @@
     methods: {
       gotoPage(index) {
         this.currentIndex = index;
+      },
+      intoTH:function () {
+        this.$router.push("/TreeHole");
+      },
+      intoV:function () {
+        this.$router.push("/VolunteerZone");
       }
     },
     computed: {
@@ -192,6 +207,43 @@
   .item_theme{
     width: 100%;
     max-height: 960px;
-    background-color: #4a5064;
+    background-color: black;
+    overflow: hidden;
+  }
+  .tip{
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    position: absolute;
+    left: 20%;
+    top: 40%;
+  }
+  .tipV{
+    color: white;
+    float: left;
+    font-size: 30px;
+    position: absolute;
+    left: 8%;
+    top: 10%;
+    writing-mode: vertical-lr;
+  }
+  .intoTH{
+    color: gold;
+    font-size: 25px;
+    font-weight: bold;
+    position: absolute;
+    left: 60%;
+    top: 70%;
+  }
+  .intoV{
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    position: absolute;
+    left: 5%;
+    bottom: 8%;
+  }
+  a:hover{
+    cursor: pointer;
   }
 </style>

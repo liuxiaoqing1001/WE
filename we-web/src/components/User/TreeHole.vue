@@ -86,7 +86,7 @@
           this.showIndex=1;
           this.$message.success('聆听');
         },
-        say:function(i){
+        say:function(){
           this.showIndex=2;
           this.$message.success('倾诉');
         },

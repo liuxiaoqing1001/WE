@@ -10,7 +10,7 @@
 <!--  自愿者个人中心-->
   <div>
     <div class="main">
-      <div class="frame">
+      <div v-if="!applyV" class="frame">
         <h2>咨询师入驻标准</h2>
         <div class="standard">
           <h5>1. 前提条件</h5>
@@ -27,6 +27,14 @@
           学历证明（必须）、 法律要求的执业资格证（必须）、 相关论文和书籍（非必须）
         </div>
       </div>
+
+      <div v-else class="frameAV">
+        <el-button @click="del()" type="danger" size="mini" icon="" style="font-size: medium;float: right">X</el-button>
+        <h2>咨询师入驻申请</h2>
+        <div class="standard">
+          申请表格、上传附件
+        </div>
+      </div>
     </div>
   </div>
 
@@ -38,14 +46,18 @@
       name: "VolunteerZone",
       data(){
         return{
-
+          applyV: false
         }
       },
       methods:{
         into:function () {
+          this.applyV=true;
           this.$router.push("/VolunteerCenter");
           this.$message.success('跳转');
-        }
+        },
+        del:function () {
+          this.applyV=false;
+        },
       }
     }
 </script>
@@ -73,6 +85,16 @@
     position: absolute;
     left: 15%;
     top: 20%;
+  }
+
+  .frameAV{
+    background: white;
+    width: 1500px;
+    height: 850px;
+    /*border-radius: 10px;*/
+    position: absolute;
+    left: 8%;
+    top: 5%;
   }
 
   .standard{

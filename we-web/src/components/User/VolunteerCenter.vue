@@ -15,13 +15,17 @@
           <div class="right-wrapper-fixed">
             <div class="menu-title">
 <!--              姓名的名字作为头像-->
-              <img src="../../assets/logo/we_logo.png" height="200" width="200"/>
-              <p class="userName">{{userName}}</p>
+              <img src="../../assets/logo/we_logo.png" @click="intoC()" height="200" width="200"/><br>
+              <a class="userName" @click="intoC()">{{userName}}</a>
               <p class="level">{{level}}</p>
             </div>
             <div class="menu_medium">
               <button @click="toArticle()" type="button" class="btn_article">我的文章</button>
               <button @click="toConsulting()" type="button" class="btn_consulting">咨询中心</button>
+            </div>
+            <div class="menu_bottom">
+              <a class="comeBack" @click="comeBack()">返回用户平台</a>
+              <a class="comeBack" @click="quit()">退出登录</a>
             </div>
           </div>
         </aside>
@@ -48,6 +52,18 @@
         toConsulting:function () {
           this.$router.push("/VConsulting");
           this.$message.success('咨询');
+        },
+        intoC:function () {
+          this.$router.push("/VCenter");
+          this.$message.success('个人中心');
+        },
+        comeBack:function () {
+          this.$router.push("/Home");
+          this.$message.success('返回');
+        },
+        quit:function () {
+          this.$router.push("/");
+          this.$message.success('已注销');
         }
       }
     }
@@ -58,20 +74,12 @@
     display: flex;
     min-height: 92vh;
     margin-top: 50px;
-    /*margin-left: 200px;*/
-
   }
   .main-wrapper{
     flex:  0 1 55%;
     margin-left: 200px;
-    /*height: 800px;*/
     box-shadow: 0 2px 25px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
     margin-right: 100px;
-    /*flex: 1;*/
-    /*background: #f6f6f6;*/
-    /*padding: 0 15px;*/
-
-    /*width: 800px;*/
   }
   .right-wrapper{
     flex:  0 1 18%;
@@ -86,6 +94,7 @@
   }
   .menu-title img{
     margin-top: 60px;
+    margin-bottom: 20px;
     width: 100px;
     height: 100px;
     border: 2px solid #fff;
@@ -93,15 +102,23 @@
     overflow: hidden;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
   }
+  a,img:hover{
+    cursor: pointer;
+  }
   .level{
     padding-top: 4px;
     font-size: 14px;
     line-height: 24px;
     color: #42b983;
   }
-  .menu_medium{
-    /*margin-top: 20px;*/
-    /*padding: 20px 0;*/
+  .comeBack{
+    font-size: 15px;
+    color: #3f51b5;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  .menu_bottom{
+    margin-top: 50%;
   }
   .btn_article,.btn_consulting{
     display: inline-block;

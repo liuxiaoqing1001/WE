@@ -45,7 +45,7 @@
           <div class="item_theme">
             <img src="../../assets/background/background.jpeg" height="700" width="80%" style="float: right"/>
             <div class="tipV">
-              诚邀您欢迎加入平台自愿者咨询师
+              诚邀您加入平台自愿者咨询师
             </div>
             <a class="intoV" @click="intoV()">>>>进入专区</a>
           </div>
@@ -224,7 +224,7 @@
     font-size: 30px;
     position: absolute;
     left: 8%;
-    top: 10%;
+    top: 18%;
     writing-mode: vertical-lr;
   }
   .intoTH{

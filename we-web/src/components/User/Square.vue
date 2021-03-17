@@ -246,13 +246,6 @@
     color: blue;
     font-size: medium;
   }
-  /*.menu_left li{*/
-  /*  display: flex;*/
-  /*  padding: 0 20px;*/
-  /*  height: 44px;*/
-  /*  line-height: 44px;*/
-  /*  cursor: pointer;*/
-  /*}*/
 
   ul li a{
     display:inline-block;

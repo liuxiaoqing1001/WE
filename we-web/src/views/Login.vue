@@ -186,4 +186,8 @@
     font-size: 16px;
     margin-bottom: 20px;
   }
+
+  a:hover{
+    cursor: pointer;
+  }
 </style>

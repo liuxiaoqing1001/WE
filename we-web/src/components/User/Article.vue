@@ -153,4 +153,7 @@
     line-height: 28px;
     color: rgba(255,255,255,0.8);
   }
+  li:hover{
+    cursor: pointer;
+  }
 </style>

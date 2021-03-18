@@ -27,17 +27,50 @@
         <el-input v-model="VForm.identity"></el-input>
       </el-form-item>
       <el-form-item label="执业资格证" prop="certificate">
-        <!--      :before-upload  文件上传前的回调-->
-        <!--      :accept 接收的文件类型-->
-        <el-upload class="special" ref="upload" action="/System/fileUpload.mvc" :on-change="getFiles"
-                   :before-upload="fileUploadSuffix" multiple :accept="doc,docx,xls,xlsx" :data="addFilesDate" :file-list="fileList">
+<!--        action	必选参数，上传的地址	string-->
+<!--        multiple	是否支持多选文件	boolean-->
+<!--        data	上传时附带的额外参数	object-->
+<!--        accept	接受上传的文件类型（thumbnail-mode 模式下此参数无效）	string	—	—-->
+<!--        on-change	文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用	function(file, fileList)	—	—-->
+<!--        before-upload	文件上传前的回调，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。	function(file)	—	—-->
+<!--        auto-upload	是否在选取文件后立即进行上传	boolean	—	true-->
+<!--        file-list	上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}]	array	—	[]-->
+<!--        limit	最大允许上传个数	number	—	—-->
+        <el-upload
+          class="special xj-upload clearfix"
+          ref="upload"
+          action="/FileUpload/upload2"
+          :on-change="getFiles"
+          :before-upload="beforeUpload"
+          :before-remove="beforeRemove"
+          :auto-upload="false"
+          multiple
+          :limit="1"
+          :on-exceed="handleExceed"
+          name="提交文件"
+          accept="doc,docx,xls,xlsx"
+          :on-success="fileSuccessUpload"
+          :on-error="fileError">
           <el-button size="small" type="primary">选择文件</el-button>
         </el-upload>
         <!--      <el-input v-model="VForm.certificate"></el-input>-->
       </el-form-item>
       <el-form-item label="学历学位证" prop="diploma">
-        <el-upload class="special" ref="upload" action="/System/fileUpload.mvc" :on-change="getFiles"
-                   :before-upload="fileUploadSuffix" multiple :accept="doc,docx,xls,xlsx" :data="addFilesDate" :file-list="fileList">
+        <el-upload
+          class="special xj-upload clearfix"
+          ref="upload"
+          action="/FileUpload/upload2"
+          :on-change="getFiles"
+          :before-upload="beforeUpload"
+          :before-remove="beforeRemove"
+          :auto-upload="false"
+          multiple
+          :limit="1"
+          :on-exceed="handleExceed"
+          name="提交文件"
+          accept="doc,docx,xls,xlsx"
+          :on-success="fileSuccessUpload"
+          :on-error="fileError">
           <el-button size="small" type="primary">选择文件</el-button>
         </el-upload>
         <!--      <el-input v-model="VForm.diploma"></el-input>-->
@@ -142,6 +175,9 @@
               label: '男'
             }
           ],
+          headers: {
+            'Content-Type':'application/x-www-form-urlencoded'
+          }
         }
       },
 
@@ -165,22 +201,41 @@
 
         },
 
-        fileUploadSuffix : function (fileList, suffix) {
-          let blooean = null
-          for (let i in fileList) {
-            let item = fileList[i] // 某一条文件信息
-            let fileName = item.name.lastIndexOf('.') // 取到文件名开始到最后一个点的长度
-            let fileNameLength = item.name.length // 取到文件名长度
-            let hz = item.name.substring(fileName + 1, fileNameLength) // 获取上传文件的后缀名
-            // 判断文件名后缀是否合法
-            if (suffix.indexOf(hz) === -1) { // 不合法上传文件
-              // 删除上传的文件列表中的不合法文件类型
-              fileList.splice(i--, 1) // 删除列表中的数据（删除后文件调整）
-              // 弹窗显示判断
-              blooean = true
+        handleExceed(files, fileList) {
+          this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+        },
+        beforeRemove(file, fileList) {
+          return this.$confirm(`确定移除 ${ file.name }？`);
+        },
+        uploadFile(){
+          this.loading = true;
+          this.$refs.upload.submit();
+        },
+        fileSuccessUpload(response,file,fileList){
+          this.VForm['提交文件'] = response.split('?')[1].split('&')[1].split('=')[1];
+          this.$refs.uploadattachment.submit();
+        },
+        fileSuccessUploadattachment(response,file,fileList){
+          this.VForm['提交内容'] = response.split('?')[1].split('&')[1].split('=')[1];
+          this.uploadForm();
+        },
+        uploadForm(){
+          const self = this;
+          this.$refs['VForm'].validate((valid)=>{
+            if(valid){
+              self.VForm['提交时间']=Vue.filter('formatdate')(new Date(),'yyyy-MM-dd hh:mm:ss');
+              self.$axios({
+                method:'post',
+                url:self.uploadUrl,
+                data:self.VForm,
+                headers:self.headers
+              })
+              .then(function (res) {
+                self.$message.success('上传成功');
+                self.loading=false;
+              })
             }
-          }
-          return blooean // 返回参数
+          })
         }
 
       }

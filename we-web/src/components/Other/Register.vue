@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="register-box">
+      <h3>注 册</h3>
       <div class="form_box">
         <el-form-item class="option" label="用户名" prop="name">
           <el-input v-model="ruleForm.name"></el-input>

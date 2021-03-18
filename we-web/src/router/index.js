@@ -18,7 +18,7 @@ import Article from "../components/User/Article";
 import TreeHole from "../components/User/TreeHole";
 import VolunteerZone from "../components/User/VolunteerZone";
 import VolunteerCenter from "../components/User/VolunteerCenter";
-import Other from "../components/User/Other";
+import Other from "../components/Other/Other";
 import Home from "../components/User/Home";
 import Detail from "../components/User/Detail";
 import MentalTest from "../components/User/MentalTest";
@@ -35,6 +35,12 @@ export default new Router({
       path: '/',        //访问路径
       name: 'Login',
       component: Login  //跳转页面
+    },
+    {
+      // 修改密码
+      path: '/ModifyPwd',
+      name: 'ModifyPwd',
+      component: ModifyPwd
     },
     {
       // 用户首页

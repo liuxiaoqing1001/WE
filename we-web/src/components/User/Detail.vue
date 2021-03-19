@@ -33,7 +33,7 @@
 
 <script>
     export default {
-      name: "Detail",
+        name: "Detail",
       props:{
         user_name:{
           default:''

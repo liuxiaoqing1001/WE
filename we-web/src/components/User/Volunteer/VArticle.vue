@@ -78,10 +78,10 @@
 
 <script>
     export default {
-        name: "MyArticle",
+      name: "VArticle",
       methods:{
         intoW:function () {
-          // this.$router.push("/VWrite");
+          this.$router.push("/VWrite");
           this.$message.success('跳转');
         },
       }

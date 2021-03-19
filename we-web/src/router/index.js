@@ -25,6 +25,7 @@ import MentalTest from "../components/User/MentalTest";
 import VCenter from "../components/User/Volunteer/VCenter";
 import VArticle from "../components/User/Volunteer/VArticle";
 import VConsulting from "../components/User/Volunteer/VConsulting";
+import VWrite from "../components/User/Volunteer/VWrite";
 
 Vue.use(Router);
 
@@ -176,6 +177,11 @@ export default new Router({
           path: '/VConsulting',
           component: VConsulting
         },
+        {
+          name: 'VWrite',
+          path: '/VWrite',
+          component: VWrite
+        }
       ]
     }
   ]

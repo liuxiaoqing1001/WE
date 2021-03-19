@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="register-box">
+    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="edit-box">
       <h3>修改密码</h3>
       <div class="form_box">
         <el-form-item class="option" label="密码" prop="pass">
@@ -90,7 +90,7 @@
 </script>
 
 <style scoped>
-  .register-box{
+  .edit-box{
     border: 1px solid #DCDFE6;
     width: 350px;
     margin: 130px auto;

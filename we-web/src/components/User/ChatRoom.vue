@@ -1,23 +1,25 @@
 <template>
   <div class="chat">
-<!--    v-model		输入框中的文字-->
-<!--    taleList	要渲染的数据-->
-<!--    toolConfig 工具栏配置	-->
-<!--    width		  聊天框宽度	-->
-<!--    height		聊天框高度-->
-<!--    config		组件配置项	-->
-<!--    scrollType 消息自动到低	-->
-<!--    quickList	自动匹配快捷回复	-->
-    <JwChat :taleList="list" @enter="bindEnter" v-model="inputMsg"
-            :toolConfig="tool":quickList="quickList">
-      <template slot="tools">
-        <div style="width:20rem;text-align:right;" @click="toolEvent('自定义')">
-          <b slot="tools">插槽</b>
-          <JwChat-icon type="icon-lishi" title="自定义"/>
-        </div>
-      </template>
-    </JwChat>
+    <div class="chat-box">
+      <!--    v-model		输入框中的文字-->
+      <!--    taleList	要渲染的数据-->
+      <!--    toolConfig 工具栏配置	-->
+      <!--    width		  聊天框宽度	-->
+      <!--    height		聊天框高度-->
+      <!--    config		组件配置项	-->
+      <!--    scrollType 消息自动到低	-->
+      <!--    quickList	自动匹配快捷回复	-->
+      <JwChat-index
+        :config="config"
+        :showRightBox='false'
+        scrollType="scroll"
+        :taleList="list"
+        @enter="bindEnter"
+        v-model="inputMsg"
+        :toolConfig="tool" />
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -30,35 +32,52 @@
           tool: {
             callback: this.toolEvent
           },
-          quickList: [
-            {text: '这里是jwchat，您想了解什么问题。'},
-            {text: 'jwchat是最好的聊天组件'},
-            {text: '谁将烟焚散，散了纵横的牵绊；听弦断，断那三千痴缠。'},
-            {text: '长夏逝去。山野间的初秋悄然涉足。'},
-            {text: '江南风骨，天水成碧，天教心愿与身违。'},
-            {text: '总在不经意的年生。回首彼岸。纵然发现光景绵长。'},
-            {text: '外面的烟花奋力的燃着，屋里的人激情的说着情话'},
-            {text: '假如你是云，我就是雨，一生相伴，风风雨雨；'},
-            {text: '即使泪水在眼中打转，我依旧可以笑的很美，这是你学不来的坚强。'},
-            {text: ' 因为不知来生来世会不会遇到你，所以今生今世我会加倍爱你。'},
-          ]
+          config: {
+            img: '../image/cover.png',
+            name: 'JwChat',
+            dept: '最简单、最便捷',
+            callback: this.bindCover,
+            historyConfig:{
+              show: true,
+              tip: '加载更多',
+              callback: this.bindLoadHistory,
+            },
+
+          },
         };
       },
       methods: {
         bindEnter () {
-          const msg = this.inputMsg
+          const msg = this.inputMsg;
           if (!msg) return;
           const msgObj = {
-            "date": "2020/05/20 23:19:07",
+            "date": "2020/05/10 23:19:07",
             "text": { "text": msg },
             "mine": true,
             "name": "JwChat",
-            "img": "../image/three.jpeg"
-          }
+            "img": "../../assets/logo/we_logo.png"
+          };
           this.list.push(msgObj)
         },
         toolEvent (type, obj) {
           console.log('tools', type, obj)
+        },
+        bindLoadHistory () {
+          const history = new Array(3).fill().map((i, j) => {
+            return {
+              "date": "2020/05/20 23:19:07",
+              "text": { "text": j + new Date() },
+              "mine": false,
+              "name": "JwChat",
+              "img": "image/three.jpeg"
+            }
+          });
+          let list = history.concat(this.list);
+          this.list = list;
+          console.log('加载历史', list, history);
+        },
+        bindCover (type) {
+          console.log('header', type);
         },
       },
       mounted () {
@@ -81,13 +100,6 @@
           {
             "date": "2020/04/25 21:19:07",
             "text": { "text": "<img data-src='"+img+"'/>" },
-            "mine": false,
-            "name": "只盼流星不盼雨",
-            "img": "/image/two.jpeg"
-          },
-          {
-            "date": "2020/04/25 21:19:07",
-            "text": { "text": "<img data-src='/image/three.jpeg'/>" },
             "mine": false,
             "name": "只盼流星不盼雨",
             "img": "/image/two.jpeg"
@@ -133,6 +145,23 @@
 
 <style scoped>
   .chat{
-    margin-top: 5%;
+    width: 100%;
+    min-width: 1200px;
+    height: 920px;
+    /*background-color: #fff;*/
+    /*background: radial-gradient(ellipse at bottom, #090a0f 0%, #000000 100%);*/
+    background-image: url("https://img.zcool.cn/community/010d1d57620dde0000012e7e2aa1e7.jpg@3000w_1l_0o_100sh.jpg");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+    overflow: hidden;
+    filter: drop-shadow(0 0 10px white);
+    /*position: relative;*/
   }
+
+  .chat-box{
+    margin-top: 6%;
+    /*background-color: darkseagreen;*/
+  }
+
 </style>

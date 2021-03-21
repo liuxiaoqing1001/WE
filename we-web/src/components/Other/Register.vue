@@ -13,7 +13,7 @@
           <el-input type="password" v-model="ruleForm.checkPass" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item class="option">
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button @click="comeBack()">返回</el-button>
           <el-button type="primary" @click="submitForm('ruleForm')" style="margin-left: 30px">注册</el-button>
         </el-form-item>
       </div>
@@ -99,8 +99,9 @@
           });
         },
 
-        resetForm(formName) {
-          this.$refs[formName].resetFields();
+        comeBack(formName) {
+          // this.$refs[formName].resetFields();
+          this.$router.push("/");
         }
       }
     }

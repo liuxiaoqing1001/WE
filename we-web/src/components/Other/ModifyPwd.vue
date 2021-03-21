@@ -10,7 +10,7 @@
           <el-input type="password" v-model="ruleForm.checkPass" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item class="option">
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+<!--          <el-button @click="resetForm('ruleForm')">重置</el-button>-->
           <el-button type="primary" @click="submitForm('ruleForm')" style="margin-right: 50px">修改</el-button>
         </el-form-item>
       </div>

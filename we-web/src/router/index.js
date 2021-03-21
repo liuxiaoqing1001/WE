@@ -22,6 +22,7 @@ import Other from "../components/Other/Other";
 import Home from "../components/User/Home";
 import Detail from "../components/User/Detail";
 import MentalTest from "../components/User/MentalTest";
+import ChatRoom from "../components/User/ChatRoom";
 import VCenter from "../components/User/Volunteer/VCenter";
 import VArticle from "../components/User/Volunteer/VArticle";
 import VConsulting from "../components/User/Volunteer/VConsulting";
@@ -42,6 +43,11 @@ export default new Router({
       path: '/ModifyPwd',
       name: 'ModifyPwd',
       component: ModifyPwd
+    },
+    {
+      name: ChatRoom,
+      path: "/ChatRoom",
+      component: ChatRoom
     },
     {
       // 用户首页
@@ -108,7 +114,8 @@ export default new Router({
           name: MentalTest,
           path: '/MentalTest',
           component: MentalTest
-        }
+        },
+
       ]
     },
     {

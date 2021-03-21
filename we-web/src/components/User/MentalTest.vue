@@ -48,7 +48,8 @@
         <div class="op">
           <button v-if="progress===0" disabled type="button" class="ui-raised-button btn btn-danger btn-block disabled">上一题</button>
           <button v-else @click="prev()" type="button" class="ui-raised-button btn btn-danger btn-block">上一题</button>
-          <button v-if="isLast" @click="submit()" type="button" class="ui-raised-button btn btn-primary btn-block">提交</button>
+<!--          <button v-if="isLast" @click="submit()" type="button" class="ui-raised-button btn btn-primary btn-block">提交</button>-->
+          <router-link v-if="isLast" target="_blank" class="ui-raised-button submit" :to="{path:'/ChatRoom'}">提交</router-link>
           <button v-else @click="next()" type="button" class="ui-raised-button btn btn-success btn-block">下一题</button>
         </div>
 
@@ -164,7 +165,6 @@
           this.$message.success('已为您成功匹配咨询师');
           this.$router.push("/ChatRoom");
         }
-
       },
       skip:function(i){
         this.progress=i;
@@ -197,7 +197,7 @@
       correct(){
         return function (id) {
           for(const i of this.questionList){
-            if(i.id==id){
+            if(i.id===id){
               return i.answer;
             }
           }
@@ -210,7 +210,7 @@
         return this.questionList[this.progress];
       },
       isLast: function () {
-        return this.progress == this.questionList.length - 1;
+        return this.progress === this.questionList.length - 1;
       },
       progressBar: function () {
         return Math.round(this.size / this.questionList.length * 100);
@@ -239,6 +239,16 @@
   .ui-page-container {
     margin: 0 auto;
     padding: 16px;
+  }
+
+  .submit{
+    position: relative;
+    top: 14px;
+    font-size: 15px;
+  }
+
+  .op{
+    margin-top: 25px;
   }
 
   .mu-ripple-wrapper {

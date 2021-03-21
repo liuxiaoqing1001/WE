@@ -19,6 +19,10 @@ import VueParticles from 'vue-particles'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 
+import Chat from 'jwchat'
+
+Vue.use(Chat);
+
 Vue.use(mavonEditor);
 
 Vue.use(VueParticles);

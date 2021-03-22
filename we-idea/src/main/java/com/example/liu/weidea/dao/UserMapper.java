@@ -6,26 +6,31 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface UserDao {
-    // -- select 用户名是否存在
-    @Select("select count(*) from user where name=#{name}")
-    int nameSearch(String name) ;
+public interface UserMapper {
+    // -- select 用户是否存在
+    @Select("select count(*) from user where phone=#{phone}")
+    int userSearch(String phone) ;
 
-    // select 根据用户名和密码查找用户
-    @Select("select * from user where name=#{uname} and password=#{pwd}")
-    User select(@Param("uname") String name, @Param("pwd") String password) ;
+    // select 根据手机号和密码查找用户
+    @Select("select * from user where phone=#{phone} and password=#{pwd}")
+    User select(@Param("phone") String phone, @Param("pwd") String password) ;
 
     // -- insert 添加用户
-    @Insert("insert into user(name,password,phone,regdate) " +
-            "values(#{name},#{password},#{phone},now())")
+    @Insert("insert into user(phone,password,regdate) " +
+            "values(#{phone},#{password},now())")
     int add(User user) ;
-
-
-
 
     //查询数据库中所有信息
     @Select("select * from user")
     List<User> getAll() ;
+
+    @Select("select * from user where phone=#{phone}")
+    User searchByPhone(@Param("phone") String phone);
+
+
+
+
+
 
     //根据id更新内容
     @Update("<script>" +
@@ -121,9 +126,6 @@ public interface UserDao {
 
     @Select("select photourl from user where name=#{name}")
     String getPhotoUrl(String name);
-
-    @Select("select * from user where name=#{name}")
-    User searchByName(@Param("name") String name);
 
     //修改密码
     @Update("update user set password=#{password} where name=#{name}")

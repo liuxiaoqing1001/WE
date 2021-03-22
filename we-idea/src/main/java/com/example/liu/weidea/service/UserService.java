@@ -25,15 +25,15 @@ public interface UserService {
     int ROLE_USER = 1 ;
     /**
      *
-     * @param name  非空
+     * @param phone  非空
      * @param pwd  非空
      * @return  key--User , key-msg ; 其中 key-msg的值 0-成功；1-账号不存在；2-用户名或密码错误；3-登录失败
      */
-    Map<String , Object> loginCheck(String name, String pwd) ;
+    Map<String , Object> loginCheck(String phone, String pwd) ;
 
     /**
      *
-     * @param user 非空，名字和密码非空
+     * @param user 非空，电话和密码非空
      * @return Integer ：0--成功；1--用户名已存在；2--信息不完整；3--失败，其他原因
      */
     Integer register(User user) ;
@@ -74,7 +74,7 @@ public interface UserService {
 
     String getPhotoUrl(String name);
 
-    User searchByName(String name);
+    User searchByPhone(String phone);
 
     Integer forget(String password, String name);
 }

@@ -20,14 +20,14 @@ public class UserController {
 
     /**
      * 登录
-     * @param name
+     * @param phone
      * @param password
      * @return
      */
-    @GetMapping("login/{name}/{pwd}")
-    public ResponseData login(@PathVariable("name") String name , @PathVariable("pwd") String password) {
+    @GetMapping("login/{phone}/{pwd}")
+    public ResponseData login(@PathVariable("phone") String phone , @PathVariable("pwd") String password) {
         // 调用service中方法进行login处理
-        Map<String , Object> map = userService.loginCheck(name , password) ;
+        Map<String , Object> map = userService.loginCheck(phone , password) ;
         String msg = "" ;
         Integer status = (Integer)(map.get(UserService.KEY_MSG)) ;
         switch (status) {
@@ -59,7 +59,6 @@ public class UserController {
     @PostMapping("register")
     public ResponseData register(@RequestBody Map<String , Object> map) {
         User user = new User() ;
-        user.setName((String)map.get("name"));
         user.setPassword((String)map.get("password"));
         user.setPhone((String)map.get("phone"));
         Integer result = userService.register(user) ;
@@ -85,9 +84,9 @@ public class UserController {
         ) ;
     }
 
-    @GetMapping("/searchByName/{name}")
-    public ResponseData searchByname(@PathVariable("name")String name){
-        User result=userService.searchByName(name);
+    @GetMapping("/searchByPhone/{phone}")
+    public ResponseData searchByPhone(@PathVariable("phone")String phone){
+        User result=userService.searchByPhone(phone);
         return new ResponseData(
                 result !=null ? 0 : 1 ,
                 result !=null ? "查找成功" : "查找失败" ,

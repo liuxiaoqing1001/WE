@@ -279,19 +279,22 @@ SpringBoot + Mybatis + Mysql + Vue
     
 CREATE TABLE user (
   id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(255) NOT NULL COMMENT '用户名',
+  name varchar(255) DEFAULT NULL COMMENT '用户名',
   phone varchar(255) NOT NULL COMMENT '电话',
   password varchar(255) NOT NULL COMMENT '密码',
   birthday date DEFAULT NULL COMMENT '生日',
   sex varchar(10) DEFAULT NULL COMMENT '性别',
   email varchar(50) DEFAULT NULL COMMENT '邮箱',
   photourl varchar(60) DEFAULT NULL COMMENT '头像地址',
-  regdate datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  regdate datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   role int(11) DEFAULT '1' COMMENT '角色',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+ALTER TABLE Persons AUTO_INCREMENT=10011;//以其他的值起始
 
+insert into user(phone,password,regdate) values('16600274434','1234567890',now());
+INSERT INTO user VALUES ('admin', 'e10adc3949ba59abbe56e057f20f883e', '22', '女', '962746554@qq.com', '15032408116', 'http://aa', null, '2020-11-07 16:42:10', '0');
 
 
 ---------------------------------------------------------------------------------
@@ -402,6 +405,8 @@ https://blog.csdn.net/viewyu12345/article/details/80850029
 
 15. jwchat
 https://codegi.gitee.io/jwchatdoc/component/chat.html#%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE
+
+16.https://blog.csdn.net/weixin_43633329/article/details/112760968?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&dist_request_id=1328665.11346.16159934991905633&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control
 
 
 

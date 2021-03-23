@@ -60,8 +60,8 @@
             },
             {
               min: 3,
-              max: 10,
-              message: '长度在 3 到 10 个字符',
+              max: 11,
+              message: '长度在 3 到 11 个字符',
               trigger: 'blur'
             }
           ],
@@ -92,15 +92,27 @@
             // this.dialogVisible = true;
             this.$message.error('请填写信息！！！');
           }else {
+            // http://127.0.0.1:8618/user/login?phone=16600274434&password=1234567890
+            this.$http.get("/user/login/16600274434/1234567890").then(response => {
+                if (this.loginForm.username === response.data.data.phone){
+                  // if (this.loginForm.password === response.data.password){
+                    this.$message.success('登录成功');
+                    this.$router.push("/UserMain");
+                  // }
+                }
+                // ;
+                console.log(response);
+              });
+
             // const {data:res} = await this.$http.post('login',this.loginForm);
             // if (res.meta.status!==200){
             //   this.$message.error('信息不正确！！！登录失败');
             // }else {
-              this.$message.success('登录成功');
+
               // // 将登录成功之后的token保存到客户端的sessionStorage中
               // window.sessionStorage.setItem('token',res.data.token);
               // this.$router.push("/AdminMain");
-              this.$router.push("/UserMain");
+
             // }
           }
         });

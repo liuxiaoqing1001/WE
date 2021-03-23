@@ -24,7 +24,7 @@ public class UserController {
      * @param password
      * @return
      */
-    @GetMapping("login/{phone}/{pwd}")
+    @GetMapping("login?{phone}&{pwd}")
     public ResponseData login(@PathVariable("phone") String phone , @PathVariable("pwd") String password) {
         // 调用service中方法进行login处理
         Map<String , Object> map = userService.loginCheck(phone , password) ;

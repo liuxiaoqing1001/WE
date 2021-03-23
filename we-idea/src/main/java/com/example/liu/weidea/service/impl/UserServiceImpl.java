@@ -1,7 +1,7 @@
 package com.example.liu.weidea.service.impl;
 
 import com.example.liu.weidea.bean.Page;
-import com.example.liu.weidea.dao.UserMapper;
+import com.example.liu.weidea.dao.UserDao;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserMapper userMapper;
+    UserDao userDao;
 
     @Override
     public Map<String, Object> loginCheck(String phone, String pwd) {
@@ -25,14 +25,14 @@ public class UserServiceImpl implements UserService {
             return map ;
         }
         // 先进行账号是否存在检测
-        int nameCount = userMapper.userSearch(phone) ;
+        int nameCount = userDao.userSearch(phone) ;
         System.out.println("nameCount:"+nameCount);
         if(nameCount == 0) {
             map.put(KEY_MSG , LOGIN_MSG_FAIL_NON) ;
             return map ;
         }
         // 账号存在，登录检查
-        User u = userMapper.select(phone , DigestUtils.md5DigestAsHex(pwd.getBytes())) ;
+        User u = userDao.select(phone , DigestUtils.md5DigestAsHex(pwd.getBytes())) ;
         if(u == null) {
             map.put(KEY_MSG , LOGIN_MSG_FAIL_ERROR) ;
             return map ;
@@ -56,14 +56,14 @@ public class UserServiceImpl implements UserService {
             return REG_MSG_FAIL_INFO_NON ;
         }
         // 先进行账号是否存在检测
-        int count = userMapper.userSearch(user.getPhone()) ;
+        int count = userDao.userSearch(user.getPhone()) ;
         if(count > 0) {
             return REG_MSG_FAIL_NAMEEXISTS ;
         }
         // 注册
         user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
         user.setPhone(user.getPhone());
-        int r = userMapper.add(user) ;
+        int r = userDao.add(user) ;
         if(r > 0) {
             return REG_MSG_OK ;
         } else {
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
         if(phone==""||phone==null){
             return null;
         }
-        return userMapper.searchByPhone(phone);
+        return userDao.searchByPhone(phone);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         password= DigestUtils.md5DigestAsHex(password.getBytes());
-        return userMapper.forget(password, name);
+        return userDao.forget(password, name);
     }
 
     //修改
@@ -108,11 +108,11 @@ public class UserServiceImpl implements UserService {
         if(null != user.getPassword()) {
             user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
         }
-        int r = userMapper.updateById(user) ;
+        int r = userDao.updateById(user) ;
         if(r != 1) {
             return null ;
         } else {
-            return userMapper.getById(user.getId()) ;
+            return userDao.getById(user.getId()) ;
         }
     }
 
@@ -128,8 +128,8 @@ public class UserServiceImpl implements UserService {
         if(null != regdate) {
             pubdateStr = new SimpleDateFormat("yyyyMMdd").format(regdate) ;
         }
-        List<User> list = userMapper.getMoreBy(id , name , pubdateStr , size * (curPage-1) , size) ;
-        int count = userMapper.getMoreCount(id , name , pubdateStr) ;
+        List<User> list = userDao.getMoreBy(id , name , pubdateStr , size * (curPage-1) , size) ;
+        int count = userDao.getMoreCount(id , name , pubdateStr) ;
         int pageCount = (int) Math.ceil(count * 1.0 / size);
         Page<User> pageInfo = new Page() ;
         pageInfo.setData((ArrayList<User>) list);
@@ -142,19 +142,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        return userMapper.getAll();
+        return userDao.getAll();
     }
 
     //根据id获取用户信息
     @Override
     public User getById(Integer id) {
-        return userMapper.getById(id);
+        return userDao.getById(id);
     }
 
     //根据id删除用户信息
     @Override
     public int DeleteById(Integer id) {
-        return userMapper.DeleteById(id);
+        return userDao.DeleteById(id);
     }
 
     @Override
@@ -162,11 +162,11 @@ public class UserServiceImpl implements UserService {
         if(id == null || id<1) {
             return null ;
         }
-        int r = userMapper.upRole(id) ;
+        int r = userDao.upRole(id) ;
         if(r != 1) {
             return null ;
         } else {
-            return userMapper.upRole(id) ;
+            return userDao.upRole(id) ;
         }
     }
 
@@ -175,11 +175,11 @@ public class UserServiceImpl implements UserService {
         if(id == null || id<1) {
             return null ;
         }
-        int r = userMapper.delById(id) ;
+        int r = userDao.delById(id) ;
         if(r != 1) {
             return null ;
         } else {
-            return userMapper.delById(id) ;
+            return userDao.delById(id) ;
         }
     }
 
@@ -191,8 +191,8 @@ public class UserServiceImpl implements UserService {
         if(null == size || size < 1) {
             size = 10 ;
         }
-        List<User> list = userMapper.getLimit(size * (curPage-1) , size) ;
-        int count = userMapper.getCount() ;
+        List<User> list = userDao.getLimit(size * (curPage-1) , size) ;
+        int count = userDao.getCount() ;
         int pageCount = (int) Math.ceil(count * 1.0 / size);
         Page<User> pageInfo = new Page() ;
         pageInfo.setData((ArrayList<User>) list);
@@ -215,7 +215,7 @@ public class UserServiceImpl implements UserService {
             return REG_MSG_FAIL_INFO_NON ;
         }
         // 先进行账号是否存在检测
-        int nameC = userMapper.userSearch(user.getName()) ;
+        int nameC = userDao.userSearch(user.getName()) ;
         if(nameC > 0) {
             return REG_MSG_FAIL_NAMEEXISTS ;
         }
@@ -228,7 +228,7 @@ public class UserServiceImpl implements UserService {
 //        user.setPhotourl(user.getPhotourl());
 //        user.setRole(user.getRole());
 //        System.out.println(user);
-        int r = userMapper.addRole(user) ;
+        int r = userDao.addRole(user) ;
         if(r > 0) {
             return REG_MSG_OK ;
         } else {
@@ -237,7 +237,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getPhotoUrl(String name) {
-        return userMapper.getPhotoUrl(name);
+        return userDao.getPhotoUrl(name);
     }
 
 }

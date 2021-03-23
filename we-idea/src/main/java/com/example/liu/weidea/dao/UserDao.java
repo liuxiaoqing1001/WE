@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface UserMapper {
+public interface UserDao {
     // -- select 用户是否存在
     @Select("select count(*) from user where phone=#{phone}")
     int userSearch(String phone) ;

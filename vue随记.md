@@ -3438,7 +3438,44 @@ quickList	自动匹配快捷回复	Array	-	[]
 ~~~
 
 ~~~ 
-
+getData() {//查询数据
+	axios.get("http://localhost:8080/user/selectUserById", {
+	    params: {
+		id: this.$route.query.id
+	    }
+	}).then(response => {
+	    this.userName = response.data.userName;
+	    this.userAge = response.data.userAge;
+	    this.userAddress = response.data.userAddress;
+	    console.log(response);
+	}).catch(error => {
+	    console.log(errror);
+	});
+},
+editData(){//修改数据库
+    axios({
+        method:'post',
+        url: 'http://localhost:8080/user/updateUser',
+        data: "&id=" + this.$route.query.id + "&userName=" + this.userName + "&userAge=" + this.userAge + "&userAddress=" + this.userAddress
+    }).then(response => {
+        console.log(response)
+        this.$router.push({path : "/"})
+    }).catch(error => {
+        console.log(error)
+    })
+}
+set_user() {//给页面控件赋值
+	admin
+	    .post('user/set_user',{
+	    name:this.name,
+	    age: this.age,
+	    sex: this.sex
+	})
+	.then(response => {
+	    alert("提交成功");
+	})
+	.catch();
+}
 ~~~
 
 ~~~ 

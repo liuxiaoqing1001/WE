@@ -24,7 +24,7 @@ public class UserController {
      * @param password
      * @return
      */
-    @GetMapping("login?{phone}&{pwd}")
+    @GetMapping("/login/{phone}/{pwd}")
     public ResponseData login(@PathVariable("phone") String phone , @PathVariable("pwd") String password) {
         // 调用service中方法进行login处理
         Map<String , Object> map = userService.loginCheck(phone , password) ;
@@ -44,6 +44,35 @@ public class UserController {
                 msg = "登录失败" ;
                 break;
         }
+        return new ResponseData(
+                status ,
+                msg ,
+                map.get(UserService.KEY_USER)
+        ) ;
+    }
+
+    @GetMapping("/login2")
+    public ResponseData queryUserName(@RequestParam(value="phone" ,required =false ) String phone,
+                                      @RequestParam(value="password" ,required =false ) String password){
+        // 调用service中方法进行login处理
+        Map<String , Object> map = userService.loginCheck(phone , password) ;
+        String msg = "" ;
+        Integer status = (Integer)(map.get(UserService.KEY_MSG)) ;
+        switch (status) {
+            case UserService.LOGIN_MSG_OK :
+                msg = "登录成功" ;
+                break;
+            case UserService.LOGIN_MSG_FAIL_ERROR :
+                msg = "手机号或密码输入错误" ;
+                break;
+            case UserService.LOGIN_MSG_FAIL_NON:
+                msg = "账号不存在" ;
+                break;
+            default :
+                msg = "登录失败" ;
+                break;
+        }
+
         return new ResponseData(
                 status ,
                 msg ,
@@ -93,6 +122,7 @@ public class UserController {
                 result
         );
     }
+
 
 //    @PutMapping("/forget/{password}/{name}")
 //    public ResponseData forget(@PathVariable("password")String password, @PathVariable("name")String name){

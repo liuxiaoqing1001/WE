@@ -93,7 +93,7 @@
             this.$message.error('请填写信息！！！');
           }else {
             // http://127.0.0.1:8618/user/login?phone=16600274434&password=1234567890
-            this.$http.get("/user/login/16600274434/1234567890").then(response => {
+            this.$http.get("/user/login2").then(response => {
                 if (this.loginForm.username === response.data.data.phone){
                   // if (this.loginForm.password === response.data.password){
                     this.$message.success('登录成功');
@@ -103,6 +103,8 @@
                 // ;
                 console.log(response);
               });
+
+            
 
             // const {data:res} = await this.$http.post('login',this.loginForm);
             // if (res.meta.status!==200){

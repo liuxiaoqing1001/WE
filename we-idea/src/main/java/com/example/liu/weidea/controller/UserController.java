@@ -51,33 +51,10 @@ public class UserController {
         ) ;
     }
 
-    @GetMapping("/login2")
-    public ResponseData queryUserName(@RequestParam(value="phone" ,required =false ) String phone,
-                                      @RequestParam(value="password" ,required =false ) String password){
-        // 调用service中方法进行login处理
-        Map<String , Object> map = userService.loginCheck(phone , password) ;
-        String msg = "" ;
-        Integer status = (Integer)(map.get(UserService.KEY_MSG)) ;
-        switch (status) {
-            case UserService.LOGIN_MSG_OK :
-                msg = "登录成功" ;
-                break;
-            case UserService.LOGIN_MSG_FAIL_ERROR :
-                msg = "手机号或密码输入错误" ;
-                break;
-            case UserService.LOGIN_MSG_FAIL_NON:
-                msg = "账号不存在" ;
-                break;
-            default :
-                msg = "登录失败" ;
-                break;
-        }
-
-        return new ResponseData(
-                status ,
-                msg ,
-                map.get(UserService.KEY_USER)
-        ) ;
+    @GetMapping(value = "/test2")
+    public String queryUserName(@RequestParam(value="phone" ,required =false,defaultValue = "0") String phone,
+                                @RequestParam(value="password" ,required =false,defaultValue = "0") String password){
+        return "id:"+phone+"/"+password;
     }
 
     /**
@@ -232,10 +209,10 @@ public class UserController {
 //     * @param id
 //     * @return
 //     */
-//    @GetMapping("/{id}")
-//    public User getById(@PathVariable("id") Integer id) {
-//        return userService.getById(id) ;
-//    }
+    @GetMapping("/{id}")
+    public User getById(@PathVariable("id") Integer id) {
+        return userService.getById(id) ;
+    }
 //
 //    /**
 //     * 根据id删除相关用户信息

@@ -93,18 +93,22 @@
             this.$message.error('请填写信息！！！');
           }else {
             // http://127.0.0.1:8618/user/login?phone=16600274434&password=1234567890
-            this.$http.get("/user/login2").then(response => {
-                if (this.loginForm.username === response.data.data.phone){
-                  // if (this.loginForm.password === response.data.password){
-                    this.$message.success('登录成功');
-                    this.$router.push("/UserMain");
-                  // }
-                }
-                // ;
-                console.log(response);
-              });
+            // let url="/user/login/"+this.loginForm.username+"/"+this.loginForm.password;
 
-            
+            this.$http.get("/user/test",{
+              params:{
+                phone:this.loginForm.username
+              }
+            }).then(response => {
+                // if (this.loginForm.username === response.data.data.phone){
+                  // if (this.loginForm.password === response.data.password){
+                  //   this.$message.success('登录成功');
+                  //   this.$router.push("/UserMain");
+                  // }
+                // }
+                // ;
+                console.log(response.data);
+              });
 
             // const {data:res} = await this.$http.post('login',this.loginForm);
             // if (res.meta.status!==200){

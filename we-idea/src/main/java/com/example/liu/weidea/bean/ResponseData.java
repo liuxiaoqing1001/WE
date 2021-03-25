@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseData implements Serializable {
-    private Integer errCode ;
+    private Integer errorCode ;
     private String msg ;
     private Object data ;
 }

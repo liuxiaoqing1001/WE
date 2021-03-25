@@ -7,23 +7,44 @@ import java.util.List;
 
 @Mapper
 public interface UserDao {
-    // -- select 用户是否存在
+
+    /**
+     * 用户是否存在
+     * @param phone
+     * @return
+     */
     @Select("select count(*) from user where phone=#{phone}")
     int userSearch(String phone) ;
 
-    // select 根据手机号和密码查找用户
+    /**
+     * 根据手机号和密码查找用户
+     * @param phone
+     * @param password
+     * @return
+     */
     @Select("select * from user where phone=#{phone} and password=#{pwd}")
     User select(@Param("phone") String phone, @Param("pwd") String password) ;
 
-    // -- insert 添加用户
-    @Insert("insert into user(phone,password,regdate) " +
-            "values(#{phone},#{password},now())")
+    /**
+     * 注册
+     * @param user
+     * @return
+     */
+    @Insert("insert into user(phone,password,regdate) values(#{phone},#{password},now())")
     int add(User user) ;
 
-    //查询数据库中所有信息
+    /**
+     * 查询数据库中所有信息
+     * @return
+     */
     @Select("select * from user")
     List<User> getAll() ;
 
+    /**
+     * 根据电话号查询用户信息
+     * @param phone
+     * @return
+     */
     @Select("select * from user where phone=#{phone}")
     User searchByPhone(@Param("phone") String phone);
 

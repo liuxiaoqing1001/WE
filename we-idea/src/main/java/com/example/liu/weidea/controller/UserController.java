@@ -52,19 +52,12 @@ public class UserController {
         ) ;
     }
 
-    @GetMapping(value = "/test")
-    public String queryUserName(@RequestParam(value="phone" ,required =false,defaultValue = "0") String phone,
-                                @RequestParam(value="password" ,required =false,defaultValue = "0") String password){
-
-        return "id22:"+phone+"/"+password;
-    }
-
     /**
      * 注册
      * @param map
      * @return
      */
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseData register(@RequestBody Map<String , Object> map) {
         User user = new User() ;
         user.setPassword((String)map.get("password"));
@@ -92,6 +85,11 @@ public class UserController {
         ) ;
     }
 
+    /**
+     * 根据电话号查询用户信息
+     * @param phone
+     * @return
+     */
     @GetMapping("/searchByPhone/{phone}")
     public ResponseData searchByPhone(@PathVariable("phone")String phone){
         User result=userService.searchByPhone(phone);

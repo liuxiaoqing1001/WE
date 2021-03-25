@@ -12,7 +12,7 @@
       <div class="form_box">
         <el-form-item class="option" prop="username">
           <!--        v-model="dataForm.username" 绑定数据-->
-          <el-input type="text" v-model="loginForm.username" placeholder="请输入用户名或手机号">
+          <el-input type="text" v-model="loginForm.userId" placeholder="请输入用户名或手机号">
 <!--            prefix首部、suffix尾部-->
             <i slot="prefix" class="el-input__icon el-icon-user"></i>
           </el-input>
@@ -47,12 +47,12 @@
     data() {
       return {
         loginForm: {
-          username: '',
+          userId: '',
           password: ''
         },
         // 表单验证，需要在 el-form-item 元素中增加 prop 属性
         rules: {
-          username: [
+          userId: [
             {
               required: true, //表示是否必填
               message: '账号不可为空',
@@ -87,42 +87,26 @@
       submit_login () {
         // validate 预校验
         this.$refs.loginFormRef.validate(async valid => {
-          // console.log(valid)
           if (!valid){
-            // this.dialogVisible = true;
             this.$message.error('请填写信息！！！');
           }else {
-            // http://127.0.0.1:8618/user/login?phone=16600274434&password=1234567890
-            // let url="/user/login/"+this.loginForm.username+"/"+this.loginForm.password;
-
-            this.$http.get("/user/test",{
+            this.$http.get("/user/login",{
               params:{
-                phone:this.loginForm.username
+                phone:this.loginForm.userId,
+                password:this.loginForm.password
               }
             }).then(response => {
-                // if (this.loginForm.username === response.data.data.phone){
-                  // if (this.loginForm.password === response.data.password){
-                  //   this.$message.success('登录成功');
-                  //   this.$router.push("/UserMain");
-                  // }
-                // }
-                // ;
-                console.log(response.data);
-              });
-
-            // const {data:res} = await this.$http.post('login',this.loginForm);
-            // if (res.meta.status!==200){
-            //   this.$message.error('信息不正确！！！登录失败');
-            // }else {
-
-              // // 将登录成功之后的token保存到客户端的sessionStorage中
-              // window.sessionStorage.setItem('token',res.data.token);
-              // this.$router.push("/AdminMain");
-
-            // }
+              if (response.data.errorCode===0){
+                this.$message.success(response.data.msg);
+                // 将登录成功之后的用户id保存到客户端的sessionStorage中
+                window.sessionStorage.setItem('token',response.data.data.id);
+                this.$router.push("/UserMain");
+              }else {
+                this.$message.error(response.data.msg);
+              }
+            });
           }
         });
-
       },
       ModifyPwd(){
         this.$router.push("/ModifyPwd");
@@ -130,12 +114,6 @@
       Register(){
         this.$router.push("/Register");
       }
-
-      // // 点击重置按钮 重置表单
-      // resetLoginForm () {
-      //   // console.log(this)
-      //   this.$refs.loginFormRef.resetFields()
-      // }
     }
   }
 </script>

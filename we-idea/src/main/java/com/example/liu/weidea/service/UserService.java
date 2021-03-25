@@ -74,6 +74,11 @@ public interface UserService {
 
     String getPhotoUrl(String name);
 
+    /**
+     * 根据电话号查询用户信息
+     * @param phone
+     * @return
+     */
     User searchByPhone(String phone);
 
     Integer forget(String password, String name);

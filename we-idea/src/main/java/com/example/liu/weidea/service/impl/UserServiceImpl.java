@@ -17,6 +17,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
 
+    /**
+     * 登录
+     * @param phone  非空
+     * @param pwd  非空
+     * @return
+     */
     @Override
     public Map<String, Object> loginCheck(String phone, String pwd) {
         Map<String , Object> map = new HashMap<>() ;
@@ -26,7 +32,6 @@ public class UserServiceImpl implements UserService {
         }
         // 先进行账号是否存在检测
         int nameCount = userDao.userSearch(phone) ;
-        System.out.println("nameCount:"+nameCount);
         if(nameCount == 0) {
             map.put(KEY_MSG , LOGIN_MSG_FAIL_NON) ;
             return map ;
@@ -47,6 +52,11 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
+    /**
+     * 注册
+     * @param user 非空，电话和密码非空
+     * @return
+     */
     @Override
     public Integer register(User user) {
         if(null == user) {
@@ -71,14 +81,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
-
-
-
-
-
-
-
+    /**
+     * 根据电话号查询用户信息
+     * @param phone
+     * @return
+     */
     @Override
     public User searchByPhone(String phone) {
         if(phone==""||phone==null){
@@ -86,6 +93,10 @@ public class UserServiceImpl implements UserService {
         }
         return userDao.searchByPhone(phone);
     }
+
+
+
+
 
     @Override
     public Integer forget(String password, String name) {

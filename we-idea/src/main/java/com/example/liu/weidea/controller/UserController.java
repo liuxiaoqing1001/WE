@@ -24,8 +24,9 @@ public class UserController {
      * @param password
      * @return
      */
-    @GetMapping("/login/{phone}/{pwd}")
-    public ResponseData login(@PathVariable("phone") String phone , @PathVariable("pwd") String password) {
+    @GetMapping("/login")
+    public ResponseData login(@RequestParam(value="phone" ,required =false) String phone,
+                              @RequestParam(value="password" ,required =false) String password) {
         // 调用service中方法进行login处理
         Map<String , Object> map = userService.loginCheck(phone , password) ;
         String msg = "" ;
@@ -51,10 +52,11 @@ public class UserController {
         ) ;
     }
 
-    @GetMapping(value = "/test2")
+    @GetMapping(value = "/test")
     public String queryUserName(@RequestParam(value="phone" ,required =false,defaultValue = "0") String phone,
                                 @RequestParam(value="password" ,required =false,defaultValue = "0") String password){
-        return "id:"+phone+"/"+password;
+
+        return "id22:"+phone+"/"+password;
     }
 
     /**
@@ -209,10 +211,10 @@ public class UserController {
 //     * @param id
 //     * @return
 //     */
-    @GetMapping("/{id}")
-    public User getById(@PathVariable("id") Integer id) {
-        return userService.getById(id) ;
-    }
+//    @GetMapping("/{id}")
+//    public User getById(@PathVariable("id") Integer id) {
+//        return userService.getById(id) ;
+//    }
 //
 //    /**
 //     * 根据id删除相关用户信息

@@ -3438,6 +3438,11 @@ quickList	自动匹配快捷回复	Array	-	[]
 ~~~
 
 ~~~ 
+http://localhost:8080/xx?phoneV=phone
+@RequestParam(value="phoneV" ,required =false,defaultValue=0) String phone
+value：参数名
+required：是否包含该参数，默认为true，表示该请求路径中必须包含该参数，如果不包含就报错。
+defaultValue：默认参数值，如果设置了该值，required=true将失效，自动为false,如果没有传该参数，就使用默认值
 getData() {//查询数据
 	axios.get("http://localhost:8080/user/selectUserById", {
 	    params: {

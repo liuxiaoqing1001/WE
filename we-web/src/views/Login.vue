@@ -10,7 +10,7 @@
 <!--      <h3 class="login-title">欢迎登录</h3>-->
 <!--      prop="username" 相当于html中的定义表单的name-->
       <div class="form_box">
-        <el-form-item class="option" prop="username">
+        <el-form-item class="option" prop="userId">
           <!--        v-model="dataForm.username" 绑定数据-->
           <el-input type="text" v-model="loginForm.userId" placeholder="请输入用户名或手机号">
 <!--            prefix首部、suffix尾部-->
@@ -100,7 +100,11 @@
                 this.$message.success(response.data.msg);
                 // 将登录成功之后的用户id保存到客户端的sessionStorage中
                 window.sessionStorage.setItem('token',response.data.data.id);
-                this.$router.push("/UserMain");
+                if (response.data.data.role===0){
+                  this.$router.push("/AdminMain");
+                }else {
+                  this.$router.push("/UserMain");
+                }
               }else {
                 this.$message.error(response.data.msg);
               }
@@ -109,7 +113,7 @@
         });
       },
       ModifyPwd(){
-        this.$router.push("/ModifyPwd");
+        this.$router.push("/ForgetPwd");
       },
       Register(){
         this.$router.push("/Register");

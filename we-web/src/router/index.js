@@ -10,6 +10,7 @@ import Model from "../components/Admin/Model";
 import Data from "../components/Admin/Data";
 import Setting from "../components/Admin/Setting";
 import ModifyPwd from "../components/Other/ModifyPwd";
+import ForgetPwd from "../components/Other/ForgetPwd";
 import PersonalCenter from "../components/Other/PersonalCenter";
 import Register from "../components/Other/Register";
 import Consulting from "../components/User/Consulting";
@@ -37,6 +38,12 @@ export default new Router({
       path: '/',        //访问路径
       name: 'Login',
       component: Login  //跳转页面
+    },
+    {
+      // 忘记密码
+      path: '/ForgetPwd',
+      name: 'ForgetPwd',
+      component: ForgetPwd
     },
     {
       // 修改密码

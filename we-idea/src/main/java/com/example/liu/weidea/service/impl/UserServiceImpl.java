@@ -94,18 +94,26 @@ public class UserServiceImpl implements UserService {
         return userDao.searchByPhone(phone);
     }
 
-
-
-
-
+    /**
+     * 修改秘密
+     * @param password
+     * @param phone
+     * @return
+     */
     @Override
-    public Integer forget(String password, String name) {
-        if(name==null||name==""){
+    public Integer modifyPwd(String password, String phone) {
+        if(phone==null||phone==""){
             return null;
         }
         password= DigestUtils.md5DigestAsHex(password.getBytes());
-        return userDao.forget(password, name);
+        return userDao.modifyPwd(password, phone);
     }
+
+
+
+
+
+
 
     //修改
     @Override

@@ -20,7 +20,7 @@
 
 <script>
     export default {
-        name: "ModifyPwd",
+      name: "ModifyPwd",
       data() {
         var validatePass = (rule, value, callback) => {
           if (value === '') {
@@ -91,14 +91,14 @@
 
 <style scoped>
   .edit-box{
-    border: 1px solid #DCDFE6;
+    /*border: 1px solid #DCDFE6;*/
     width: 350px;
     margin: 130px auto;
     padding: 35px 35px 15px 35px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    box-shadow: 0 0 25px #909399;
+    /*box-shadow: 0 0 25px #909399;*/
   }
 
   .form_box{

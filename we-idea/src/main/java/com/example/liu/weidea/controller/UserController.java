@@ -100,16 +100,15 @@ public class UserController {
         );
     }
 
-
-//    @PutMapping("/forget/{password}/{name}")
-//    public ResponseData forget(@PathVariable("password")String password, @PathVariable("name")String name){
-//        Integer result=userService.forget(password, name);
-//        return new ResponseData(
-//                result !=null ? 0 : 1 ,
-//                result !=null ? "修改成功" : "修改失败" ,
-//                result
-//        );
-//    }
+    @PostMapping("/modifyPwd")
+    public ResponseData modifyPwd(@RequestBody Map<String , Object> map){
+        Integer result=userService.modifyPwd((String)map.get("password"), (String)map.get("phone"));
+        return new ResponseData(
+                result !=null ? 0 : 1 ,
+                result !=null ? "修改成功" : "修改失败" ,
+                result
+        );
+    }
 //
 //    /**
 //     * 更新

@@ -81,5 +81,11 @@ public interface UserService {
      */
     User searchByPhone(String phone);
 
-    Integer forget(String password, String name);
+    /**
+     * 修改密码
+     * @param password
+     * @param phone
+     * @return
+     */
+    Integer modifyPwd(String password, String phone);
 }

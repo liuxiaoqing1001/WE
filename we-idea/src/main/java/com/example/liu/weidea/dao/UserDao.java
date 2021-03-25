@@ -48,6 +48,17 @@ public interface UserDao {
     @Select("select * from user where phone=#{phone}")
     User searchByPhone(@Param("phone") String phone);
 
+    /**
+     * 修改密码
+     * @param password
+     * @param phone
+     * @return
+     */
+    @Update("update user set password=#{password} where phone=#{phone}")
+    int modifyPwd(@Param("password") String password, @Param("phone") String phone) ;
+
+
+
 
 
 
@@ -148,8 +159,5 @@ public interface UserDao {
     @Select("select photourl from user where name=#{name}")
     String getPhotoUrl(String name);
 
-    //修改密码
-    @Update("update user set password=#{password} where name=#{name}")
-    int forget(@Param("password") String password, @Param("name") String name) ;
 
 }

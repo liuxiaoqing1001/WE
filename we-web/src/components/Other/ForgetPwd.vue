@@ -1,10 +1,10 @@
 <template>
   <div>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="edit-box">
-      <h3>注 册</h3>
+      <h3>修改密码</h3>
       <div class="form_box">
-        <el-form-item class="option" label="手机号" prop="userId">
-          <el-input v-model="ruleForm.userId"></el-input>
+        <el-form-item class="option" label="账号" prop="userId">
+          <el-input type="text" v-model="ruleForm.userId" placeholder="请输入账号或手机号"></el-input>
         </el-form-item>
         <el-form-item class="option" label="密码" prop="pwd">
           <el-input type="password" v-model="ruleForm.pwd" auto-complete="off"></el-input>
@@ -14,7 +14,7 @@
         </el-form-item>
         <el-form-item class="option">
           <el-button @click="comeBack()">返回</el-button>
-          <el-button type="primary" @click="submitForm('ruleForm')" style="margin-left: 30px">注册</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')" style="margin-right: 50px">修改</el-button>
         </el-form-item>
       </div>
     </el-form>
@@ -23,7 +23,7 @@
 
 <script>
     export default {
-      name: "Register",
+      name: "ForgetPwd",
       data() {
         var validatePass = (rule, value, callback) => {
           if (value === '') {
@@ -36,16 +36,16 @@
         };
         return {
           ruleForm: {
-            userId: '',
+            userId:'',
             pwd: '',
             checkPwd: ''
           },
           rules: {
             userId: [
               {
-                required: true,
-                message: '请输入手机号',
-                trigger: 'blur'
+                required: true, //表示是否必填
+                message: '账号不可为空',
+                trigger: 'blur' //表示触发时机（blur失去焦点）
               },
               {
                 min: 3,
@@ -88,7 +88,7 @@
         submitForm(formName) {
           this.$refs[formName].validate(valid => {
             if (valid) {
-              this.$http.post("/user/register",{
+              this.$http.post("/user/modifyPwd",{
                 phone:this.ruleForm.userId,
                 password:this.ruleForm.pwd
               }).then(response => {

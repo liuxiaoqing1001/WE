@@ -34,10 +34,10 @@ public interface UserDao {
     int add(User user) ;
 
     /**
-     * 查询数据库中所有信息
+     * 查询数据库中用户（除管理员）
      * @return
      */
-    @Select("select * from user")
+    @Select("select * from user where role=0")
     List<User> getAll() ;
 
     /**

@@ -3,14 +3,13 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="edit-box">
       <h3>修改密码</h3>
       <div class="form_box">
-        <el-form-item class="option" label="密码" prop="pass">
-          <el-input type="password" v-model="ruleForm.pass" auto-complete="off"></el-input>
+        <el-form-item class="option" label="密码" prop="pwd">
+          <el-input type="password" v-model="ruleForm.pwd" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item class="option" label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm.checkPass" auto-complete="off"></el-input>
+        <el-form-item class="option" label="确认密码" prop="checkPwd">
+          <el-input type="password" v-model="ruleForm.checkPwd" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item class="option">
-<!--          <el-button @click="resetForm('ruleForm')">重置</el-button>-->
           <el-button type="primary" @click="submitForm('ruleForm')" style="margin-right: 50px">修改</el-button>
         </el-form-item>
       </div>
@@ -25,7 +24,7 @@
         var validatePass = (rule, value, callback) => {
           if (value === '') {
             callback(new Error('输入密码不可为空'));
-          } else if (value !== this.ruleForm.pass) {
+          } else if (value !== this.ruleForm.pwd) {
             callback(new Error('密码不一致!'));
           } else {
             callback();
@@ -33,11 +32,11 @@
         };
         return {
           ruleForm: {
-            pass: '',
-            checkPass: ''
+            pwd: '',
+            checkPwd: ''
           },
           rules: {
-            pass: [
+            pwd: [
               {
                 required: true,
                 message: '密码不可为空',
@@ -50,7 +49,7 @@
                 trigger: 'blur'
               }
             ],
-            checkPass: [
+            checkPwd: [
               {
                 required: true,
                 validator: validatePass,
@@ -71,19 +70,19 @@
         submitForm(formName) {
           this.$refs[formName].validate(valid => {
             if (valid) {
-              this.$message({
-                type: 'success',
-                message: '注册成功'
+              this.$http.post("/user/modifyPwd",{
+                phone:window.sessionStorage.getItem('token'),
+                password:this.ruleForm.pwd
+              }).then(response => {
+                if (response.data.errorCode===0){
+                  this.$message.success(response.data.msg);
+                  this.$router.push("/");
+                }else {
+                  this.$message.error(response.data.msg);
+                }
               });
-            } else {
-              this.$message.error('注册失败');
-              return false;
             }
           });
-        },
-
-        resetForm(formName) {
-          this.$refs[formName].resetFields();
         }
       }
     }

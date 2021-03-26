@@ -88,4 +88,22 @@ public interface UserService {
      * @return
      */
     Integer modifyPwd(String password, String phone);
+
+    /**
+     * 查询数据库中所有管理员
+     * @return
+     */
+    List<User> getAllAdmin();
+
+    /**
+     * 查询数据库中所有用户（除管理员）
+     * @return
+     */
+    List<User> getAllUser();
+
+    /**
+     * 查询数据库中所有自愿者
+     * @return
+     */
+    List<User> getAllVolunteer();
 }

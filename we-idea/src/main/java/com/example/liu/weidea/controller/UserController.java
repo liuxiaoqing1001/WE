@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 //import com.isoft.video.util.FileUtil;
@@ -109,6 +110,40 @@ public class UserController {
                 result
         );
     }
+
+    @GetMapping("/getAllAdmin")
+    public ResponseData getAllAdmin(){
+        List<User> adminList = userService.getAllAdmin();
+        return new ResponseData(
+                adminList != null?0:1,
+                adminList != null?"查询成功":"查询失败",
+                adminList
+        );
+    }
+
+    @GetMapping("/getAllUser")
+    public ResponseData getAllUser(){
+        List<User> userList = userService.getAllUser();
+        return new ResponseData(
+                userList != null?0:1,
+                userList != null?"查询成功":"查询失败",
+                userList
+        );
+    }
+
+    @GetMapping("/getAllVolunteer")
+    public ResponseData getAllVolunteer(){
+        List<User> volunteerList = userService.getAllVolunteer();
+        return new ResponseData(
+                volunteerList != null?0:1,
+                volunteerList != null?"查询成功":"查询失败",
+                volunteerList
+        );
+    }
+
+//    public List<User> getAll() {
+//        return userService.getAll() ;
+//    }
 //
 //    /**
 //     * 更新

@@ -109,7 +109,32 @@ public class UserServiceImpl implements UserService {
         return userDao.modifyPwd(password, phone);
     }
 
+    /**
+     * 查询数据库中所有管理员
+     * @return
+     */
+    @Override
+    public List<User> getAllAdmin() {
+        return userDao.getAllAdmin();
+    }
 
+    /**
+     * 查询数据库中所有用户（除管理员）
+     * @return
+     */
+    @Override
+    public List<User> getAllUser() {
+        return userDao.getAllUser();
+    }
+
+    /**
+     * 查询数据库中所有自愿者
+     * @return
+     */
+    @Override
+    public List<User> getAllVolunteer() {
+        return userDao.getAllVolunteer();
+    }
 
 
 

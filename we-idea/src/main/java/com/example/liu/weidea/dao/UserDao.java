@@ -34,11 +34,25 @@ public interface UserDao {
     int add(User user) ;
 
     /**
-     * 查询数据库中用户（除管理员）
+     * 查询数据库中所有管理员
      * @return
      */
     @Select("select * from user where role=0")
-    List<User> getAll() ;
+    List<User> getAllAdmin() ;
+
+    /**
+     * 查询数据库中所有用户（除管理员）
+     * @return
+     */
+    @Select("select * from user where role!=0")
+    List<User> getAllUser() ;
+
+    /**
+     * 查询数据库中所有自愿者
+     * @return
+     */
+    @Select("select * from user where role=2")
+    List<User> getAllVolunteer() ;
 
     /**
      * 根据电话号查询用户信息
@@ -63,6 +77,12 @@ public interface UserDao {
 
 
 
+
+
+
+
+    @Select("select * from user")
+    List<User> getAll() ;
 
     //根据id更新内容
     @Update("<script>" +

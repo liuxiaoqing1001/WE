@@ -5,7 +5,7 @@
       <!-- 头部 -->
       <el-header>
         <div>
-          <img src="../assets/logo/we_logo_black.png" alt="">
+          <img src="../assets/logo/we_logo_1.png" alt="">
           <span>“我和你”心理健康公益平台<span style="font-size: 10px">·管理员后台·</span></span>
         </div>
 <!--        <span style="float:right;padding:5px;margin-left:2%;width:20%">-->
@@ -23,7 +23,6 @@
             </el-dropdown-menu>
           </el-dropdown>
         </span>
-<!--        <el-button type="info" @click="logout">退出</el-button>-->
       </el-header>
       <!-- 主体 -->
       <el-container>
@@ -74,7 +73,6 @@
               <span slot="title">模块管理</span>
             </el-menu-item>
             <el-menu-item index="/Data" >
-<!--              disabled-->
               <i class="el-icon-document"></i>
               <span slot="title">数据统计</span>
             </el-menu-item>
@@ -114,29 +112,19 @@
       }
     },
     methods: {
-      handleIconClick(ev) {
-        console.log(ev);
-      },
       logout() {
-        // // 清空token
-        // window.sessionStorage.clear('token');
+        // 清空token
+        window.sessionStorage.clear();
         // 跳转到登录页
         this.$router.push('/');
       },
       modifyPwd(){
-        // this.$router.push('/modifyPwd');
-        this.$router.push("/UserMain");
+        this.$router.push('/modifyPwd');
       },
       // 点击切换左侧菜单的折叠与展开
       toggleCollapse() {
         this.isCollapse = !this.isCollapse
       }
-      // async getMenuList() {
-      //   const { data: res } = await this.$http.get('menus')
-      //   console.log(res)
-      //   if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
-      //   this.menuList = res.data
-      // }
     }
   }
 </script>

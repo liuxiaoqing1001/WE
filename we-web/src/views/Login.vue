@@ -99,7 +99,7 @@
               if (response.data.errorCode===0){
                 this.$message.success(response.data.msg);
                 // 将登录成功之后的用户id保存到客户端的sessionStorage中
-                window.sessionStorage.setItem('token',response.data.data.id);
+                window.sessionStorage.setItem('token',response.data.data.phone);
                 if (response.data.data.role===0){
                   this.$router.push("/AdminMain");
                 }else {

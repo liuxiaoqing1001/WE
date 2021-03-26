@@ -89,11 +89,17 @@
     methods:{
       // 监听 pageSize 改变的事件
       handleSizeChange(newSize) {
-        console.log(newSize)
+        // console.log(newSize)
+        this.queryInfo.pagesize = newSize;
+        // 重新发起请求用户列表
+        this.getUserList();
       },
       // 监听 当前页码值 改变的事件
       handleCurrentChange(newPage) {
-        console.log(newPage)
+        // console.log(newPage)
+        this.queryInfo.pagenum = newPage;
+        // 重新发起请求用户列表
+        this.getUserList();
       },
       getUserList(){
         this.$http.get("/user/getAllUser").then(response => {
@@ -123,4 +129,9 @@
   .el-table{
     height: auto;
   }
+
+  /*.el-breadcrumb{margin-bottom: 15px;font-size: 12px;}*/
+  /*.el-card{box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) !important;}*/
+  /*.el-table{margin-top: 15px;font-size: 12px;}*/
+  /*.el-pagination{margin-top: 15px;}*/
 </style>

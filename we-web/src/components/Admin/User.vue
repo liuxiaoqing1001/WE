@@ -39,7 +39,7 @@
         <span slot="footer" class="dialog-footer">
           <el-button @click="addDialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="addUser">确 定</el-button>
-      </span>
+        </span>
       </el-dialog>
 
       <!--用户列表区域-->

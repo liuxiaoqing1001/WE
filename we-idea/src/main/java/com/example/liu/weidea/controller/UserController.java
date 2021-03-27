@@ -87,6 +87,40 @@ public class UserController {
     }
 
     /**
+     * 添加管理员
+     * @param map
+     * @return
+     */
+    @PostMapping("/registerAdmin")
+    public ResponseData registerAdmin(@RequestBody Map<String , Object> map) {
+        User admin = new User() ;
+        admin.setPassword((String)map.get("password"));
+        admin.setPhone((String)map.get("phone"));
+        admin.setRole(0);
+        Integer result = userService.registerAdmin(admin) ;
+        String msg = "" ;
+        switch (result) {
+            case UserService.REG_MSG_OK :
+                msg = "注册成功" ;
+                break;
+            case UserService.REG_MSG_FAIL_NAMEEXISTS :
+                msg = "账户已存在" ;
+                break;
+            case UserService.REG_MSG_FAIL_INFO_NON:
+                msg = "注册信息不完整" ;
+                break;
+            default :
+                msg = "注册失败" ;
+                break;
+        }
+        return new ResponseData(
+                result ,
+                msg,
+                result == 0
+        ) ;
+    }
+
+    /**
      * 根据电话号查询用户信息
      * @param phone
      * @return

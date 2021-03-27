@@ -34,6 +34,14 @@ public interface UserDao {
     int add(User user) ;
 
     /**
+     * 添加管理员
+     * @param user
+     * @return
+     */
+    @Insert("insert into user(phone,password,regdate,role) values(#{phone},#{password},now(),0)")
+    int addAdmin(User user) ;
+
+    /**
      * 查询数据库中所有管理员
      * @return
      */

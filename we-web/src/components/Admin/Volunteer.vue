@@ -118,6 +118,7 @@
   .el-breadcrumb{
     /*margin-bottom: 20px;*/
     margin-top: 15px;
+    margin-bottom: 15px;
     font-size: 13px;
     height: auto;
   }
@@ -127,5 +128,10 @@
   }
   .el-table{
     height: auto;
+    margin-top: 15px;
+    font-size: 12px;
+  }
+  .el-pagination{
+    margin-top: 15px;
   }
 </style>

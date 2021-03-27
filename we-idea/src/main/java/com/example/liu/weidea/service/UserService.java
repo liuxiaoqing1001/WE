@@ -106,4 +106,11 @@ public interface UserService {
      * @return
      */
     List<User> getAllVolunteer();
+
+    /**
+     * 添加管理员
+     * @param user
+     * @return
+     */
+    Integer registerAdmin(User user);
 }

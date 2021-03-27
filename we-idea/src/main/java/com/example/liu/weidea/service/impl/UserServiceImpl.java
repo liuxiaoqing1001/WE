@@ -82,6 +82,36 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 添加管理员
+     * @param user 非空，电话和密码非空
+     * @return
+     */
+    @Override
+    public Integer registerAdmin(User user) {
+        if( user == null ) {
+            return REG_MSG_FAIL_INFO_NON ;
+        }
+        if(StringUtils.isEmpty(user.getPassword())||StringUtils.isEmpty(user.getPhone()) ) {
+            return REG_MSG_FAIL_INFO_NON ;
+        }
+        // 先进行账号是否存在检测
+        int count = userDao.userSearch(user.getPhone()) ;
+        if(count > 0) {
+            return REG_MSG_FAIL_NAMEEXISTS ;
+        }
+        // 注册
+        user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+        user.setPhone(user.getPhone());
+        user.setRole(user.getRole());
+        int r = userDao.addAdmin(user) ;
+        if(r > 0) {
+            return REG_MSG_OK ;
+        } else {
+            return REG_MSG_FAIL_OTHER ;
+        }
+    }
+
+    /**
      * 根据电话号查询用户信息
      * @param phone
      * @return

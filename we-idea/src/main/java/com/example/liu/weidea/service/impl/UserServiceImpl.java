@@ -206,12 +206,48 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public int DeleteById(Integer id) {
-        return userDao.DeleteById(id);
+    public int deleteById(Integer id) {
+        return userDao.deleteById(id);
     }
 
+    /**
+     * 根据关键字查询用户
+     * @param keyword
+     * @return
+     */
+    @Override
+    public List<User> getUser(String keyword) {
+        if(keyword==""||keyword==null){
+            return userDao.getAllUser();
+        }
+        return userDao.getUser(keyword);
+    }
 
+    /**
+     * 根据关键字查询自愿者
+     * @param keyword
+     * @return
+     */
+    @Override
+    public List<User> getVolunteer(String keyword) {
+        if(keyword==""||keyword==null){
+            return userDao.getAllVolunteer();
+        }
+        return userDao.getVolunteer(keyword);
+    }
 
+    /**
+     * 根据关键字查询管理员
+     * @param keyword
+     * @return
+     */
+    @Override
+    public List<User> getAdmin(String keyword) {
+        if(keyword==""||keyword==null){
+            return userDao.getAllAdmin();
+        }
+        return userDao.getAdmin(keyword);
+    }
 
 
 

@@ -5,15 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.service.UserService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -247,26 +244,64 @@ public class UserController {
     }
 
     /**
+     * 根据关键字查询用户
+     * @param keyword
+     * @return
+     */
+    @GetMapping("/getUser/{keyword}")
+    public ResponseData getUser(@PathVariable("keyword") String keyword) {
+        List<User> u = userService.getUser(keyword) ;
+        return new ResponseData(
+                u !=null ? 0 : 1 ,
+                u !=null ? "查询成功" : "查询失败" ,
+                u
+        );
+    }
+
+    /**
+     * 根据关键字查询自愿者
+     * @param keyword
+     * @return
+     */
+    @GetMapping("/getVolunteer/{keyword}")
+    public ResponseData getVolunteer(@PathVariable("keyword") String keyword) {
+        List<User> u = userService.getVolunteer(keyword) ;
+        return new ResponseData(
+                u !=null ? 0 : 1 ,
+                u !=null ? "查询成功" : "查询失败" ,
+                u
+        );
+    }
+
+    /**
+     * 根据关键字查询管理员
+     * @param keyword
+     * @return
+     */
+    @GetMapping("/getAdmin/{keyword}")
+    public ResponseData getAdmin(@PathVariable("keyword") String keyword) {
+        List<User> u = userService.getAdmin(keyword) ;
+        return new ResponseData(
+                u !=null ? 0 : 1 ,
+                u !=null ? "查询成功" : "查询失败" ,
+                u
+        );
+    }
+
+    /**
      * 根据id删除相关用户信息
      * @param id
      * @return
      */
-    @DeleteMapping("/delete")
-    public ResponseData deleteById(@RequestParam(value = "id",required = false) Integer id) {
-        int result = userService.DeleteById(id) ;
+    @DeleteMapping("/delete/{id}")
+    public ResponseData deleteById(@PathVariable("id") Integer id) {
+        int result = userService.deleteById(id) ;
         return  new ResponseData(
                 result !=0 ? 0 : 1 ,
                 result !=0 ? "删除成功" : "删除失败" ,
                 result
         ) ;
     }
-
-
-
-
-
-
-
 
 //
 //    @GetMapping("RolePage/{curPage}/{size}")

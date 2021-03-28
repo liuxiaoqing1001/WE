@@ -10,6 +10,7 @@
           <el-input type="password" v-model="ruleForm.checkPwd" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item class="option">
+          <el-button @click="comeBack()">返回</el-button>
           <el-button type="primary" @click="submitForm('ruleForm')" style="margin-right: 50px">修改</el-button>
         </el-form-item>
       </div>
@@ -83,6 +84,9 @@
               });
             }
           });
+        },
+        comeBack() {
+          this.$router.go(-1);
         }
       }
     }

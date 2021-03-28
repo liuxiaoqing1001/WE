@@ -104,6 +104,7 @@
                 }else {
                   window.sessionStorage.setItem('token',response.data.data.name);
                 }
+                window.sessionStorage.setItem('id',response.data.data.id);
                 if (response.data.data.role===0){
                   this.$router.push("/AdminMain");
                 }else {

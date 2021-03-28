@@ -71,7 +71,7 @@ public interface UserService {
      * @param id
      * @return
      */
-    int DeleteById(Integer id) ;
+    int deleteById(Integer id) ;
 
     Integer upRole(Integer id);
 
@@ -122,4 +122,25 @@ public interface UserService {
      * @return
      */
     Integer registerAdmin(User user);
+
+    /**
+     * 根据关键字查询用户
+     * @param keyword
+     * @return
+     */
+    List<User> getUser(String keyword);
+
+    /**
+     * 根据关键字查询自愿者
+     * @param keyword
+     * @return
+     */
+    List<User> getVolunteer(String keyword);
+
+    /**
+     * 根据关键字查询自愿者
+     * @param keyword
+     * @return
+     */
+    List<User> getAdmin(String keyword);
 }

@@ -130,7 +130,50 @@ public interface UserDao {
      * @return
      */
     @Delete("delete from user where id=#{id}")
-    int DeleteById(Integer id) ;
+    int deleteById(Integer id) ;
+
+    /**
+     * 根据关键字查询用户
+     * @param keyword
+     * @return
+     */
+     @Select("<script>" +
+            "select * from user " +
+            "        <if test=\"keyword != null\"> " +
+            "            <bind name=\"key\" value=\"'%'+keyword+'%'\"/> " +
+            "            where (name like #{key} and role!=0) or (phone like #{key} and role!=0)" +
+            "        </if>"
+            +"</script>")
+    List<User> getUser(String keyword) ;
+
+    /**
+     * 根据关键字查询自愿者
+     * @param keyword
+     * @return
+     */
+    @Select("<script>" +
+            "select * from user " +
+            "        <if test=\"keyword != null\"> " +
+            "            <bind name=\"key\" value=\"'%'+keyword+'%'\"/> " +
+            "            where (name like #{key} and role!=0) or (phone like #{key} and role=2)" +
+            "        </if>"
+            +"</script>")
+    List<User> getVolunteer(String keyword) ;
+
+    /**
+     * 根据关键字查询管理员
+     * @param keyword
+     * @return
+     */
+    @Select("<script>" +
+            "select * from user " +
+            "        <if test=\"keyword != null\"> " +
+            "            <bind name=\"key\" value=\"'%'+keyword+'%'\"/> " +
+            "            where (name like #{key} and role!=0) or (phone like #{key} and role=0)" +
+            "        </if>"
+            +"</script>")
+    List<User> getAdmin(String keyword) ;
+
 
 
 
@@ -202,6 +245,7 @@ public interface UserDao {
 
     @Select("select photourl from user where name=#{name}")
     String getPhotoUrl(String name);
+
 
 
 }

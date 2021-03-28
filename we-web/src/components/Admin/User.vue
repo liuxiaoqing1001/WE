@@ -18,7 +18,7 @@
           <el-col :span="10">
             <!--搜索区域-->
             <el-input v-model="queryInfo.query" placeholder="请输入内容" clearable @clear="getUserList">
-              <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
+              <el-button slot="append" icon="el-icon-search" @click="getUser"></el-button>
             </el-input>
           </el-col>
         </el-row>
@@ -48,8 +48,8 @@
       <el-table :data="userList" style="width: 100%" border stripe>
         <el-table-column prop="id" label="ID">
         </el-table-column>
-        <el-table-column prop="name" label="姓名"></el-table-column>
-        <el-table-column prop="phone" label="电话"></el-table-column>
+        <el-table-column prop="name" label="用户名"></el-table-column>
+        <el-table-column prop="phone" label="手机号"></el-table-column>
         <el-table-column prop="sex" label="性别"></el-table-column>
         <el-table-column prop="birthday" label="出生日期"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
@@ -93,20 +93,31 @@
           <el-form-item label="ID">
             <el-input v-model="editForm.id" :disabled="true"></el-input>
           </el-form-item>
-          <el-form-item label="用户名">
-            <el-input v-model="editForm.name" :disabled="true"></el-input>
+          <el-form-item label="用户名" prop="name">
+            <el-input v-model="editForm.name"></el-input>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-select v-model="editForm.sex" style="float: left">
+              <el-option v-for="item in sexes" :key="item.label" :label="item.label" :value="item.label">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
             <el-input v-model="editForm.email"></el-input>
           </el-form-item>
-          <el-form-item label="手机" prop="phone">
+          <el-form-item label="手机号" prop="phone">
             <el-input v-model="editForm.phone"></el-input>
+          </el-form-item>
+          <el-form-item label="出生日期">
+            <el-date-picker v-model="editForm.birthday" type="datetime"
+                            format="yyyy年MM月dd日" value-format="yyyy年MM月dd日" style="float: left">
+            </el-date-picker>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-        <el-button @click="editDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editUserInfo">确 定</el-button>
-      </span>
+          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="editUserInfo">确 定</el-button>
+        </span>
       </el-dialog>
     </el-container>
 
@@ -182,14 +193,40 @@
             }
           ]
         },
+        //多条件查询是否性别下拉框
+        sexes: [
+          {
+            value: '1',
+            label: '男'
+          },
+          {
+            value: '0',
+            label: '女'
+          }
+        ],
         // 修改用户信息的表单数据
         editForm: {
           name: '',
+          sex:'',
           email: '',
-          phone: ''
+          phone: '',
+          birthday:''
         },
         // 修改用户信息表单的验证规则对象
         editFormRules: {
+          name: [
+            {
+              required: true, //表示是否必填
+              message: '账号不可为空',
+              trigger: 'blur' //表示触发时机（blur失去焦点）
+            },
+            {
+              min: 3,
+              max: 11,
+              message: '长度在 3 到 11 个字符',
+              trigger: 'blur'
+            }
+          ],
           email: [
             {
               required: true,
@@ -238,6 +275,16 @@
           if (response.data.errorCode===0){
             this.userList = response.data.data;
             this.total = response.data.data.length;
+          }else {
+            this.$message.error(response.data.msg);
+          }
+        });
+      },
+      getUser(){
+        this.$http.get("/user/getUser/"+this.queryInfo.query).then(response => {
+          if (response.data.errorCode===0){
+            this.$message.success(response.data.msg);
+            this.userList = response.data.data;
           }else {
             this.$message.error(response.data.msg);
           }
@@ -312,7 +359,7 @@
         })
       },
       // 根据ID删除对应的用户信息
-      async removeUserById(id) {
+      removeUserById(id) {
         // // 两种方式：1. async，await
         // const confirmResult = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         //   confirmButtonText: '确定',
@@ -329,10 +376,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-
-          this.$http.delete("/user/delete",{
-            id:id
-          }).then(response => {
+          this.$http.delete("/user/delete/"+id).then(response => {
             if (response.data.errorCode===0){
               this.$message.success(response.data.msg);
               this.getUserList();

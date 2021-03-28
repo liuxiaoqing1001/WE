@@ -23,24 +23,25 @@ public interface UserService {
     int LOGIN_MSG_FAIL_OTHER = 3 ;
     int ROLE_ADMIN = 0 ;
     int ROLE_USER = 1 ;
+
     /**
-     *
+     * 登录
      * @param phone  非空
      * @param pwd  非空
-     * @return  key--User , key-msg ; 其中 key-msg的值 0-成功；1-账号不存在；2-用户名或密码错误；3-登录失败
+     * @return
      */
     Map<String , Object> loginCheck(String phone, String pwd) ;
 
     /**
-     *
-     * @param user 非空，电话和密码非空
-     * @return Integer ：0--成功；1--用户名已存在；2--信息不完整；3--失败，其他原因
+     * 注册
+     * @param user
+     * @return Integer
      */
     Integer register(User user) ;
 
     /**
-     * 根据id修改个人信息，可以修改 电话、头像、状态、密码
-     * @param user 非空，id非空，mobile、photoutl、status、password 至少一项不为空
+     * 根据id修改个人信息
+     * @param user
      * @return
      */
     User update(User user) ;
@@ -58,10 +59,18 @@ public interface UserService {
 
     List<User> getAll() ;
 
-    //根据id获取用户信息
-    User getById(Integer id) ;
+    /**
+     * 根据id获取用户信息
+     * @param id
+     * @return
+     */
+    User getUserById(Integer id) ;
 
-    //根据id删除用户信息
+    /**
+     * 根据id删除用户信息
+     * @param id
+     * @return
+     */
     int DeleteById(Integer id) ;
 
     Integer upRole(Integer id);

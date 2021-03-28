@@ -79,6 +79,60 @@ public interface UserDao {
     @Update("update user set password=#{password} where phone=#{phone}")
     int modifyPwd(@Param("password") String password, @Param("phone") String phone) ;
 
+    /**
+     * 根据id更新内容
+     * @param user
+     * @return
+     */
+    @Update("<script>" +
+            "update user " +
+            "        <set> " +
+            "            <if test=\"null != password\">" +
+            "                password=#{password} , " +
+            "            </if>\n" +
+            "            <if test=\"null != name\">" +
+            "                name=#{name} , " +
+            "            </if>\n" +
+            "            <if test=\"null != sex\"> " +
+            "                sex=#{sex}, " +
+            "            </if>\n" +
+            "            <if test=\"null != email\"> " +
+            "                email = #{email} , " +
+            "            </if>\n" +
+            "            <if test=\"null != phone\"> " +
+            "                phone=#{phone} , " +
+            "            </if>" +
+            "            <if test=\"null != photourl\"> " +
+            "                photourl=#{photourl}, " +
+            "            </if>\n" +
+            "            <if test=\"null != birthday\"> " +
+            "                birthday = #{birthday} , " +
+            "            </if>\n" +
+            "            <if test=\"null != role\">" +
+            "                role=#{role} , " +
+            "            </if>\n" +
+            "        </set> " +
+            "        where id=#{id}"
+            +"</script>")
+    int updateById(User user) ;
+
+    /**
+     * 根据id查找对应用户信息
+     * @param id
+     * @return
+     */
+    @Select("select * from user where id=#{id}")
+    User getUserById(Integer id) ;
+
+    /**
+     * 根据id删除对应用户信息
+     * @param id
+     * @return
+     */
+    @Delete("delete from user where id=#{id}")
+    int DeleteById(Integer id) ;
+
+
 
 
 
@@ -92,42 +146,9 @@ public interface UserDao {
     @Select("select * from user")
     List<User> getAll() ;
 
-    //根据id更新内容
-    @Update("<script>" +
-            "update user " +
-            "        <set> " +
-            "            <if test=\"null != password\">" +
-            "                password=#{password} , " +
-            "            </if>\n" +
-            "            <if test=\"null != age\">" +
-            "                age=#{age} , " +
-            "            </if>\n" +
-            "            <if test=\"null != sex\"> " +
-            "                sex=#{sex}, " +
-            "            </if>\n" +
-            "            <if test=\"null != email\"> " +
-            "                email = #{email} , " +
-            "            </if>\n" +
-            "            <if test=\"null != mobile\"> " +
-            "                mobile=#{mobile} , " +
-            "            </if>" +
-            "            <if test=\"null != photourl\"> " +
-            "                photourl=#{photourl}, " +
-            "            </if>\n" +
-            "            <if test=\"null != status\"> " +
-            "                status = #{status} , " +
-            "            </if>\n" +
-            "            <if test=\"null != role\">" +
-            "                role=#{role} , " +
-            "            </if>\n" +
-            "        </set> " +
-            "        where id=#{id}"
-            +"</script>")
-    int updateById(User user) ;
 
-    //根据id查找对应用户信息
-    @Select("select * from user where id=#{id}")
-    User getById(Integer id) ;
+
+
 
     //分页
     @Select("<script>" +
@@ -162,11 +183,6 @@ public interface UserDao {
             "        </where>"+
             "</script>")
     int getMoreCount(@Param("id") Integer id, @Param("name") String name, @Param("regdate") String regdate) ;
-
-
-    //根据id删除对应用户信息
-    @Delete("delete from user where id=#{id}")
-    int DeleteById(Integer id) ;
 
     @Update("update user set role=1 where id=#{id}")
     int upRole(@Param("id") Integer id);

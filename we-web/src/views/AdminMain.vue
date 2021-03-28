@@ -14,7 +14,7 @@
         <span style="float:right;padding-top:10px;margin-right:1%">
           <el-dropdown trigger="click">
             <span class="el-dropdown-link" style="color:white;font-size: 18px">
-              admin
+              {{admin}}
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -105,6 +105,7 @@
     name: "AdminMain",
     data(){
       return{
+        admin:window.sessionStorage.getItem("token"),
         // 菜单是否折叠
         isCollapse: false,
         searchCriteria: '',

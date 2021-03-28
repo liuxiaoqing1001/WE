@@ -3469,18 +3469,6 @@ editData(){//修改数据库
         console.log(error)
     })
 }
-set_user() {//给页面控件赋值
-	admin
-	    .post('user/set_user',{
-	    name:this.name,
-	    age: this.age,
-	    sex: this.sex
-	})
-	.then(response => {
-	    alert("提交成功");
-	})
-	.catch();
-}
 ~~~
 
 ~~~ 

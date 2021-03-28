@@ -166,11 +166,11 @@ public class UserServiceImpl implements UserService {
         return userDao.getAllVolunteer();
     }
 
-
-
-
-
-    //修改
+    /**
+     * 修改
+     * @param user
+     * @return
+     */
     @Override
     public User update(User user) {
         if(null == user) {
@@ -186,9 +186,40 @@ public class UserServiceImpl implements UserService {
         if(r != 1) {
             return null ;
         } else {
-            return userDao.getById(user.getId()) ;
+            return userDao.getUserById(user.getId()) ;
         }
     }
+
+    /**
+     * 根据id获取用户信息
+     * @param id
+     * @return
+     */
+    @Override
+    public User getUserById(Integer id) {
+        return userDao.getUserById(id);
+    }
+
+    /**
+     * 根据id删除用户信息
+     * @param id
+     * @return
+     */
+    @Override
+    public int DeleteById(Integer id) {
+        return userDao.DeleteById(id);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public Page<User> newsPage(Integer id, String name, Date regdate, Integer curPage, Integer size) {
@@ -217,18 +248,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userDao.getAll();
-    }
-
-    //根据id获取用户信息
-    @Override
-    public User getById(Integer id) {
-        return userDao.getById(id);
-    }
-
-    //根据id删除用户信息
-    @Override
-    public int DeleteById(Integer id) {
-        return userDao.DeleteById(id);
     }
 
     @Override

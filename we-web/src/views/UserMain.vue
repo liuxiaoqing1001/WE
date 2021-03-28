@@ -18,7 +18,7 @@
         <span style="float:right;padding-top:10px;margin-right:1%">
           <el-dropdown trigger="click">
             <span class="el-dropdown-link">
-              user
+              {{user}}
               <i class="el-icon-caret-bottom el-icon--right" style="color: blue"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -46,6 +46,7 @@
       name: 'UserMain',
       data () {
         return {
+          user:window.sessionStorage.getItem("token"),
           activeIndex: 'Home',
           links: [
             {

@@ -1,12 +1,19 @@
 package com.example.liu.weidea.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.service.UserService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -135,6 +142,11 @@ public class UserController {
         );
     }
 
+    /**
+     * 修改密码
+     * @param map
+     * @return
+     */
     @PostMapping("/modifyPwd")
     public ResponseData modifyPwd(@RequestBody Map<String , Object> map){
         Integer result=userService.modifyPwd((String)map.get("password"), (String)map.get("phone"));
@@ -145,6 +157,10 @@ public class UserController {
         );
     }
 
+    /**
+     * 查询所有管理员
+     * @return
+     */
     @GetMapping("/getAllAdmin")
     public ResponseData getAllAdmin(){
         List<User> adminList = userService.getAllAdmin();
@@ -155,6 +171,10 @@ public class UserController {
         );
     }
 
+    /**
+     * 查询所有用户（除管理员）
+     * @return
+     */
     @GetMapping("/getAllUser")
     public ResponseData getAllUser(){
         List<User> userList = userService.getAllUser();
@@ -165,6 +185,10 @@ public class UserController {
         );
     }
 
+    /**
+     * 查询所有自愿者
+     * @return
+     */
     @GetMapping("/getAllVolunteer")
     public ResponseData getAllVolunteer(){
         List<User> volunteerList = userService.getAllVolunteer();
@@ -178,21 +202,72 @@ public class UserController {
 //    public List<User> getAll() {
 //        return userService.getAll() ;
 //    }
-//
-//    /**
-//     * 更新
-//     * @param user
-//     * @return
-//     */
-//    @PutMapping("/update")
-//    public ResponseData update(User user) {
-//        User u = userService.update(user) ;
-//        return new ResponseData(
-//                u !=null ? 0 : 1 ,
-//                u !=null ? "更新成功" : "更新失败" ,
-//                u
-//        ) ;
-//    }
+
+    /**
+     * 更新
+     * @param map
+     * @return
+     */
+    @PostMapping("/update")
+    public ResponseData update(@RequestBody Map<String , Object> map) throws ParseException {
+        JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("user")));
+        User user = new User();
+        user.setId(Integer.valueOf(json.getString("id")));
+        user.setName(json.getString("name"));
+        user.setPassword(json.getString("password"));
+        if (json.getString("birthday")!=null){
+            user.setBirthday(new SimpleDateFormat("yyyy年MM月dd日").parse(json.getString("birthday")));
+        }
+        user.setSex(json.getString("sex"));
+        user.setEmail(json.getString("email"));
+        user.setPhotourl(json.getString("photourl"));
+        user.setPhone(json.getString("phone"));
+        user.setRole(Integer.valueOf(json.getString("role")));
+        User u = userService.update(user) ;
+        return new ResponseData(
+                u !=null ? 0 : 1 ,
+                u !=null ? "更新成功" : "更新失败" ,
+                u
+        ) ;
+    }
+
+    /**
+     * 根据id获取数据库相关信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/getUserById")
+    public ResponseData getUserById(@RequestParam(value = "id",required = false) Integer id) {
+        User u = userService.getUserById(id) ;
+        return new ResponseData(
+                u !=null ? 0 : 1 ,
+                u !=null ? "获取成功" : "获取失败" ,
+                u
+        );
+    }
+
+    /**
+     * 根据id删除相关用户信息
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/delete")
+    public ResponseData deleteById(@RequestParam(value = "id",required = false) Integer id) {
+        int result = userService.DeleteById(id) ;
+        return  new ResponseData(
+                result !=0 ? 0 : 1 ,
+                result !=0 ? "删除成功" : "删除失败" ,
+                result
+        ) ;
+    }
+
+
+
+
+
+
+
+
 //
 //    @GetMapping("RolePage/{curPage}/{size}")
 //    public Map<String , Object> page(@PathVariable("curPage") Integer curPage , @PathVariable("size")Integer size ){
@@ -272,30 +347,7 @@ public class UserController {
 //        return map ;
 //    }
 //
-//    /**
-//     * 根据id获取数据库相关信息
-//     * @param id
-//     * @return
-//     */
-//    @GetMapping("/{id}")
-//    public User getById(@PathVariable("id") Integer id) {
-//        return userService.getById(id) ;
-//    }
 //
-//    /**
-//     * 根据id删除相关用户信息
-//     * @param id
-//     * @return
-//     */
-//    @DeleteMapping("/delete/{id}")
-//    public ResponseData deleteById(@PathVariable("id") Integer id) {
-//        int result = userService.DeleteById(id) ;
-//        return  new ResponseData(
-//                result !=0 ? 0 : 1 ,
-//                result !=0 ? "删除成功" : "删除失败" ,
-//                result
-//        ) ;
-//    }
 //
 //    private static String getFileType(String path){
 //        String fileType = "";

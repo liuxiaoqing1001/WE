@@ -27,6 +27,7 @@
       <!--    边框：border属性，设置为true即可启用-->
       <!--    隔行变色：stripe属性,创建带斑马纹的表格，默认为false，设置为true即为启用-->
       <el-table :data="userList" style="width: 100%" border stripe>
+        <el-table-column prop="id" label="ID"></el-table-column>
         <el-table-column prop="name" label="姓名"></el-table-column>
         <el-table-column prop="phone" label="电话"></el-table-column>
         <el-table-column prop="sex" label="性别"></el-table-column>
@@ -35,21 +36,20 @@
         <el-table-column prop="role" label="角色"></el-table-column>
         <el-table-column prop="regdate" label="创建时间"></el-table-column>
         <el-table-column label="操作">
-<!--          <template slot-scope="scope">-->
-<!--            {{scope.row.id}}-->
-<!--          </template>-->
-          <!--修改-->
-          <el-tooltip class="item" effect="dark" content="修改" placement="top" :enterable="false">
-            <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
-          </el-tooltip>
-          <!--删除-->
-          <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">
-            <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
-          </el-tooltip>
-          <!--分配角色-->
-          <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">
-            <el-button type="warning" size="mini" icon="el-icon-setting"></el-button>
-          </el-tooltip>
+          <template slot-scope="scope">
+            <!--修改-->
+            <el-tooltip class="item" effect="dark" content="修改" placement="top" :enterable="false">
+              <el-button type="primary" size="mini" icon="el-icon-edit" @click="showEditDialog(scope.row.id)"></el-button>
+            </el-tooltip>
+            <!--删除-->
+            <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">
+              <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
+            </el-tooltip>
+            <!--分配角色-->
+            <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">
+              <el-button type="warning" size="mini" icon="el-icon-setting"></el-button>
+            </el-tooltip>
+          </template>
         </el-table-column>
       </el-table>
       <!--分页区域-->

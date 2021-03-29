@@ -23,21 +23,22 @@
         </el-row>
       </el-card>
       <el-table :data="mList" style="width: 100%" border stripe>
-        <el-table-column prop="mId" label="编号"></el-table-column>
-        <el-table-column prop="mName" label="名称"></el-table-column>
-        <el-table-column prop="mRemark" label="备注"></el-table-column>
-        <el-table-column prop="mCreator" label="创建者"></el-table-column>
-        <el-table-column prop="mState" label="状态"></el-table-column>
+        <el-table-column prop="id" label="ID"></el-table-column>
+        <el-table-column prop="name" label="名字"></el-table-column>
+        <el-table-column prop="route" label="路径"></el-table-column>
+        <el-table-column prop="text" label="显示名"></el-table-column>
+        <el-table-column prop="createDate" label="创建时间"></el-table-column>
+        <el-table-column prop="sort" label="排序"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            {{scope.row.id}}
+            {{// scope.row.id}}
+            <!--修改-->
+            <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
+            <!--删除-->
+            <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
+            <!--状态开关-->
+            <el-button type="warning" size="mini" icon="el-icon-setting"></el-button>
           </template>
-          <!--修改-->
-          <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
-          <!--删除-->
-          <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
-          <!--状态开关-->
-          <el-button type="warning" size="mini" icon="el-icon-setting"></el-button>
         </el-table-column>
       </el-table>
     </el-container>

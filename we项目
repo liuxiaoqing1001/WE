@@ -313,11 +313,11 @@ CREATE TABLE article (
 
 CREATE TABLE module (
   id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(255) DEFAULT NULL COMMENT '名字',
+  name varchar(255) NOT NULL COMMENT '名字',
   route varchar(255) NOT NULL COMMENT '路径',
-  text varchar(255) DEFAULT NULL COMMENT '显示名',
+  text varchar(255) NOT NULL COMMENT '显示名',
   createDate datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  sort int(11) NOT NULL AUTO_INCREMENT COMMENT '排序',
+  sort int(11) NOT NULL COMMENT '排序',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 

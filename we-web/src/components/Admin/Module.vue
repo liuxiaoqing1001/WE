@@ -4,7 +4,7 @@
       <el-header>
         <!--面包屑导航区域-->
         <el-breadcrumb >
-          <el-breadcrumb-item :to="{ path: '/Model' }">模块管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/Module' }">模块管理</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
 

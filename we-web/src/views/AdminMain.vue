@@ -68,7 +68,7 @@
                 </template>
               </el-menu-item>
             </el-submenu>
-            <el-menu-item index="/Model" >
+            <el-menu-item index="/Module" >
               <i class="el-icon-menu"></i>
               <span slot="title">模块管理</span>
             </el-menu-item>

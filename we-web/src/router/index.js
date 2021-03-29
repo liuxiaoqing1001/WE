@@ -6,7 +6,7 @@ import AdminMain from '../views/AdminMain'
 import User from "../components/Admin/User";
 import Admin from "../components/Admin/Admin";
 import Volunteer from "../components/Admin/Volunteer";
-import Model from "../components/Admin/Model";
+import Module from "../components/Admin/Module";
 import Data from "../components/Admin/Data";
 import Setting from "../components/Admin/Setting";
 import ModifyPwd from "../components/Other/ModifyPwd";
@@ -148,9 +148,9 @@ export default new Router({
           component: Admin
         },
         {
-          name: 'Model',
-          path: '/Model',
-          component: Model
+          name: 'Module',
+          path: '/Module',
+          component: Module
         },
         {
           name: 'Data',

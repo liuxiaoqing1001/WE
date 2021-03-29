@@ -17,7 +17,7 @@ public class Article implements Serializable {
     private Integer sender ;
     private String title;
     private String content;
-    @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
-    @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm:ss" , timezone = "Asia/Shanghai")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "Asia/Shanghai")
     private Date pubDate ;
 }

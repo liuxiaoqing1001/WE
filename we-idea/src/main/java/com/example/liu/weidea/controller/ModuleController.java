@@ -1,15 +1,15 @@
 package com.example.liu.weidea.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.Module;
 import com.example.liu.weidea.service.ModuleService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 @CrossOrigin
@@ -19,16 +19,18 @@ public class ModuleController {
     @Autowired
     ModuleService moduleService;
 
+    /**
+     * 添加模块
+     * @param map
+     * @return
+     */
     @PostMapping("/add")
     public ResponseData add(@RequestBody Map<String , Object> map) {
         Module module = new Module() ;
         module.setName((String)map.get("name"));
-        module.setPassword((String)map.get("route"));
-        module.setPhone((String)map.get("text"));
-        new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss").parse(json.getString("birthday"))
-        module.setPassword((String)map.get("createDate"));
-        module.setPhone((String)map.get("sort"));
-        Integer result = ModuleService.add(module) ;
+        module.setRoute((String)map.get("route"));
+        module.setText((String)map.get("text"));
+        Integer result = moduleService.add(module) ;
         String msg = "" ;
         switch (result) {
             case ModuleService.REG_MSG_OK :
@@ -48,6 +50,28 @@ public class ModuleController {
                 result ,
                 msg,
                 result == 0
+        ) ;
+    }
+
+    /**
+     * 更新
+     * @param map
+     * @return
+     */
+    @PostMapping("/update")
+    public ResponseData update(@RequestBody Map<String , Object> map) {
+        JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("module")));
+        Module module = new Module();
+        module.setId(Integer.valueOf(json.getString("id")));
+        module.setName(json.getString("name"));
+        module.setRoute(json.getString("route"));
+        module.setText(json.getString("text"));
+        module.setSort(Integer.valueOf(json.getString("sort")));
+        Module m = moduleService.update(module) ;
+        return new ResponseData(
+                m !=null ? 0 : 1 ,
+                m !=null ? "更新成功" : "更新失败" ,
+                m
         ) ;
     }
     

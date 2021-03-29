@@ -1,6 +1,8 @@
 package com.example.liu.weidea.service;
 
 
+import com.example.liu.weidea.entity.Module;
+
 public interface ModuleService {
     public static final int REG_MSG_OK = 0 ;
     public static final int REG_MSG_FAIL_NAMEEXISTS = 1 ;
@@ -16,5 +18,17 @@ public interface ModuleService {
     int ROLE_ADMIN = 0 ;
     int ROLE_Module = 1 ;
 
+    /**
+     * 添加模块
+     * @param module
+     * @return
+     */
+    Integer add(Module module);
 
+    /**
+     * 更新
+     * @param module
+     * @return
+     */
+    Module update(Module module);
 }

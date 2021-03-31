@@ -1,12 +1,5 @@
 package com.example.liu.weidea.service;
 
-import com.example.liu.weidea.bean.Page;
-import com.example.liu.weidea.entity.Article;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 
 public interface ArticleService {
     public static final int REG_MSG_OK = 0 ;

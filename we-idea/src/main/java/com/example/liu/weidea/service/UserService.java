@@ -1,6 +1,5 @@
 package com.example.liu.weidea.service;
 
-import com.example.liu.weidea.bean.Page;
 import com.example.liu.weidea.entity.User;
 
 import java.util.Date;
@@ -46,17 +45,6 @@ public interface UserService {
      */
     User update(User user) ;
 
-    /**
-     * 分页
-     * @param id
-     * @param name
-     * @param regdate
-     * @param curPage
-     * @param size
-     * @return
-     */
-    Page<User> newsPage(Integer id, String name, Date regdate, Integer curPage, Integer size) ;
-
     List<User> getAll() ;
 
     /**
@@ -77,7 +65,6 @@ public interface UserService {
 
     Integer delById(Integer id);
 
-    Page<User> RolePage(Integer curPage, Integer size);
 
     Integer addRole(User user);
 

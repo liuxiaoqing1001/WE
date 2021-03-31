@@ -1,6 +1,5 @@
 package com.example.liu.weidea.service.impl;
 
-import com.example.liu.weidea.bean.Page;
 import com.example.liu.weidea.dao.UserDao;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.service.UserService;
@@ -257,29 +256,7 @@ public class UserServiceImpl implements UserService {
 
 
 
-    @Override
-    public Page<User> newsPage(Integer id, String name, Date regdate, Integer curPage, Integer size) {
-        if(null == curPage || curPage < 1) {
-            curPage = 1 ;
-        }
-        if(null == size || size < 1) {
-            size = 10 ;
-        }
-        String pubdateStr = null ;
-        if(null != regdate) {
-            pubdateStr = new SimpleDateFormat("yyyyMMdd").format(regdate) ;
-        }
-        List<User> list = userDao.getMoreBy(id , name , pubdateStr , size * (curPage-1) , size) ;
-        int count = userDao.getMoreCount(id , name , pubdateStr) ;
-        int pageCount = (int) Math.ceil(count * 1.0 / size);
-        Page<User> pageInfo = new Page() ;
-        pageInfo.setData((ArrayList<User>) list);
-        pageInfo.setCurPage(curPage);
-        pageInfo.setPageCount(pageCount);
-        pageInfo.setRowCount(count) ;
-        pageInfo.setSize(size);
-        return pageInfo ;
-    }
+
 
     @Override
     public List<User> getAll() {
@@ -312,25 +289,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public Page<User> RolePage(Integer curPage, Integer size) {
-        if(null == curPage || curPage < 1) {
-            curPage = 1 ;
-        }
-        if(null == size || size < 1) {
-            size = 10 ;
-        }
-        List<User> list = userDao.getLimit(size * (curPage-1) , size) ;
-        int count = userDao.getCount() ;
-        int pageCount = (int) Math.ceil(count * 1.0 / size);
-        Page<User> pageInfo = new Page() ;
-        pageInfo.setData((ArrayList<User>) list);
-        pageInfo.setCurPage(curPage);
-        pageInfo.setPageCount(pageCount);
-        pageInfo.setRowCount(count) ;
-        pageInfo.setSize(size);
-        return pageInfo ;
-    }
+
 
     @Override
     public Integer addRole(User user) {

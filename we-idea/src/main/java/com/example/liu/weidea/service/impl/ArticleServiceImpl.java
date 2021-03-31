@@ -1,16 +1,9 @@
 package com.example.liu.weidea.service.impl;
 
-import com.example.liu.weidea.bean.Page;
 import com.example.liu.weidea.dao.ArticleDao;
-import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
-import org.springframework.util.StringUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {

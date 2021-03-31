@@ -3,6 +3,8 @@ package com.example.liu.weidea.service;
 
 import com.example.liu.weidea.entity.Module;
 
+import java.util.List;
+
 public interface ModuleService {
     public static final int REG_MSG_OK = 0 ;
     public static final int REG_MSG_FAIL_NAMEEXISTS = 1 ;
@@ -31,4 +33,39 @@ public interface ModuleService {
      * @return
      */
     Module update(Module module);
+
+    /**
+     * 获取所有模块
+     * @return
+     */
+    List<Module> getAll();
+
+    /**
+     * 根据id删除模块
+     * @param id
+     * @return
+     */
+    int deleteById(Integer id);
+
+    /**
+     * 根据关键字查询模块
+     * @param keyword
+     * @return
+     */
+    List<Module> getModule(String keyword);
+
+    /**
+     * 根据id获取模块信息
+     * @param id
+     * @return
+     */
+    Module getModuleById(Integer id);
+
+    /**
+     * 根据id改变显示状态
+     * @param id
+     * @param state
+     * @return
+     */
+    Integer updateState(Integer id, String state);
 }

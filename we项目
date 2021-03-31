@@ -314,10 +314,10 @@ CREATE TABLE article (
 CREATE TABLE module (
   id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(255) NOT NULL COMMENT '名字',
-  route varchar(255) NOT NULL COMMENT '路径',
+  route varchar(255) DEFAULT NULL COMMENT '路径',
   text varchar(255) NOT NULL COMMENT '显示名',
   createDate datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  sort int(11) NOT NULL COMMENT '排序',
+  state varchar(255) DEFAULT '关闭' COMMENT '状态',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 

@@ -32,7 +32,7 @@ public class ModuleController {
         module.setText(json.getString("text"));
         Integer result = moduleService.add(module) ;
         return new ResponseData(
-                result !=0 ? 0 : 1 ,
+                result !=0 ? 1 : 0 ,
                 result !=0 ? "添加成功" : "添加失败" ,
                 result
         ) ;
@@ -51,6 +51,7 @@ public class ModuleController {
         module.setName(json.getString("name"));
         module.setRoute(json.getString("route"));
         module.setText(json.getString("text"));
+        module.setState(json.getString("state"));
         Module m = moduleService.update(module) ;
         return new ResponseData(
                 m !=null ? 0 : 1 ,

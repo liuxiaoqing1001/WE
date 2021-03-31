@@ -20,5 +20,6 @@ public class Module implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "Asia/Shanghai")
     private Date createDate ;
-    private Integer sort;
+//    private Integer sort;
+    private String state;
 }

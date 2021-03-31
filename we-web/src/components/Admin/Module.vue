@@ -50,7 +50,7 @@
         <el-table-column prop="route" label="路径"></el-table-column>
         <el-table-column prop="text" label="显示名"></el-table-column>
         <el-table-column prop="createDate" label="创建时间"></el-table-column>
-        <el-table-column label="状态">
+        <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.state" @change="moduleStateChanged(scope.row)"></el-switch>
           </template>
@@ -96,9 +96,11 @@
             <el-input v-model="editForm.text"></el-input>
           </el-form-item>
           <el-form-item label="状态">
-            <el-input v-model="editForm.state"></el-input>
+            <el-select v-model="editForm.state" style="float: left">
+              <el-option v-for="item in states" :key="item.label" :label="item.label" :value="item.label">
+              </el-option>
+            </el-select>
           </el-form-item>
-
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="editDialogVisible = false">取 消</el-button>
@@ -122,11 +124,22 @@
         queryInfo:{
           query:'',//查询参数
           pageNum:1,//当前页码
-          pageSize:2//每页显示条数
+          pageSize:5//每页显示条数
         },
         addDialogVisible: false,
         editDialogVisible: false,
-        num: [],
+        stateValue:'',
+
+        states: [
+          {
+            value: '0',
+            label: '关闭'
+          },
+          {
+            value: '1',
+            label: '开启'
+          }
+        ],
         addForm: {
           name: '',
           route: '',
@@ -152,7 +165,8 @@
         editForm: {
           name: '',
           route:'',
-          text: ''
+          text: '',
+          state:''
         },
         // 修改模块信息表单的验证规则对象
         editFormRules: {
@@ -193,10 +207,15 @@
       },
       // 监听 当前状态值 改变事件
       moduleStateChanged(moduleInfo) {
-        console.log(moduleInfo);
+        if (moduleInfo.state===false){
+          this.stateValue="关闭";
+        }else {
+          this.stateValue="开启";
+        }
+        console.log(moduleInfo.state);
         this.$http.post("/module/updateState/",{
           id:moduleInfo.id,
-          state:moduleInfo.state
+          state:this.stateValue
         }).then(response => {
           if (response.data.errorCode===0){
             this.$message.success(response.data.msg);
@@ -255,6 +274,15 @@
           if (response.data.errorCode===0){
             this.mList = response.data.data;
             this.total = response.data.data.length;
+            for (let i=0;i<this.total;i++){
+              if(this.mList[i].state==="关闭"){
+                // this.mList.state=false
+            //     this.scope.row.state=false;
+              }else {
+                // this.mList.state=true
+            //     this.scope.row.state=true;
+              }
+            }
           }else {
             this.$message.error(response.data.msg);
           }

@@ -52,10 +52,7 @@
         <el-table-column prop="createDate" label="创建时间"></el-table-column>
         <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.state"
-                       :active-value="1"
-                       :inactive-value="0"
-                       @change="moduleStateChanged(scope.row)"></el-switch>
+            <el-switch v-model="scope.row.state" @change="moduleStateChanged(scope.row)"></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -100,7 +97,7 @@
           </el-form-item>
           <el-form-item label="状态">
             <el-select v-model="editForm.state" style="float: left">
-              <el-option v-for="item in states" :key="item.label" :label="item.label" :value="item.label">
+              <el-option v-for="item in states" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
@@ -131,16 +128,15 @@
         },
         addDialogVisible: false,
         editDialogVisible: false,
-        stateValue:'',
-
+        stateValue:'0',
         states: [
           {
             value: '0',
-            label: '关闭'
+            label: '0 关闭'
           },
           {
             value: '1',
-            label: '开启'
+            label: '1 开启'
           }
         ],
         addForm: {
@@ -210,10 +206,8 @@
       },
       // 监听 当前状态值 改变事件
       moduleStateChanged(moduleInfo) {
-        if (moduleInfo.state===false){
-          this.stateValue="关闭";
-        }else {
-          this.stateValue="开启";
+        if (moduleInfo.state===true){
+          this.stateValue="1";
         }
         console.log(moduleInfo.state);
         this.$http.post("/module/updateState/",{
@@ -277,15 +271,14 @@
           if (response.data.errorCode===0){
             this.mList = response.data.data;
             this.total = response.data.data.length;
-            for (let i=0;i<this.total;i++){
-              if(this.mList[i].state==="关闭"){
-                // this.mList.state=false
-            //     this.scope.row.state=false;
-              }else {
-                // this.mList.state=true
-            //     this.scope.row.state=true;
-              }
-            }
+            // for (let i=0;i<this.total;i++){
+            //   console.log(this.mList[i].state)
+            //   if(this.mList[i].state===0){
+            //     this.mList[i].state=0
+            //   }else {
+            //     this.mList[i].state=1
+            //   }
+            // }
           }else {
             this.$message.error(response.data.msg);
           }

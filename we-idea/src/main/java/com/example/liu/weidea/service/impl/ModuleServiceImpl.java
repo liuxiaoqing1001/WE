@@ -112,9 +112,6 @@ public class ModuleServiceImpl implements ModuleService {
      */
     @Override
     public Integer updateState(Integer id, String state) {
-        if(state==null||state==""){
-            return null;
-        }
         return moduleDao.updateState(id, state);
     }
 }

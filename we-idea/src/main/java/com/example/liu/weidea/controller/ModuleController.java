@@ -32,8 +32,8 @@ public class ModuleController {
         module.setText(json.getString("text"));
         Integer result = moduleService.add(module) ;
         return new ResponseData(
-                result !=0 ? 1 : 0 ,
-                result !=0 ? "添加成功" : "添加失败" ,
+                result ==0 ? 0 : 1 ,
+                result ==0 ? "添加成功" : "添加失败" ,
                 result
         ) ;
     }

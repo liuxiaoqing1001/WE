@@ -52,7 +52,10 @@
         <el-table-column prop="createDate" label="创建时间"></el-table-column>
         <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.state" @change="moduleStateChanged(scope.row)"></el-switch>
+            <el-switch v-model="scope.row.state"
+                       :active-value="1"
+                       :inactive-value="0"
+                       @change="moduleStateChanged(scope.row)"></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -196,14 +199,14 @@
         // console.log(newSize)
         this.queryInfo.pageSize = newSize;
         // 重新发起请求模块列表
-        this.getUserList();
+        this.getModuleList();
       },
       // 监听 当前页码值 改变的事件
       handleCurrentChange(newPage) {
         // console.log(newPage)
         this.queryInfo.pageNum = newPage;
         // 重新发起请求模块列表
-        this.getUserList();
+        this.getModuleList();
       },
       // 监听 当前状态值 改变事件
       moduleStateChanged(moduleInfo) {

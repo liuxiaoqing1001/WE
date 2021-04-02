@@ -298,15 +298,8 @@ insert into user(phone,password,regdate) values('16600274434','1234567890',now()
 CREATE TABLE article (
   id int(11) NOT NULL AUTO_INCREMENT,
   sender int(11) NOT NULL COMMENT '发送者',
-  name varchar(255) DEFAULT NULL COMMENT '用户名',
-  phone varchar(255) NOT NULL COMMENT '电话',
-  password varchar(255) NOT NULL COMMENT '密码',
-  birthday date DEFAULT NULL COMMENT '生日',
-  sex varchar(10) DEFAULT NULL COMMENT '性别',
-  email varchar(50) DEFAULT NULL COMMENT '邮箱',
-  photourl varchar(60) DEFAULT NULL COMMENT '头像地址',
-  regdate datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  role int(11) DEFAULT '1' COMMENT '角色',
+  content varchar(255) DEFAULT NULL COMMENT '内容',
+  sendDate datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '发送时间',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -437,6 +430,32 @@ https://codegi.gitee.io/jwchatdoc/component/chat.html#%E5%8F%82%E6%95%B0%E9%85%8
 18. Spring Boot（三）Controller的使用
 https://blog.csdn.net/qq_40241957/article/details/88874139
 https://blog.csdn.net/li13168690086/article/details/82415667?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&dist_request_id=1328689.684.16165161545023541&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control
+
+
+
+
+
+
+19.再等等好运马上来了
+https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202002%2F18%2F20200218081931_jeacg.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619969884&t=fead2c8fcf3b6cd31f0284fee17e67e2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+我需要
+https://haokan.baidu.com/v?vid=6369129946562341360&pd=pcshare
+
+https://vd2.bdstatic.com/mda-ijiqckncw23fx73z/sc/mda-ijiqckncw23fx73z.mp4?v_from_s=gz_haokan_4469&auth_key=1617383202-0-0-11716dc8b14f31e7141b1112a414b6ae&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000165_2
 
 
 

@@ -14,10 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class Article implements Serializable {
     private Integer id;
-    private Integer sender ;
-    private String title;
+    private String sender;
     private String content;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "Asia/Shanghai")
-    private Date pubDate ;
+    private Date sendDate ;
 }

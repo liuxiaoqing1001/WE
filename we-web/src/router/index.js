@@ -7,6 +7,7 @@ import User from "../components/Admin/User";
 import Admin from "../components/Admin/Admin";
 import Volunteer from "../components/Admin/Volunteer";
 import Module from "../components/Admin/Module";
+import ArticleManager from "../components/Admin/ArticleManager";
 import Data from "../components/Admin/Data";
 import Setting from "../components/Admin/Setting";
 import ModifyPwd from "../components/Other/ModifyPwd";
@@ -151,6 +152,11 @@ export default new Router({
           name: 'Module',
           path: '/Module',
           component: Module
+        },
+        {
+          name: 'ArticleManager',
+          path: '/ArticleManager',
+          component: ArticleManager
         },
         {
           name: 'Data',

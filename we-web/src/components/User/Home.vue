@@ -65,10 +65,12 @@
     data() {
       return{
         dataList:[
-          'https://i1.mifile.cn/a4/xmad_15535933141925_ulkYv.jpg',
-          'https://i1.mifile.cn/a4/xmad_15532384207972_iJXSx.jpg',
-          'https://i1.mifile.cn/a4/xmad_15517939170939_oiXCK.jpg'
+          'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3744317613,3330554315&fm=15&gp=0.jpg',
+          'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F011e485783aa700000018c1be22d29.jpg&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619969651&t=32b17ba6792e5657e8a0f14615b578e2',
+          'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsryhxl.com%2Fuploadsabcd%2F191024%2F1-1910242054134c.jpg&refer=http%3A%2F%2Fsryhxl.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619969096&t=7fbfc060937fe015e29c27f998d0a3d5',
+          'https://ossimg.xinli001.com/20191028/69c90fc8584f568365521ee029cdbade.png?x-oss-process=image/quality,Q_80'
         ],
+        // http://www.nxwcmedia.com/?p=29644
         currentIndex: 0,   //默认显示图片
         timer: null    //定时器
       }
@@ -153,6 +155,7 @@
   }
   .banner img {
     width: 100%;
+    height: 700px;
     display: block;
   }
   .banner .page {

@@ -186,7 +186,7 @@
           this.$refs[formName].validate(valid => {
             if (valid) {
               this.$message({
-                type: 'success',
+                typeId: 'success',
                 message: '提交成功'
               });
               // this.activeName: 'first',

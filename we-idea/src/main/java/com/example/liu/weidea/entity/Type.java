@@ -12,14 +12,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Article implements Serializable {
+public class Type implements Serializable {
     private Integer id;
-    private String sender;
-    private String title;
-    private String content;
-    private String type;
-    private String imgUrl;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "Asia/Shanghai")
-    private Date sendDate ;
+    private String name;
 }

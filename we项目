@@ -298,10 +298,25 @@ insert into user(phone,password,regdate) values('16600274434','1234567890',now()
 CREATE TABLE article (
   id int(11) NOT NULL AUTO_INCREMENT,
   sender int(11) NOT NULL COMMENT '发送者',
+  title varchar(255) DEFAULT NULL COMMENT '标题',
   content varchar(255) DEFAULT NULL COMMENT '内容',
+  type varchar(255) DEFAULT NULL COMMENT '类型',
+  imgUrl varchar(255) DEFAULT NULL COMMENT '图片地址',
   sendDate datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '发送时间',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+insert into article(sender,content,type,sendDate) values('10011','xxxx','婚恋情感',now());
+
+
+CREATE TABLE type (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) NOT NULL COMMENT '类型名',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+insert into type values('','');
+心理科普、婚恋情感、人际社交、成长学习、性心理、心理健康、家庭关系、职场技能
 
 
 CREATE TABLE module (
@@ -461,6 +476,12 @@ https://vd2.bdstatic.com/mda-ijiqckncw23fx73z/sc/mda-ijiqckncw23fx73z.mp4?v_from
 
 
 
+
+保存数据：localStorage.setItem(key,value); 
+读取数据：localStorage.getItem(key); 
+删除单个数据：localStorage.removeItem(key); 
+删除所有数据：localStorage.clear(); 
+得到某个索引的key：localStorage.key(index); 
 
 
 

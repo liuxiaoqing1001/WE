@@ -1,80 +1,14 @@
 <template>
   <div class="article">
-<!--    <header>-->
-<!--      <div class="explain">-->
-<!--        <h1>gangan Blog</h1>-->
-<!--        <h5>学习弯道超车技术</h5>-->
-<!--      </div>-->
-<!--    </header>-->
     <div class="index-wrapper">
       <ul>
-        <li class="blog-wrapper" v-on:click="$goRoute('/Detail')">
-          <p class="blog-time">2018年07月30日</p>
-          <h3 class="blog-title">基于 MIME 类型的服务端推送</h3>
-          <div class="blog-content">
-            目前就职于视听行业相关的公司，故而需要接触流媒体传输相关技术。今天介绍一种基于 MIME 类型的服务端流媒体推送实现。<span class="blog-more">阅读原文...</span>
-          </div>
+        <li class="blog-wrapper" v-for="item in articleList" :key="item.id" v-on:click="toDetail(item.id)">
+          <p class="blog-sender">{{item.sender}}</p>
+          <p class="blog-sendDate">{{item.sendDate}}</p>
+          <h2 class="blog-title">{{item.title}}</h2>
           <div class="blog-tag">
             <ul>
-              <li>文章标签</li>
-              <li>文章标签</li>
-              <li>文章标签</li>
-            </ul>
-          </div>
-        </li>
-        <li class="blog-wrapper">
-          <p class="blog-time">2018年07月30日</p>
-          <h3 class="blog-title">基于 MIME 类型的服务端推送</h3>
-          <div class="blog-content">
-            目前就职于视听行业相关的公司，故而需要接触流媒体传输相关技术。今天介绍一种基于 MIME 类型的服务端流媒体推送实现。<span class="blog-more">阅读原文...</span>
-          </div>
-          <div class="blog-tag">
-            <ul>
-              <li>文章标签</li>
-              <li>文章标签</li>
-              <li>文章标签</li>
-            </ul>
-          </div>
-        </li>
-        <li class="blog-wrapper">
-          <p class="blog-time">2018年07月30日</p>
-          <h3 class="blog-title">基于 MIME 类型的服务端推送</h3>
-          <div class="blog-content">
-            目前就职于视听行业相关的公司，故而需要接触流媒体传输相关技术。今天介绍一种基于 MIME 类型的服务端流媒体推送实现。<span class="blog-more">阅读原文...</span>
-          </div>
-          <div class="blog-tag">
-            <ul>
-              <li>文章标签</li>
-              <li>文章标签</li>
-              <li>文章标签</li>
-            </ul>
-          </div>
-        </li>
-        <li class="blog-wrapper">
-          <p class="blog-time">2018年07月30日</p>
-          <h3 class="blog-title">基于 MIME 类型的服务端推送</h3>
-          <div class="blog-content">
-            目前就职于视听行业相关的公司，故而需要接触流媒体传输相关技术。今天介绍一种基于 MIME 类型的服务端流媒体推送实现。<span class="blog-more">阅读原文...</span>
-          </div>
-          <div class="blog-tag">
-            <ul>
-              <li>文章标签</li>
-              <li>文章标签</li>
-              <li>文章标签</li>
-            </ul>
-          </div>
-        </li>
-        <li class="blog-wrapper">
-          <p class="blog-time">2018年07月30日</p>
-          <h3 class="blog-title">基于 MIME 类型的服务端推送</h3>
-          <div class="blog-content">
-            目前就职于视听行业相关的公司，故而需要接触流媒体传输相关技术。今天介绍一种基于 MIME 类型的服务端流媒体推送实现。<span class="blog-more">阅读原文...</span>
-          </div>
-          <div class="blog-tag">
-            <ul>
-              <li>文章标签</li>
-              <li>文章标签</li>
-              <li>文章标签</li>
+              <li>{{item.type}}</li>
             </ul>
           </div>
         </li>
@@ -85,7 +19,34 @@
 
 <script>
     export default {
-        name: "Article"
+      name: "Article",
+      data(){
+          return{
+            articleList:[]
+          }
+      },
+      created() {
+        this.getArticleList();
+      },
+      methods:{
+        getArticleList(){
+          this.$http.get("/article/getAll").then(response => {
+            if (response.data.errorCode===0){
+              this.articleList = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        },
+        toDetail(id){
+          this.$router.push({
+            path: 'Detail',
+            query: {
+              id:id
+            }
+          })
+        },
+      }
     }
 </script>
 
@@ -111,19 +72,21 @@
     list-style: none;
     box-shadow: 0 1px 2px rgba(151,151,151,0.58);
   }
-  .blog-time{
+  .blog-sender,.blog-sendDate{
     line-height: 24px;
-    margin: 0 0 10px;
+    margin: 0 0 0px;
     font-size: 13px;
     font-weight: bold;
     color: #727272;
     overflow: hidden;
   }
   .blog-title{
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     font-size: 24px;
     line-height: 32px;
     color: #3f51b5;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
   }
   .blog-content{
     word-break: break-all;
@@ -140,9 +103,12 @@
   }
   .blog-tag{
     position: relative;
-    margin: 0 -12px;
-    padding: 12px 20px 8px;
-    border-top: 1px solid #ddd;
+    margin-left: 80%;
+    /*padding-top: 8px;*/
+    /*margin: 0 -12px;*/
+    /*float: right;*/
+    /*padding-bottom: 10px;*/
+    /*border-top: 1px solid #ddd;*/
   }
   .blog-tag li{
     display: inline-block;

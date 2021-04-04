@@ -2,8 +2,10 @@
   <div class="detail">
     <div id="content">
       <h2>{{list.title}}</h2>
+      <h9>{{list.sender}}</h9>
       <!-- 用v-html解析后台传来的HTML代码 -->
-      <div  v-html="list.content">
+<!--      <div  v-html="list.sender">-->
+      <div v-html="list.content">
       </div>
     </div>
   </div>
@@ -18,23 +20,24 @@
         }
       },
       mounted(){
-        //console.log(this.$route.params)/* 获取动态路由传值 */
-        var aid=this.$route.params.aid;
-        // console.log(aid)
-        // 调用requestData()方法请求新闻内容
+        // 获取动态路由传值
+        var aid=this.$route.query.id;
+        // 调用requestData()方法请求数据
         this.requestData(aid);
-
       },
       methods:{
         requestData(aid){
-          // 新闻详情接口
-          var api='http://www.phonegap100.com/appapi.php?a=getPortalArticle&aid=1';//+aid;
-          // get请求如果跨域的话，后台php java要允许跨域请求
-          this.$http.get(api).then((res)=>{
-            this.list=res.body.result[0]
-          },(err)=>{
-            console.log(err)
-          })
+          this.$http.get("/article/getArticleById",{
+            params:{
+              id:aid
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.list = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
         }
       }
     }

@@ -14,7 +14,7 @@ import java.util.Map;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/Article")
+@RequestMapping("/article")
 public class ArticleController {
     @Autowired
     ArticleService articleService;
@@ -28,7 +28,9 @@ public class ArticleController {
         JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("article")));
         Article article = new Article();
         article.setSender(json.getString("sender"));
+        article.setContent(json.getString("title"));
         article.setContent(json.getString("content"));
+        article.setContent(json.getString("type"));
         Integer result = articleService.add(article) ;
         return new ResponseData(
                 result ==0 ? 0 : 1 ,
@@ -48,7 +50,10 @@ public class ArticleController {
         Article article = new Article();
         article.setId(Integer.valueOf(json.getString("id")));
         article.setSender(json.getString("sender"));
+        article.setContent(json.getString("title"));
         article.setContent(json.getString("content"));
+        article.setContent(json.getString("type"));
+        article.setContent(json.getString("imgUrl"));
         Article m = articleService.update(article) ;
         return new ResponseData(
                 m !=null ? 0 : 1 ,
@@ -116,18 +121,18 @@ public class ArticleController {
         );
     }
 
-    /**
-     * 根据id改变显示状态
-     * @param map
-     * @return
-     */
-    @PostMapping("/updateState")
-    public ResponseData updateState(@RequestBody Map<String , Object> map){
-        Integer result=articleService.updateState((Integer) map.get("id"), (String)map.get("state"));
-        return new ResponseData(
-                result !=null ? 0 : 1 ,
-                result !=null ? "修改成功" : "修改失败" ,
-                result
-        );
-    }
+//    /**
+//     * 根据id改变显示状态
+//     * @param map
+//     * @return
+//     */
+//    @PostMapping("/updateState")
+//    public ResponseData updateState(@RequestBody Map<String , Object> map){
+//        Integer result=articleService.updateState((Integer) map.get("id"), (String)map.get("state"));
+//        return new ResponseData(
+//                result !=null ? 0 : 1 ,
+//                result !=null ? "修改成功" : "修改失败" ,
+//                result
+//        );
+//    }
 }

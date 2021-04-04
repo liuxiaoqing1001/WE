@@ -42,7 +42,7 @@ Vue.prototype.$http = axios;
 
 // 路由跳转
 Vue.prototype.$goRoute = function (index) {
-  this.$router.push(index)
+  this.$router.push(index);
 };
 
 new Vue({

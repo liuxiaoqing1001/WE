@@ -21,7 +21,7 @@ public interface ArticleDao {
      * @param article
      * @return
      */
-    @Insert("insert into article(sender,content,sendDate) values(#{sender},#{content},now())")
+    @Insert("insert into article(sender,title,content,sendDate) values(#{sender},#{title},#{content},now())")
     int add(Article article);
 
     /**
@@ -35,8 +35,17 @@ public interface ArticleDao {
             "            <if test=\"null != sender\">" +
             "                sender=#{sender} , " +
             "            </if>\n" +
+            "            <if test=\"null != title\">" +
+            "                title=#{title} , " +
+            "            </if>\n" +
             "            <if test=\"null != content\">" +
             "                content=#{content} , " +
+            "            </if>\n" +
+            "            <if test=\"null != type\">" +
+            "                type=#{type} , " +
+            "            </if>\n" +
+            "            <if test=\"null != imgUrl\">" +
+            "                imgUrl=#{imgUrl} , " +
             "            </if>\n" +
             "        </set> " +
             "        where id=#{id}"
@@ -75,17 +84,17 @@ public interface ArticleDao {
             "select * from article " +
             "        <if test=\"keyword != null\"> " +
             "            <bind name=\"key\" value=\"'%'+keyword+'%'\"/> " +
-            "            where sender like #{key} or content like #{key}" +
+            "            where sender like #{key} or title like #{key} or content like #{key} or type like #{key}" +
             "        </if>"
             +"</script>")
     List<Article> getArticle(String keyword);
 
-    /**
-     * 根据id改变显示状态
-     * @param id
-     * @param state
-     * @return
-     */
-    @Update("update article set state=#{state} where id=#{id}")
-    Integer updateState(Integer id, String state);
+//    /**
+//     * 根据id改变显示状态
+//     * @param id
+//     * @param state
+//     * @return
+//     */
+//    @Update("update article set state=#{state} where id=#{id}")
+//    Integer updateState(Integer id, String state);
 }

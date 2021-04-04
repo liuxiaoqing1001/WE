@@ -22,14 +22,15 @@
 
       <el-table :data="mList" style="width: 100%" border stripe>
         <el-table-column prop="id" label="ID"></el-table-column>
-        <el-table-column prop="name" label="发送者"></el-table-column>
-        <el-table-column prop="route" label="内容"></el-table-column>
-        <el-table-column prop="createDate" label="发送时间"></el-table-column>
+        <el-table-column prop="sender" label="发送者"></el-table-column>
+        <el-table-column prop="type" label="类型"></el-table-column>
+        <el-table-column prop="title" label="标题"></el-table-column>
+        <el-table-column prop="sendDate" label="发送时间"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <!--修改-->
-            <el-tooltip class="item" effect="dark" content="修改" placement="top" :enterable="false">
-              <el-button type="primary" size="mini" icon="el-icon-edit" @click="showEditDialog(scope.row.id)"></el-button>
+            <!--详情-->
+            <el-tooltip class="item" effect="dark" content="详情" placement="top" :enterable="false">
+              <el-button type="primary" size="mini" icon="el-icon-view" @click="showDialog(scope.row.id)"></el-button>
             </el-tooltip>
             <!--删除-->
             <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">
@@ -43,39 +44,32 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="queryInfo.pageNum"
-        :page-sizes="[1, 2, 5, 10]"
+        :page-sizes="[10, 20, 50]"
         :page-size="queryInfo.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
 
-      <!--修改文章信息的对话框-->
-      <el-dialog title="修改文章" :visible.sync="editDialogVisible" width="50%"  @close="editDialogClosed">
-        <!--内容主体区域-->
-        <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
-          <el-form-item label="ID">
-            <el-input v-model="editForm.id" :disabled="true"></el-input>
+      <!--文章信息的对话框-->
+      <el-dialog title="文章" :visible.sync="editDialogVisible" width="50%"  @close="editDialogClosed">
+        <!--内容主体区域 :rules="editFormRules"-->
+        <el-form :model="viewForm" ref="editFormRef" label-width="70px">
+<!--          <el-form-item>-->
+<!--            <el-image v-model="viewForm.imgUrl" :href="viewForm.imgUrl"></el-image>-->
+<!--          </el-form-item>-->
+          <el-form-item label="发送者:" prop="sender" class="inputDeep">
+            <el-input v-model="viewForm.sender" readonly></el-input>
           </el-form-item>
-          <el-form-item label="名字" prop="name">
-            <el-input v-model="editForm.name"></el-input>
+          <el-form-item label="类型:" prop="type" class="inputDeep">
+            <el-input v-model="viewForm.type" readonly></el-input>
           </el-form-item>
-          <el-form-item label="路径" prop="route">
-            <el-input v-model="editForm.route"></el-input>
+          <el-form-item label="标题:" prop="type" class="inputDeep">
+            <el-input v-model="viewForm.title" readonly></el-input>
           </el-form-item>
-          <el-form-item label="显示名" prop="text">
-            <el-input v-model="editForm.text"></el-input>
-          </el-form-item>
-          <el-form-item label="状态">
-            <el-select v-model="editForm.state" style="float: left">
-              <el-option v-for="item in states" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
+          <el-form-item label="内容:" prop="content" class="inputDeep">
+            <el-input type="textarea" v-model="viewForm.content" readonly></el-input>
           </el-form-item>
         </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="editDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="editArticleInfo">确 定</el-button>
-        </span>
       </el-dialog>
 
     </el-container>
@@ -94,32 +88,18 @@
         queryInfo:{
           query:'',//查询参数
           pageNum:1,//当前页码
-          pageSize:5//每页显示条数
+          pageSize:10//每页显示条数
         },
         editDialogVisible: false,
-        editForm: {
-          name: '',
-          route:'',
-          text: '',
-          state:''
+        viewForm: {
+          imgUrl:'',
+          sender: '',
+          title:'',
+          content:'',
+          type: '',
+          sendDate:''
         },
-        // 修改文章信息表单的验证规则对象
-        editFormRules: {
-          name: [
-            {
-              required: true, //表示是否必填
-              message: '名字不可为空',
-              trigger: 'blur' //表示触发时机（blur失去焦点）
-            }
-          ],
-          text: [
-            {
-              required: true,
-              message: '请输入显示名',
-              trigger: 'blur'
-            }
-          ]
-        }
+
       }
     },
     created() {
@@ -140,8 +120,8 @@
         // 重新发起请求文章列表
         this.getArticleList();
       },
-      // 监听 修改文章状态
-      showEditDialog(id) {
+      // 监听 文章状态
+      showDialog(id) {
         this.$http.get("/article/getArticleById",{
           params:{
             id:id
@@ -149,13 +129,13 @@
         }).then(response => {
           if (response.data.errorCode===0){
             this.editDialogVisible = true;
-            this.editForm = response.data.data;
+            this.viewForm = response.data.data;
           }else {
             this.$message.error(response.data.msg);
           }
         });
       },
-      // 监听 修改文章信息对话框的关闭事件
+      // 监听 文章信息对话框的关闭事件
       editDialogClosed() {
         // 表单内容重置为空
         this.$refs.editFormRef.resetFields() // 通过ref引用调用resetFields方法
@@ -188,30 +168,11 @@
           }
         });
       },
-      editArticleInfo() {
-        this.$refs.editFormRef.validate(valid => {
-          if (!valid){
-            this.$message.error('请填写信息！！！');
-          }else {
-            this.$http.post("/article/update",{
-              article:this.editForm
-            }).then(response => {
-              if (response.data.errorCode===0){
-                this.$message.success(response.data.msg);
-                this.editDialogVisible = false;
-                this.getArticleList();
-              }else {
-                this.$message.error(response.data.msg);
-              }
-            });
-          }
-        })
-      },
       removeArticleById(id) {
         this.$confirm('此操作将永久删除该文章, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          typeId: 'warning'
         }).then(() => {
           this.$http.delete("/article/delete/"+id).then(response => {
             if (response.data.errorCode===0){
@@ -223,7 +184,7 @@
           });
         }).catch(() => {
           this.$message({
-            type: 'info',
+            typeId: 'info',
             message: '已取消删除'
           })
         })
@@ -252,4 +213,13 @@
   .el-pagination{
     margin-top: 15px;
   }
+  .inputDeep>>>.el-input__inner {
+    border: 0;
+  }
+  .inputDeep>>>.el-textarea__inner {
+    border: 0;
+    height: 400px;
+    /*resize: none;*/
+  }
+
 </style>

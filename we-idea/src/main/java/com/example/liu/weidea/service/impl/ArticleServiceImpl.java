@@ -29,6 +29,8 @@ public class ArticleServiceImpl implements ArticleService {
         }
         article.setSender(article.getSender());
         article.setContent(article.getContent());
+        article.setTitle(article.getTitle());
+        article.setType(article.getType());
 //        Integer sort = articleDao.getLastSort();
 //        article.setSort(sort);
         int r = articleDao.add(article) ;
@@ -102,14 +104,14 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.getArticleById(id);
     }
 
-    /**
-     * 根据id改变显示状态
-     * @param id
-     * @param state
-     * @return
-     */
-    @Override
-    public Integer updateState(Integer id, String state) {
-        return articleDao.updateState(id, state);
-    }
+//    /**
+//     * 根据id改变显示状态
+//     * @param id
+//     * @param state
+//     * @return
+//     */
+//    @Override
+//    public Integer updateState(Integer id, String state) {
+//        return articleDao.updateState(id, state);
+//    }
 }

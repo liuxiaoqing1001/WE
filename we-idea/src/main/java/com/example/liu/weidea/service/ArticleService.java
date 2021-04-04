@@ -60,11 +60,11 @@ public interface ArticleService {
      */
     Article getArticleById(Integer id);
 
-    /**
-     * 根据id改变显示状态
-     * @param id
-     * @param state
-     * @return
-     */
-    Integer updateState(Integer id, String state);
+//    /**
+//     * 根据id改变显示状态
+//     * @param id
+//     * @param state
+//     * @return
+//     */
+//    Integer updateState(Integer id, String state);
 }

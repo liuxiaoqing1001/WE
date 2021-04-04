@@ -44,7 +44,7 @@
           this.$refs[formName].validate(valid => {
             if (valid) {
               this.$message({
-                type: 'success',
+                typeId: 'success',
                 message: '发布成功'
               });
             } else {

@@ -306,17 +306,24 @@ CREATE TABLE article (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-insert into article(sender,content,type,sendDate) values('10011','xxxx','婚恋情感',now());
+insert into article(sender,title,content,type,sendDate) values('10012','头条','xxxx','婚恋情感',now());
 
 
 CREATE TABLE type (
   id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(255) NOT NULL COMMENT '类型名',
-  text varchar(255) NOT NULL COMMENT '显示名',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-insert into type values('','');
+insert into type values('1','全部');
+insert into type values('2','心理科普');
+insert into type values('3','婚恋情感');
+insert into type values('4','人际社交');
+insert into type values('5','成长学习');
+insert into type values('6','性心理');
+insert into type values('7','心理健康');
+insert into type values('8','家庭关系');
+insert into type values('9','职场技能');
 心理科普、婚恋情感、人际社交、成长学习、性心理、心理健康、家庭关系、职场技能
 
 

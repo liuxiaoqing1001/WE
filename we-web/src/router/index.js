@@ -206,3 +206,9 @@ export default new Router({
     }
   ]
 })
+
+// 解决重复点击导航报错
+const VueRouterPush = Router.prototype.push;
+Router.prototype.push = function push (to) {
+  return VueRouterPush.call(this, to).catch(err => err)
+};

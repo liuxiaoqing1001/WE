@@ -1,6 +1,7 @@
 package com.example.liu.weidea.service.impl;
 
 import com.example.liu.weidea.dao.ArticleDao;
+import com.example.liu.weidea.dao.TypeDao;
 import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,10 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ArticleDao articleDao;
+
+    @Autowired
+    TypeDao typeDao;
+
     /**
      * 添加文章
      * @param article
@@ -102,6 +107,17 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getArticleById(Integer id) {
         return articleDao.getArticleById(id);
+    }
+
+    /**
+     * 根据type获取文章
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Article> getArticleByType(Integer id) {
+        String type = typeDao.getNameById(id);
+        return articleDao.getArticleByType(type);
     }
 
 //    /**

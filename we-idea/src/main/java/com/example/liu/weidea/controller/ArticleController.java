@@ -121,6 +121,21 @@ public class ArticleController {
         );
     }
 
+    /**
+     * 根据type获取文章
+     * @param id
+     * @return
+     */
+    @GetMapping("/getArticleByType")
+    public ResponseData getArticleByType(@RequestParam(value = "id",required = false) Integer id) {
+        List<Article> list = articleService.getArticleByType(id);
+        return new ResponseData(
+                list != null?0:1,
+                list != null?"获取成功":"获取失败",
+                list
+        );
+    }
+
 //    /**
 //     * 根据id改变显示状态
 //     * @param map

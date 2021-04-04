@@ -60,6 +60,13 @@ public interface ArticleService {
      */
     Article getArticleById(Integer id);
 
+    /**
+     * 根据type获取文章
+     * @param id
+     * @return
+     */
+    List<Article> getArticleByType(Integer id);
+
 //    /**
 //     * 根据id改变显示状态
 //     * @param id

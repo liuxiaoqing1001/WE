@@ -12,8 +12,8 @@
             <div class="menu_medium">
               <ul>
                 <p class="tips_ul">让心灵沐浴阳光，让快乐充溢胸膛。</p>
-                <li class="leftNav" v-for="li_item in li_links" @click="changeMenu(li_item.name)" >
-                  <a :class="{active:menuIndex===li_item.name}" v-on:click="$goRoute(li_item.route) ">{{li_item.text}}</a>
+                <li class="leftNav" v-for="li_item in li_links" @click="changeMenu(li_item.id)" >
+                  <a :class="{active:menuIndex===li_item.id}" >{{li_item.name}}</a>
                 </li>
               </ul>
             </div>
@@ -37,60 +37,14 @@
       data () {
         return {
           //当前选中菜单
-          // active      :'Home',
-          menuIndex: 'Article',
-          li_links: [
-            {
-              text: '心理科普',
-              name: 'Article',
-              route: '/Article'
-            },
-            {
-              text: '婚恋情感',
-              name: 'Article',
-              route: '/Article'
-            },
-            {
-              text: '家庭关系',
-              name: 'Article',
-              route: '/Article'
-            },
-            {
-              text: '个人社交',
-              name: 'Article',
-              route: '/Article'
-            },
-            {
-              text: '热点',
-              name: 'Article',
-              route: '/Article'
-            },
-            {
-              text: '心理健康',
-              name: 'Article',
-              route: '/Article'
-            },
-            {
-              text: '性心理',
-              name: 'Article',
-              route: '/Article'
-            },
-            {
-              text: '职场技能',
-              name: 'Article',
-              route: '/Article'
-            },
-            {
-              text: '成长学习',
-              name: 'Article',
-              route: '/Article'
-            }
-          ]
+          menuIndex: '1',
+          li_links: []
         }
       },
       mounted () {
         // 触发监听窗口滚动事件
         window.addEventListener('scroll', this.isScroll);
+        this.initLi_links();
       },
       methods:{
         // 监听窗口滚动
@@ -104,43 +58,27 @@
             this.navShadow = true;
           }
         },
-        // //切换左边菜单栏显示状态
-        // asideStatus(){
-        //   this.menuStatus = !this.menuStatus;
-        //   let self = this;
-        //   if(this.menuStatus) {
-        //     let interval = setInterval(function () {
-        //       self.navPadding +=1;
-        //       if(self.navPadding >= 240)
-        //       {
-        //         self.navPadding = 240;
-        //         clearInterval(interval);
-        //       }
-        //     },0.5)
-        //   }else {
-        //     let interval = setInterval(function () {
-        //       self.navPadding -= 1;
-        //       if(self.navPadding <= 0)
-        //       {
-        //         self.navPadding = 0;
-        //         clearInterval(interval);
-        //       }
-        //     },1)
-        //   }
-        // },
-        // 路由跳转
-        // location(url){
-        //   this.$router.push({path:url});
-        // },
-
-        // //单击菜单修改菜单样式
-        // changeMenu(active,url){
-        //   this.active = active;
-        //   this.location(url)
-        // },
+        initLi_links(){
+          this.$http.get("/type/getAll").then(response => {
+            if (response.data.errorCode===0){
+              this.li_links = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        },
         changeMenu: function(item){
           // 模型改变，视图会自动更新
           this.menuIndex = item;
+          this.toSwitch(item);
+        },
+        toSwitch(id){
+          this.$router.push({
+            path: 'Article',
+            query: {
+              id:id
+            }
+          })
         },
       },
     }

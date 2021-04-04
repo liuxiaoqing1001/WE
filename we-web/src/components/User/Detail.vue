@@ -1,10 +1,17 @@
 <template>
   <div class="detail">
     <div id="content">
-      <h2>{{list.title}}</h2>
-      <h9>{{list.sender}}</h9>
+      <h3>{{list.title}}</h3>
+      <h6>{{list.sender}}</h6>
+      <div>
+        <span style="font-size:15px">{{list.sendDate}}</span>
+        <span style="font-size:18px">
+          点赞
+          评论
+        </span>
+
+      </div>
       <!-- 用v-html解析后台传来的HTML代码 -->
-<!--      <div  v-html="list.sender">-->
       <div v-html="list.content">
       </div>
     </div>

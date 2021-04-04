@@ -89,6 +89,14 @@ public interface ArticleDao {
             +"</script>")
     List<Article> getArticle(String keyword);
 
+    /**
+     * 根据type获取文章
+     * @param type
+     * @return
+     */
+    @Select("select * from article where type=#{type}")
+    List<Article> getArticleByType(String type);
+
 //    /**
 //     * 根据id改变显示状态
 //     * @param id

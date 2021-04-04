@@ -312,6 +312,7 @@ insert into article(sender,content,type,sendDate) values('10011','xxxx','婚恋�
 CREATE TABLE type (
   id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(255) NOT NULL COMMENT '类型名',
+  text varchar(255) NOT NULL COMMENT '显示名',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 

@@ -67,6 +67,13 @@ public interface ArticleService {
      */
     List<Article> getArticleByType(Integer id);
 
+    /**
+     * 获取用户文章
+     * @param sender
+     * @return
+     */
+    List<Article> getArticleByUser(Integer sender);
+
 //    /**
 //     * 根据id改变显示状态
 //     * @param id

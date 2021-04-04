@@ -1,8 +1,14 @@
 <template>
   <div class="app-container">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="edit-box">
-      <el-form-item class="option" label="文章标题" prop="name">
+      <el-form-item class="option" label="文章标题" prop="title">
         <el-input v-model="ruleForm.title" class="title"></el-input>
+      </el-form-item>
+      <el-form-item label="文章类别">
+        <el-select v-model="ruleForm.type" style="float: left">
+          <el-option v-for="item in types" :key="item.name" :label="item.name" :value="item.name">
+          </el-option>
+        </el-select>
         <el-button type="primary" @click="submitForm('ruleForm')" class="send">发布</el-button>
         <el-button @click="comeBack()" class="comeBack">取消</el-button>
       </el-form-item>
@@ -20,41 +26,62 @@
             content: ""
           },
           ruleForm: {
-            title: ''
+            title: '',
+            type:''
           },
           rules: {
-            name: [
+            title: [
               {
                 required: true,
                 message: '请输入标题',
                 trigger: 'blur'
-              },
-              {
-                min: 3,
-                max: 10,
-                message: '长度在 3 到 10 个字符',
-                trigger: 'blur'
               }
             ],
-          }
+          },
+          types:[]
         };
       },
+      created() {
+        this.getType();
+      },
       methods: {
+        getType(){
+          this.$http.get("/type/getAll").then(response => {
+            if (response.data.errorCode===0){
+              this.types = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        },
         submitForm(formName) {
           this.$refs[formName].validate(valid => {
             if (valid) {
-              this.$message({
-                typeId: 'success',
-                message: '发布成功'
+              this.$http.post("/article/add",{
+                sender:window.sessionStorage.getItem('id'),
+                title:this.ruleForm.title,
+                content:this.article.content,
+                type:this.ruleForm.type
+              }).then(response => {
+                if (response.data.errorCode===0){
+                  this.$message.success(response.data.msg);
+                  this.$router.push("/VArticle");
+                  // // 隐藏添加用户的对话框
+                  // this.addDialogVisible = false;
+                  // // 重新发起请求用户列表
+                  // this.getUserList();
+                }else {
+                  this.$message.error(response.data.msg);
+                }
               });
             } else {
-              this.$message.error('发布失败');
+              this.$message.error('标题和内容不能为空');
               return false;
             }
           });
         },
         comeBack() {
-          this.$router.push('/VArticle');
+          this.$router.go(-1);
         }
       },
     }
@@ -79,11 +106,12 @@
 
   .title{
     float: left;
-    width: 65%;
+    width: 90%;
   }
 
   .comeBack,.send{
     float: right;
+    margin-right: 20px;
   }
 
   .comeBack{

@@ -38,7 +38,7 @@
         </div>
         <div class="banner_theme">
           <div class="item_theme">
-            <video src="https://vd2.bdstatic.com/mda-ijiqckncw23fx73z/sc/mda-ijiqckncw23fx73z.mp4?v_from_s=gz_haokan_4469&auth_key=1617383202-0-0-11716dc8b14f31e7141b1112a414b6ae&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000165_2"/>
+<!--            <video src="https://vd2.bdstatic.com/mda-ijiqckncw23fx73z/sc/mda-ijiqckncw23fx73z.mp4?v_from_s=gz_haokan_4469&auth_key=1617383202-0-0-11716dc8b14f31e7141b1112a414b6ae&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000165_2"/>-->
 <!--            <img src="../../assets/image/1.jpeg" height="640" width="1024"/>-->
           </div>
         </div>
@@ -67,8 +67,8 @@
       return{
         dataList:[
           'https://ossimg.xinli001.com/20210331/8b9bb5fa1668eabcb49fc99e06383c40.jpeg?x-oss-process=image/quality,Q_80',
-          'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F011e485783aa700000018c1be22d29.jpg&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619969651&t=32b17ba6792e5657e8a0f14615b578e2',
-          'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsryhxl.com%2Fuploadsabcd%2F191024%2F1-1910242054134c.jpg&refer=http%3A%2F%2Fsryhxl.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619969096&t=7fbfc060937fe015e29c27f998d0a3d5',
+          // 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F011e485783aa700000018c1be22d29.jpg&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619969651&t=32b17ba6792e5657e8a0f14615b578e2',
+          // 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsryhxl.com%2Fuploadsabcd%2F191024%2F1-1910242054134c.jpg&refer=http%3A%2F%2Fsryhxl.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619969096&t=7fbfc060937fe015e29c27f998d0a3d5',
           'https://ossimg.xinli001.com/20210326/18012ce2485d8729be81f5c989c9c05d.jpeg?x-oss-process=image/quality,Q_80',
           'https://ossimg.xinli001.com/20210402/b5c744482c660101988e4020e5c0a8ee.jpeg?x-oss-process=image/quality,Q_80',
         ],

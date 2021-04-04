@@ -9,19 +9,12 @@ import java.util.List;
 public interface ArticleDao {
 
     /**
-     * 根据id查找是否存在
-     * @param id
-     * @return
-     */
-    @Select("select count(*) from article where id=#{id}")
-    int articleSearch(String id);
-
-    /**
      * 添加文章
      * @param article
      * @return
      */
-    @Insert("insert into article(sender,title,content,sendDate) values(#{sender},#{title},#{content},now())")
+    @Insert("insert into article(sender,title,content,type,sendDate) " +
+            "values(#{sender},#{title},#{content},#{type},now())")
     int add(Article article);
 
     /**
@@ -96,6 +89,14 @@ public interface ArticleDao {
      */
     @Select("select * from article where type=#{type}")
     List<Article> getArticleByType(String type);
+
+    /**
+     * 获取用户文章
+     * @param sender
+     * @return
+     */
+    @Select("select * from article where sender=#{sender}")
+    List<Article> getArticleByUser(Integer sender);
 
 //    /**
 //     * 根据id改变显示状态

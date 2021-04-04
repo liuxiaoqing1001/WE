@@ -25,12 +25,12 @@ public class ArticleController {
      */
     @PostMapping("/add")
     public ResponseData add(@RequestBody Map<String , Object> map) {
-        JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("article")));
+//        JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("article")));
         Article article = new Article();
-        article.setSender(json.getString("sender"));
-        article.setContent(json.getString("title"));
-        article.setContent(json.getString("content"));
-        article.setContent(json.getString("type"));
+        article.setSender((String) map.get("sender"));
+        article.setContent((String) map.get("title"));
+        article.setContent((String) map.get("content"));
+        article.setContent((String) map.get("type"));
         Integer result = articleService.add(article) ;
         return new ResponseData(
                 result ==0 ? 0 : 1 ,
@@ -128,7 +128,28 @@ public class ArticleController {
      */
     @GetMapping("/getArticleByType")
     public ResponseData getArticleByType(@RequestParam(value = "id",required = false) Integer id) {
-        List<Article> list = articleService.getArticleByType(id);
+        List<Article> list;
+        if(id!=1){
+            list = articleService.getArticleByType(id);
+        }else {
+            list = articleService.getAll();
+
+        }
+        return new ResponseData(
+                list != null?0:1,
+                list != null?"获取成功":"获取失败",
+                list
+        );
+    }
+
+    /**
+     * 获取用户文章
+     * @param sender
+     * @return
+     */
+    @GetMapping("/getArticleByUser")
+    public ResponseData getArticleByUser(@RequestParam(value = "sender",required = false) Integer sender) {
+        List<Article> list = articleService.getArticleByUser(sender);
         return new ResponseData(
                 list != null?0:1,
                 list != null?"获取成功":"获取失败",

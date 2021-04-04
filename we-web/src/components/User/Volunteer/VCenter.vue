@@ -198,7 +198,7 @@
         },
 
         comeBack(){
-
+          this.$router.go(-1);
         },
 
         handleExceed(files, fileList) {

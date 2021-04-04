@@ -26,24 +26,10 @@
           }
       },
       created() {
-        console.log(this.$route.query.id);
-        if(this.$route.query.id===undefined||this.$route.query.id===1){
-          this.getAllArticleList();
-        }else {
-          console.log("分类");
-          this.getArticleList(this.$route.query.id);
-        }
+        console.log(window.sessionStorage.getItem('tid'));
+        this.getArticleList(window.sessionStorage.getItem('tid'));
       },
       methods:{
-        getAllArticleList(){
-          this.$http.get("/article/getAll").then(response => {
-            if (response.data.errorCode===0){
-              this.articleList = response.data.data;
-            }else {
-              this.$message.error(response.data.msg);
-            }
-          });
-        },
         toDetail(id){
           this.$router.push({
             path: 'Detail',

@@ -27,17 +27,10 @@ public class ArticleServiceImpl implements ArticleService {
         if(null == article) {
             return REG_MSG_FAIL_INFO_NON ;
         }
-        // 先进行账号是否存在检测
-        int count = articleDao.articleSearch(article.getSender()) ;
-        if(count > 0) {
-            return REG_MSG_FAIL_NAMEEXISTS ;
-        }
         article.setSender(article.getSender());
         article.setContent(article.getContent());
         article.setTitle(article.getTitle());
         article.setType(article.getType());
-//        Integer sort = articleDao.getLastSort();
-//        article.setSort(sort);
         int r = articleDao.add(article) ;
         if(r > 0) {
             return REG_MSG_OK ;
@@ -118,6 +111,16 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> getArticleByType(Integer id) {
         String type = typeDao.getNameById(id);
         return articleDao.getArticleByType(type);
+    }
+
+    /**
+     * 获取用户文章
+     * @param sender
+     * @return
+     */
+    @Override
+    public List<Article> getArticleByUser(Integer sender) {
+        return articleDao.getArticleByUser(sender);
     }
 
 //    /**

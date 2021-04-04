@@ -26,7 +26,7 @@
           list:[]
         }
       },
-      mounted(){
+      created(){
         // 获取动态路由传值
         var aid=this.$route.query.id;
         // 调用requestData()方法请求数据

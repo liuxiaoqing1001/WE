@@ -44,7 +44,11 @@
       mounted () {
         // 触发监听窗口滚动事件
         window.addEventListener('scroll', this.isScroll);
+
+      },
+      created() {
         this.initLi_links();
+        this.toSwitch(1);
       },
       methods:{
         // 监听窗口滚动
@@ -73,12 +77,8 @@
           this.toSwitch(item);
         },
         toSwitch(id){
-          this.$router.push({
-            path: 'Article',
-            query: {
-              id:id
-            }
-          })
+          window.sessionStorage.setItem('tid',id);
+          this.$router.push('/Article');
         },
       },
     }

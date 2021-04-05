@@ -61,15 +61,6 @@ public interface UserService {
      */
     int deleteById(Integer id) ;
 
-    Integer upRole(Integer id);
-
-    Integer delById(Integer id);
-
-
-    Integer addRole(User user);
-
-    String getPhotoUrl(String name);
-
     /**
      * 根据电话号查询用户信息
      * @param phone

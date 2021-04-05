@@ -74,11 +74,11 @@
               name: 'VolunteerZone',
               route: '/VolunteerZone'
             },
-            {
-              text: '其他',
-              name: 'Other',
-              route: '/Other'
-            }
+            // {
+            //   text: '其他',
+            //   name: 'Other',
+            //   route: '/Other'
+            // }
           ]
         }
       },

@@ -19,11 +19,18 @@
           <i class="el-icon-star-off" style="margin-right: 10px">{{praiseNum}}</i>
           <i class="el-icon-edit">{{commentNum}}</i>
         </span>
-
       </div>
       <!-- 用v-html解析后台传来的HTML代码 -->
-      <div v-html="list.content">
-      </div>
+      <div v-html="list.content"></div>
+    </div>
+    <div class="commentArea">
+      <span v-if="!isComment" class="noComment">暂无评论</span>
+      <ul v-else class="list-group">
+        <li class="list-group-item" v-for="cItem in cList" :key="cItem.id">
+          <span class="badge">{{ cItem.sender }}</span>
+          {{ cItem.content }}
+        </li>
+      </ul>
     </div>
   </div>
 
@@ -51,7 +58,9 @@
       data(){
         return{
           list:[],
+          cList:[],
           isEdit: false,
+          isComment:false,
           article: {
             content: ""
           },
@@ -79,7 +88,7 @@
         // 调用requestData()方法请求数据
         this.requestData(aid);
         this.getType();
-        this.initPAC();
+        this.initPAC(aid);
       },
       methods:{
         getType(){
@@ -91,8 +100,46 @@
             }
           });
         },
-        initPAC(){
-          //根据id获得点赞数和评论数
+        initPAC(aid){
+          //根据id获得点赞数和评论数,收藏数
+          this.$http.get("/article/getPNum",{
+            params:{
+              id:aid
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.praiseNum = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+          this.$http.get("/article/getCNum",{
+            params:{
+              id:aid
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.commentNum = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+          this.$http.get("/article/getCommentById",{
+            params:{
+              id:aid
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              if(response.data.data.length===0){
+                this.isComment=false;
+              }else {
+                this.isComment=true;
+                this.cList = response.data.data;
+              }
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
           //根据id修改文章
           //下方显示评论区
         },
@@ -141,8 +188,8 @@
         submitForm(formName) {
           this.$refs[formName].validate(valid => {
             if (valid) {
-              this.$http.post("/article/update",{//未修改
-                sender:window.sessionStorage.getItem('id'),
+              this.$http.post("/article/update",{
+                id:this.ruleForm.id,
                 title:this.ruleForm.title,
                 content:this.article.content,
                 type:this.ruleForm.type
@@ -233,6 +280,37 @@
 
   .comeBack{
     margin-right: 15px;
+  }
+
+  .commentArea{
+    margin-top: 10%;
+    width: 66%;
+    /*margin-right: 30%;*/
+    /*text-align: center;*/
+    margin-left: 30%;
+    font-size: 15px;
+  }
+
+  .list-group-item{
+    margin-bottom: 15px;
+    width: 50%;
+    /*width: auto;*/
+    padding: 5px 12px 0;
+    background: beige;
+    border-radius: 3px;
+    text-align: left;
+    font-size: 15px;
+    list-style: none;
+    box-shadow: 0 1px 2px rgba(151,151,151,0.58);
+  }
+
+  .noComment{
+    float:left;
+    margin-left: 25%;
+    background: beige;
+    padding: 5px 12px 0;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(151,151,151,0.58);
   }
 
 </style>

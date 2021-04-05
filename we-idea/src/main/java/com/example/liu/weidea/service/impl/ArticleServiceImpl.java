@@ -1,8 +1,11 @@
 package com.example.liu.weidea.service.impl;
 
 import com.example.liu.weidea.dao.ArticleDao;
+import com.example.liu.weidea.dao.CommentDao;
+import com.example.liu.weidea.dao.PraiseDao;
 import com.example.liu.weidea.dao.TypeDao;
 import com.example.liu.weidea.entity.Article;
+import com.example.liu.weidea.entity.Comment;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     TypeDao typeDao;
+
+    @Autowired
+    PraiseDao praiseDao;
+
+    @Autowired
+    CommentDao commentDao;
 
     /**
      * 添加文章
@@ -47,9 +56,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article update(Article article) {
         if(null == article) {
-            return null ;
-        }
-        if(article.getSender() == null) {
             return null ;
         }
         int r = articleDao.updateById(article) ;
@@ -121,6 +127,36 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getArticleByUser(Integer sender) {
         return articleDao.getArticleByUser(sender);
+    }
+
+    /**
+     * 根据id获得点赞数
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getPNum(Integer id) {
+        return praiseDao.getPNum(id);
+    }
+
+    /**
+     * 根据id获得评论数
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getCNum(Integer id) {
+        return commentDao.getCNum(id);
+    }
+
+    /**
+     * 获取文章评论
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Comment> getCommentById(Integer id) {
+        return commentDao.getCommentById(id);
     }
 
 //    /**

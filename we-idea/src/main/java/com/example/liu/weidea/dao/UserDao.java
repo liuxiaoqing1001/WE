@@ -174,77 +174,12 @@ public interface UserDao {
             +"</script>")
     List<User> getAdmin(String keyword) ;
 
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 获得所有用户
+     * @return
+     */
     @Select("select * from user")
     List<User> getAll() ;
-
-
-
-
-
-    //分页
-    @Select("<script>" +
-            "select * from user" +
-            "        <where>" +
-            "            <if test=\"null != id\">" +
-            "                and id=#{id}" +
-            "            </if>" +
-            "            <if test=\"null != name\">" +
-            "                    and name = #{name}" +
-            "            </if>" +
-            "            <if test=\"null != regdate\">" +
-            "                and DATE_FORMAT(regdate,'%Y%m%d')=#{regdate}" +
-            "            </if>" +
-            "        </where>"+
-            " order by regdate desc limit #{offset},#{rows}" +
-            "</script>")
-    List<User> getMoreBy(@Param("id") Integer id, @Param("name") String name, @Param("regdate") String regdate, @Param("offset") Integer offset, @Param("rows") Integer rows) ;
-
-    @Select("<script>" +
-            "select count(*) from user" +
-            "        <where>" +
-            "            <if test=\"null != id\">" +
-            "                and id=#{id}" +
-            "            </if>" +
-            "            <if test=\"null != name\">" +
-            "                    and name = #{name}" +
-            "            </if>" +
-            "            <if test=\"null != regdate\">" +
-            "                and DATE_FORMAT(regdate,'%Y%m%d')=#{regdate}" +
-            "            </if>" +
-            "        </where>"+
-            "</script>")
-    int getMoreCount(@Param("id") Integer id, @Param("name") String name, @Param("regdate") String regdate) ;
-
-    @Update("update user set role=1 where id=#{id}")
-    int upRole(@Param("id") Integer id);
-
-    @Delete("delete from user where id=#{id}")
-    int delById(Integer id);
-
-    @Select("select count(*) from user where role=0")
-    Integer getCount();
-
-    @Select("select * from user where role=0 order by id asc limit #{offset},#{rows}")
-    List<User> getLimit(@Param("offset") Integer offset, @Param("rows") Integer rows);
-
-    @Insert("insert into user(name,password,age,sex,email,mobile,photourl,role,regdate) " +
-            "values(#{name},#{password},#{age},#{sex},#{email},#{mobile},#{photourl},0,now())")
-    int addRole(User user);
-
-    @Select("select photourl from user where name=#{name}")
-    String getPhotoUrl(String name);
 
 
 

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.Article;
+import com.example.liu.weidea.entity.Comment;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +26,11 @@ public class ArticleController {
      */
     @PostMapping("/add")
     public ResponseData add(@RequestBody Map<String , Object> map) {
-//        JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("article")));
         Article article = new Article();
         article.setSender((String) map.get("sender"));
-        article.setContent((String) map.get("title"));
+        article.setTitle((String) map.get("title"));
         article.setContent((String) map.get("content"));
-        article.setContent((String) map.get("type"));
+        article.setType((String) map.get("type"));
         Integer result = articleService.add(article) ;
         return new ResponseData(
                 result ==0 ? 0 : 1 ,
@@ -46,14 +46,11 @@ public class ArticleController {
      */
     @PostMapping("/update")
     public ResponseData update(@RequestBody Map<String , Object> map) {
-        JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("article")));
         Article article = new Article();
-        article.setId(Integer.valueOf(json.getString("id")));
-        article.setSender(json.getString("sender"));
-        article.setContent(json.getString("title"));
-        article.setContent(json.getString("content"));
-        article.setContent(json.getString("type"));
-        article.setContent(json.getString("imgUrl"));
+        article.setId((Integer) map.get("id"));
+        article.setTitle((String) map.get("title"));
+        article.setContent((String) map.get("content"));
+        article.setType((String) map.get("type"));
         Article m = articleService.update(article) ;
         return new ResponseData(
                 m !=null ? 0 : 1 ,
@@ -157,18 +154,49 @@ public class ArticleController {
         );
     }
 
-//    /**
-//     * 根据id改变显示状态
-//     * @param map
-//     * @return
-//     */
-//    @PostMapping("/updateState")
-//    public ResponseData updateState(@RequestBody Map<String , Object> map){
-//        Integer result=articleService.updateState((Integer) map.get("id"), (String)map.get("state"));
-//        return new ResponseData(
-//                result !=null ? 0 : 1 ,
-//                result !=null ? "修改成功" : "修改失败" ,
-//                result
-//        );
-//    }
+    /**
+     * 根据id获得点赞数
+     * @param id
+     * @return
+     */
+    @GetMapping("/getPNum")
+    public ResponseData getPNum(@RequestParam(value = "id",required = false) Integer id) {
+        Integer pNum = articleService.getPNum(id);
+        return new ResponseData(
+                pNum != null?0:1,
+                pNum != null?"获取成功":"获取失败",
+                pNum
+        );
+    }
+
+    /**
+     * 根据id获得评论数
+     * @param id
+     * @return
+     */
+    @GetMapping("/getCNum")
+    public ResponseData getCNum(@RequestParam(value = "id",required = false) Integer id) {
+        Integer cNum = articleService.getCNum(id);
+        return new ResponseData(
+                cNum != null?0:1,
+                cNum != null?"获取成功":"获取失败",
+                cNum
+        );
+    }
+
+    /**
+     * 获取文章评论
+     * @param id
+     * @return
+     */
+    @GetMapping("/getCommentById")
+    public ResponseData getCommentById(@RequestParam(value = "id",required = false) Integer id) {
+        List<Comment> list = articleService.getCommentById(id);
+        return new ResponseData(
+                list != null?0:1,
+                list != null?"获取成功":"获取失败",
+                list
+        );
+    }
+
 }

@@ -119,10 +119,10 @@
     display: inline-block;
     margin: 0 8px 8px 0;
     border-radius: 2px;
-    background: #8bc34a;
+    background: mediumseagreen;
     padding: 0 16px;
     line-height: 28px;
-    color: rgba(255,255,255,0.8);
+    color: white;
   }
   li:hover{
     cursor: pointer;

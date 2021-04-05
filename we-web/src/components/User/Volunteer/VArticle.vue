@@ -34,7 +34,7 @@
         },
         toDetail(id){
           this.$router.push({
-            path: 'Detail',
+            path: 'MyArticle',
             query: {
               id:id
             }
@@ -62,10 +62,20 @@
     max-width: 960px;
     margin: 30px auto 40px;
   }
+  .intoW{
+    color: blue;
+    float: right;
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+  a:hover{
+    cursor: pointer;
+  }
   .blog-wrapper{
     margin-bottom: 30px;
     padding: 12px 12px 0;
     background: #fff;
+    /*background: beige;*/
     border-radius: 3px;
     text-align: left;
     list-style: none;
@@ -84,7 +94,7 @@
     font-size: 24px;
     line-height: 32px;
     color: #3f51b5;
-    border-bottom: 1px solid #ddd;
+    /*border-bottom: 1px solid #ddd;*/
     padding-bottom: 15px;
   }
   .blog-content{
@@ -102,21 +112,18 @@
   }
   .blog-tag{
     position: relative;
-    margin-left: 80%;
-    /*padding-top: 8px;*/
-    /*margin: 0 -12px;*/
-    /*float: right;*/
-    /*padding-bottom: 10px;*/
-    /*border-top: 1px solid #ddd;*/
+    margin: 0 -12px;
+    padding: 12px 20px 8px;
+    border-top: 1px solid #ddd;
   }
   .blog-tag li{
     display: inline-block;
     margin: 0 8px 8px 0;
     border-radius: 2px;
-    background: #8bc34a;
+    background: mediumseagreen;
     padding: 0 16px;
     line-height: 28px;
-    color: rgba(255,255,255,0.8);
+    color: white;
   }
   li:hover{
     cursor: pointer;

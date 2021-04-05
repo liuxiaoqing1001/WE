@@ -29,6 +29,7 @@ import VCenter from "../components/User/Volunteer/VCenter";
 import VArticle from "../components/User/Volunteer/VArticle";
 import VConsulting from "../components/User/Volunteer/VConsulting";
 import VWrite from "../components/User/Volunteer/VWrite";
+import MyArticle from "../components/User/Volunteer/MyArticle";
 
 Vue.use(Router);
 
@@ -201,6 +202,11 @@ export default new Router({
           name: 'VWrite',
           path: '/VWrite',
           component: VWrite
+        },
+        {
+          name: MyArticle,
+          path: '/MyArticle',
+          component: MyArticle
         }
       ]
     }

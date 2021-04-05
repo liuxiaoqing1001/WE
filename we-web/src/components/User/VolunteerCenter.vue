@@ -40,7 +40,7 @@
       data () {
         return {
           router: '/VCenter',
-          userName: 'user',
+          userName: window.sessionStorage.getItem('token'),
           level: '心理治疗师'
         }
       },

@@ -349,6 +349,9 @@ CREATE TABLE comment  (
   PRIMARY KEY (id) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
+insert into comment(id,aid,content,sender,receiver,time) values('1','9','还不错','liu','liu',now());
+insert into comment(id,aid,content,sender,receiver,time) values('2','9','不错','liu','liu',now());
+
 CREATE TABLE praise (
   id int(11) NOT NULL AUTO_INCREMENT,
   aid int(11) NOT NULL,
@@ -356,6 +359,8 @@ CREATE TABLE praise (
   time datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '时间',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+insert into praise values('1','9','10011',now());
 
 CREATE TABLE collect (
   id int(11) NOT NULL AUTO_INCREMENT,

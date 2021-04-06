@@ -1,7 +1,9 @@
 package com.example.liu.weidea.dao;
 
+import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.entity.Comment;
 import com.example.liu.weidea.entity.Type;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -38,6 +40,22 @@ public interface CommentDao {
     @Select("select * from comment where sid=#{sid}")
     List<Comment> getAllBySid(Integer sid);
 
+    /**
+     * 添加文章评论
+     * @param comment
+     * @return
+     */
+    @Insert("insert into comment(aid,content,sender,receiver,time) " +
+            "values(#{aid},#{content},#{sender},#{receiver},now())")
+    int addA(Comment comment);
 
+    /**
+     * 添加文章评论
+     * @param comment
+     * @return
+     */
+    @Insert("insert into comment(sid,content,sender,receiver,time) " +
+            "values(#{sid},#{content},#{sender},#{receiver},now())")
+    int addS(Comment comment);
 
 }

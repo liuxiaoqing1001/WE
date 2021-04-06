@@ -26,7 +26,7 @@
           }
       },
       created() {
-        console.log(window.sessionStorage.getItem('tid'));
+        // console.log(window.sessionStorage.getItem('tid'));
         this.getArticleList(window.sessionStorage.getItem('tid'));
       },
       methods:{

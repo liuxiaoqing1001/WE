@@ -1,5 +1,6 @@
 package com.example.liu.weidea.service;
 
+import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.User;
 
 import java.util.Date;
@@ -121,4 +122,11 @@ public interface UserService {
      * @return
      */
     List<User> getAdmin(String keyword);
+
+    /**
+     * 根据vid获取
+     * @param vid
+     * @return
+     */
+    List<Consultants> getConsultantsById(Integer vid);
 }

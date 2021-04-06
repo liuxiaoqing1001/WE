@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.entity.Comment;
+import com.example.liu.weidea.entity.Praise;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -198,6 +199,64 @@ public class ArticleController {
                 list != null?"获取成功":"获取失败",
                 list
         );
+    }
+
+    /**
+     * 点赞
+     * @param map
+     * @return
+     */
+    @PostMapping("/addP")
+    public ResponseData addP(@RequestBody Map<String , Object> map) {
+        Praise praise = new Praise();
+        praise.setAid((Integer) map.get("aid"));
+        praise.setUid(Integer.parseInt(map.get("uid").toString()));
+        Integer result = articleService.addP(praise) ;
+        return new ResponseData(
+                result ==0 ? 0 : 1 ,
+                result ==0 ? "添加成功" : "添加失败" ,
+                result
+        ) ;
+    }
+
+    /**
+     * 取消点赞
+     * @param aid
+     * @param uid
+     * @return
+     */
+    @DeleteMapping("/delP")
+    public ResponseData delP(@RequestParam(value = "aid",required = false) Integer aid,
+                             @RequestParam(value = "uid",required = false) Integer uid) {
+        Praise praise = new Praise();
+        praise.setAid(aid);
+        praise.setUid(uid);
+        int result = articleService.delP(praise) ;
+        return  new ResponseData(
+                result !=0 ? 0 : 1 ,
+                result !=0 ? "删除成功" : "删除失败" ,
+                result
+        ) ;
+    }
+
+    /**
+     * 是否点赞
+     * @param aid
+     * @param uid
+     * @return
+     */
+    @GetMapping("/getIsP")
+    public ResponseData getIsP(@RequestParam(value = "aid",required = false) Integer aid,
+                               @RequestParam(value = "uid",required = false) Integer uid) {
+        Praise praise = new Praise();
+        praise.setAid(aid);
+        praise.setUid(uid);
+        int result = articleService.getIsP(praise) ;
+        return  new ResponseData(
+                result !=0 ? 0 : 1 ,
+                result !=0 ? "获取成功" : "未点赞" ,
+                result
+        ) ;
     }
 
 }

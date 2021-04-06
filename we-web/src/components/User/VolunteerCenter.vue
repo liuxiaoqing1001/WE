@@ -8,7 +8,7 @@
   <div >
     <div class="container">
       <div class="main-wrapper">
-        <router-view></router-view>
+        <router-view v-if="isRouterAlive"></router-view>
       </div>
       <transition name="fade">
         <aside class="right-wrapper">
@@ -37,14 +37,26 @@
 <script>
     export default {
       name: "VolunteerCenter",
+      provide (){
+        return {
+          reload:this.reload
+        }
+      },
       data () {
         return {
+          isRouterAlive:true,
           router: '/VCenter',
           userName: window.sessionStorage.getItem('token'),
           level: '心理治疗师'
         }
       },
       methods:{
+        reload (){
+          this.isRouterAlive = false;
+          this.$nextTick(function(){
+            this.isRouterAlive = true;
+          })
+        },
         toArticle:function(){
           this.$router.push("/VArticle");
           this.$message.success('文章');

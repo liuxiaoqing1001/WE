@@ -6,6 +6,7 @@ import com.example.liu.weidea.dao.PraiseDao;
 import com.example.liu.weidea.dao.TypeDao;
 import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.entity.Comment;
+import com.example.liu.weidea.entity.Praise;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -157,6 +158,56 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Comment> getCommentById(Integer id) {
         return commentDao.getCommentById(id);
+    }
+
+    /**
+     * 取消点赞
+     * @param praise
+     * @return
+     */
+    @Override
+    public int delP(Praise praise) {
+        if(null == praise) {
+            return REG_MSG_FAIL_INFO_NON ;
+        }
+        praise.setAid(praise.getAid());
+        praise.setUid(praise.getUid());
+        return praiseDao.delP(praise);
+    }
+
+    /**
+     * 点赞
+     * @param praise
+     * @return
+     */
+    @Override
+    public Integer addP(Praise praise) {
+        if(null == praise) {
+            return REG_MSG_FAIL_INFO_NON ;
+        }
+        praise.setAid(praise.getAid());
+        praise.setUid(praise.getUid());
+        int r = praiseDao.addP(praise) ;
+        if(r > 0) {
+            return REG_MSG_OK ;
+        } else {
+            return REG_MSG_FAIL_OTHER ;
+        }
+    }
+
+    /**
+     * 是否点赞
+     * @param praise
+     * @return
+     */
+    @Override
+    public int getIsP(Praise praise) {
+        if(null == praise) {
+            return REG_MSG_FAIL_INFO_NON ;
+        }
+        praise.setAid(praise.getAid());
+        praise.setUid(praise.getUid());
+        return praiseDao.getIsP(praise);
     }
 
 //    /**

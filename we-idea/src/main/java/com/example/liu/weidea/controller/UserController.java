@@ -3,6 +3,7 @@ package com.example.liu.weidea.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
+import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -301,6 +302,21 @@ public class UserController {
                 result !=0 ? "删除成功" : "删除失败" ,
                 result
         ) ;
+    }
+
+    /***
+     * 根据vid获取
+     * @param vid
+     * @return
+     */
+    @GetMapping("/getConsultantsById/{vid}")
+    public ResponseData getConsultantsById(@PathVariable("vid") Integer vid) {
+        List<Consultants> consultants = userService.getConsultantsById(vid) ;
+        return new ResponseData(
+                consultants !=null ? 0 : 1 ,
+                consultants !=null ? "查询成功" : "查询失败" ,
+                consultants
+        );
     }
 
 //

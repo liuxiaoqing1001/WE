@@ -6,7 +6,8 @@
       <div>
         <span style="font-size:15px;margin-right: 30px">{{list.sendDate}}</span>
         <span style="font-size:18px">
-          <i class="el-icon-star-off" style="margin-right: 10px">{{praiseNum}}</i>
+          <i v-if="!isPraise" class="el-icon-star-off" @click="changeP(list.id)" style="margin-right: 10px">{{praiseNum}}</i>
+          <i v-else class="el-icon-star-on " @click="changeP(list.id)" style="margin-right: 10px">{{praiseNum}}</i>
           <i class="el-icon-edit">{{commentNum}}</i>
         </span>
       </div>
@@ -15,8 +16,8 @@
     </div>
     <div class="commentArea">
       <div class="send">
-        <textarea class="write" placeholder="说点什么吧！"></textarea>
-        <button @click="send()" type="button" class="btn_say">发送</button>
+        <textarea v-model="comment.content" class="write" placeholder="说点什么吧！"></textarea>
+        <button @click="send(list.id)" type="button" class="btn_say">发送</button>
       </div>
       <span v-if="!isComment" class="noComment">暂无评论</span>
       <ul v-else class="list-group">
@@ -32,13 +33,18 @@
 <script>
     export default {
       name: "Detail",
+      inject:['reload'],
       data(){
         return{
           list:[],
           cList:[],
+          comment:{
+            content: ""
+          },
           praiseNum:0,
           commentNum:0,
           isComment:false,
+          isPraise:false
         }
       },
       created(){
@@ -99,9 +105,65 @@
               this.$message.error(response.data.msg);
             }
           });
+          this.$http.get("/article/getIsP",{
+            params:{
+              aid:aid,
+              uid:window.sessionStorage.getItem("id")
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.isPraise=true;
+            }else {
+              this.isPraise=false;
+              // this.$message.error(response.data.msg);
+            }
+          });
         },
-        send(){
+        changeP(aid){
+          if(this.isPraise===false){
+            this.$http.post("/article/addP",{
+              aid:aid,
+              uid:window.sessionStorage.getItem("id")
+            }).then(response => {
+              if (response.data.errorCode===0){
+                this.isPraise=true;
+                this.reload();
+              }else {
+                this.isPraise=false;
+                this.$message.error(response.data.msg);
+              }
+            });
+          }else {
+            this.$http.delete("/article/delP/",{
+              params:{
+                aid:aid,
+                uid:window.sessionStorage.getItem("id")
+              }
+            }).then(response => {
+              if (response.data.errorCode===0){
+                this.isPraise=false;
+                this.reload();
+              }else {
+                this.isPraise=true;
+              }
+            });
+          }
+        },
+        send(aid){
           //发送评论
+          this.$http.post("/comment/addA",{
+            aid:aid,
+            content:this.comment.content,
+            sender:window.sessionStorage.getItem('token'),
+            receiver:this.list.sender
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.$message.success(response.data.msg);
+              this.reload();
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
         }
       }
     }
@@ -159,11 +221,18 @@
   .write{
     float: left;
     width: 75%;
-    /*height: 50px;*/
     max-height: 80%;
     margin-left: 30px;
     margin-top: 15px;
-    /*margin-bottom: 50px;*/
+    border: 1px solid #DCDFE6;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    box-shadow: 0 0 10px #909399;
+  }
+
+  i:hover{
+    cursor: pointer;
   }
 
   .btn_say{
@@ -202,6 +271,7 @@
   }
 
   .list-group-item{
+    margin-top: 20px;
     margin-bottom: 15px;
     margin-left: 18%;
     width: 50%;

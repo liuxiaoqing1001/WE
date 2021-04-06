@@ -2,6 +2,7 @@ package com.example.liu.weidea.service;
 
 import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.entity.Comment;
+import com.example.liu.weidea.entity.Praise;
 
 import java.util.List;
 
@@ -95,6 +96,27 @@ public interface ArticleService {
      * @return
      */
     List<Comment> getCommentById(Integer id);
+
+    /**
+     * 取消点赞
+     * @param praise
+     * @return
+     */
+    int delP(Praise praise);
+
+    /**
+     * 点赞
+     * @param praise
+     * @return
+     */
+    Integer addP(Praise praise);
+
+    /**
+     * 是否点赞
+     * @param praise
+     * @return
+     */
+    int getIsP(Praise praise);
 
 //    /**
 //     * 根据id改变显示状态

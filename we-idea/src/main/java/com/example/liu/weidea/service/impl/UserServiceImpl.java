@@ -1,6 +1,8 @@
 package com.example.liu.weidea.service.impl;
 
+import com.example.liu.weidea.dao.ConsultantsDao;
 import com.example.liu.weidea.dao.UserDao;
+import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    ConsultantsDao consultantsDao;
 
     /**
      * 登录
@@ -248,14 +253,15 @@ public class UserServiceImpl implements UserService {
         return userDao.getAdmin(keyword);
     }
 
-
-
-
-
-
-
-
-
+    /**
+     * 根据vid获取
+     * @param vid
+     * @return
+     */
+    @Override
+    public List<Consultants> getConsultantsById(Integer vid) {
+        return consultantsDao.getConsultantsById(vid);
+    }
 
 
     @Override

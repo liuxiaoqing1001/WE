@@ -1,6 +1,9 @@
 package com.example.liu.weidea.dao;
 
+import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.entity.Praise;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -25,11 +28,29 @@ public interface PraiseDao {
     Integer getPNum(Integer aid);
 
     /**
-     * 根据uid获取
-     * @param uid
+     * 是否点赞
+     * @param praise
      * @return
      */
-    @Select("select count(*) from collect where uid=#{uid}")
-    Integer getByUid(Integer uid);
+    @Select("select count(*) from praise where aid=#{aid} and uid=#{uid}")
+    Integer getIsP(Praise praise);
+
+    /**
+     * 点赞
+     * @param praise
+     * @return
+     */
+    @Insert("insert into praise(aid,uid,time) values(#{aid},#{uid},now())")
+    int addP(Praise praise);
+
+    /**
+     * 取消点赞
+     * @param praise
+     * @return
+     */
+    @Delete("delete from praise where aid=#{aid} and uid=#{uid}")
+    int delP(Praise praise);
+
+
 
 }

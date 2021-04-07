@@ -501,8 +501,16 @@ https://blog.csdn.net/li13168690086/article/details/82415667?utm_medium=distribu
 
 
 
+图表：
+npm i v-charts echarts@4.9.0 -S
+https://blog.csdn.net/benben719214393/article/details/88864579
+https://vue-echarts.github.io/guide/props.html#%E5%85%AC%E6%9C%89%E5%B1%9E%E6%80%A7
 
+布局：
+https://blog.csdn.net/weixin_43326165/article/details/102070745
 
+elementUI官网
+https://element.eleme.cn/#/zh-CN/component/switch
 
 19.再等等好运马上来了
 https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202002%2F18%2F20200218081931_jeacg.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1619969884&t=fead2c8fcf3b6cd31f0284fee17e67e2

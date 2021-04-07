@@ -129,4 +129,22 @@ public interface UserService {
      * @return
      */
     List<Consultants> getConsultantsById(Integer vid);
+
+    /**
+     * 查询数据库中所有管理员数量
+     * @return
+     */
+    Integer getAdminNum();
+
+    /**
+     * 查询数据库中所有用户（除管理员）数量
+     * @return
+     */
+    Integer getUserNum();
+
+    /**
+     * 查询数据库中所有自愿者数量
+     * @return
+     */
+    Integer getVolunteerNum();
 }

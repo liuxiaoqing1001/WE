@@ -319,6 +319,48 @@ public class UserController {
         );
     }
 
+    /**
+     * 查询管理员数量
+     * @return
+     */
+    @GetMapping("/getAdminNum")
+    public ResponseData getAdminNum(){
+        Integer adminNum = userService.getAdminNum();
+        return new ResponseData(
+                adminNum != null?0:1,
+                adminNum != null?"查询成功":"查询失败",
+                adminNum
+        );
+    }
+
+    /**
+     * 查询所有用户（除管理员）数量
+     * @return
+     */
+    @GetMapping("/getUserNum")
+    public ResponseData getUserNum(){
+        Integer userNum = userService.getUserNum();
+        return new ResponseData(
+                userNum != null?0:1,
+                userNum != null?"查询成功":"查询失败",
+                userNum
+        );
+    }
+
+    /**
+     * 查询所有自愿者数量
+     * @return
+     */
+    @GetMapping("/getVolunteerNum")
+    public ResponseData getVolunteerNum(){
+        Integer volunteerNum = userService.getVolunteerNum();
+        return new ResponseData(
+                volunteerNum != null?0:1,
+                volunteerNum != null?"查询成功":"查询失败",
+                volunteerNum
+        );
+    }
+
 //
 //    @GetMapping("RolePage/{curPage}/{size}")
 //    public Map<String , Object> page(@PathVariable("curPage") Integer curPage , @PathVariable("size")Integer size ){

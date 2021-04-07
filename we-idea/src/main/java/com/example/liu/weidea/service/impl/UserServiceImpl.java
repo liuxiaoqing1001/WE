@@ -263,6 +263,33 @@ public class UserServiceImpl implements UserService {
         return consultantsDao.getConsultantsById(vid);
     }
 
+    /**
+     * 获取管理员数量
+     * @return
+     */
+    @Override
+    public Integer getAdminNum() {
+        return userDao.getAdminNum();
+    }
+
+    /**
+     * 获取用户数量
+     * @return
+     */
+    @Override
+    public Integer getUserNum() {
+        return userDao.getUserNum();
+    }
+
+    /**
+     * 获取自愿者数量
+     * @return
+     */
+    @Override
+    public Integer getVolunteerNum() {
+        return userDao.getVolunteerNum();
+    }
+
 
     @Override
     public List<User> getAll() {

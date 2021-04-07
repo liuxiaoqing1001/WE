@@ -181,6 +181,24 @@ public interface UserDao {
     @Select("select * from user")
     List<User> getAll() ;
 
+    /**
+     * 获取管理员数量
+     * @return
+     */
+    @Select("select count(*) from user where role=0")
+    Integer getAdminNum();
 
+    /**
+     * 获取用户数量
+     * @return
+     */
+    @Select("select count(*) from user where role=1")
+    Integer getUserNum();
 
+    /**
+     * 获取自愿者数量
+     * @return
+     */
+    @Select("select count(*) from user where role=2")
+    Integer getVolunteerNum();
 }

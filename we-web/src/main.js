@@ -21,6 +21,10 @@ import 'mavon-editor/dist/css/index.css'
 
 import Chat from 'jwchat'
 
+import VCharts from 'v-charts'
+
+Vue.use(VCharts);
+
 Vue.use(Chat);
 
 Vue.use(mavonEditor);

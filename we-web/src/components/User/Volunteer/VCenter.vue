@@ -90,7 +90,7 @@
       data() {
         return {
           VForm: {
-            userName:'xxx',
+            userName:window.sessionStorage.getItem("token"),
             name: '',
             sender: '',
             birth: '',

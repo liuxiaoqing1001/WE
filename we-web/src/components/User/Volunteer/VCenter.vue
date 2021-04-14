@@ -14,9 +14,6 @@
           <el-option v-for="item in optionSender" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="出生年月" prop="birth">
-        <el-date-picker v-model="VForm.birth" type="date" placeholder="选择日期" class="special"></el-date-picker>
-      </el-form-item>
       <el-form-item label="籍贯" prop="comeFrom">
         <el-input v-model="VForm.comeFrom"></el-input>
       </el-form-item>
@@ -90,7 +87,7 @@
       data() {
         return {
           VForm: {
-            userName:window.sessionStorage.getItem("token"),
+            userName:'',
             name: '',
             sender: '',
             birth: '',
@@ -180,8 +177,24 @@
           }
         }
       },
-
+      created() {
+        this.getUser();
+      },
       methods: {
+        getUser(){
+          this.$http.get("/user/getUserById",{
+            params:{
+              id:window.sessionStorage.getItem("id"),
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.VForm = response.data.data;
+              window.sessionStorage.getItem("token");
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        },
         submitForm(formName) {
           this.$refs[formName].validate(valid => {
             if (valid) {

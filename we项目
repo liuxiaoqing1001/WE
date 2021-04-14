@@ -295,6 +295,20 @@ ALTER TABLE Persons AUTO_INCREMENT=10011;//以其他的值起始
 
 insert into user(phone,password,regdate) values('16600274434','1234567890',now());
 
+CREATE TABLE volunteer (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL COMMENT '用户名',
+  realName varchar(255) DEFAULT NULL COMMENT '真实姓名',
+  comeFrom varchar(255) NOT NULL COMMENT '籍贯',
+  identity varchar(255) NOT NULL COMMENT '身份证',
+  certificate varchar(255) NOT NULL COMMENT '执业资格证',
+  diploma varchar(255) NOT NULL COMMENT '学历学位证',
+  entryTime datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '入驻时间',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+insert into volunteer values('1','liu','刘晓','四川成都','1234567890','','',now());
+
 CREATE TABLE article (
   id int(11) NOT NULL AUTO_INCREMENT,
   sender int(11) NOT NULL COMMENT '发送者',

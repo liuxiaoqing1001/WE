@@ -3,17 +3,20 @@
   <div class="VForm">
     <h3>咨询师个人信息</h3>
     <el-form :model="VForm" :rules="rules" ref="ruleForm" label-width="100px">
-      <el-form-item label="用户名" prop="userName">
-        <span style="float: left;margin-left: 10px">{{VForm.userName}}</span>
+      <el-form-item label="用户名" prop="name">
+        <span style="float: left;margin-left: 10px">{{VForm.name}}</span>
       </el-form-item>
-      <el-form-item label="姓名" prop="name">
-        <el-input v-model="VForm.name"></el-input>
+      <el-form-item label="姓名" prop="realName">
+        <el-input v-model="VForm.realName"></el-input>
       </el-form-item>
       <el-form-item label="性别" prop="sender">
         <el-select v-model="VForm.sender" placeholder="请选择性别" class="special">
           <el-option v-for="item in optionSender" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
+<!--      <el-form-item label="出生年月" prop="birth">-->
+<!--        <el-date-picker v-model="VForm.birth" type="date" placeholder="选择日期" class="special"></el-date-picker>-->
+<!--      </el-form-item>-->
       <el-form-item label="籍贯" prop="comeFrom">
         <el-input v-model="VForm.comeFrom"></el-input>
       </el-form-item>
@@ -87,8 +90,8 @@
       data() {
         return {
           VForm: {
-            userName:'',
-            name: '',
+            name:'',
+            realName: '',
             sender: '',
             birth: '',
             comeFrom: '',
@@ -98,13 +101,6 @@
             diploma: '',
           },
           rules: {
-            userName: [
-              {
-                required: true,
-                message: '请输入您的姓名',
-                trigger: 'blur'
-              }
-            ],
             name: [
               {
                 required: true,
@@ -178,40 +174,42 @@
         }
       },
       created() {
-        this.getUser();
+        this.getMsg();
       },
       methods: {
-        getUser(){
-          this.$http.get("/user/getUserById",{
+        getMsg(){
+          this.$http.get("/user/getVolunteerByName",{
             params:{
-              id:window.sessionStorage.getItem("id"),
+              name:window.sessionStorage.getItem("token"),
             }
           }).then(response => {
             if (response.data.errorCode===0){
               this.VForm = response.data.data;
-              window.sessionStorage.getItem("token");
             }else {
               this.$message.error(response.data.msg);
             }
           });
         },
         submitForm(formName) {
-          this.$refs[formName].validate(valid => {
-            if (valid) {
-              this.$message({
-                typeId: 'success',
-                message: '提交成功'
-              });
-              // this.activeName: 'first',
-            } else {
-              console.log('提交失败');
-              return false;
-            }
-          });
+
+          //修改
+
+          // this.$refs[formName].validate(valid => {
+          //   if (valid) {
+          //     this.$message({
+          //       typeId: 'success',
+          //       message: '提交成功'
+          //     });
+          //     // this.activeName: 'first',
+          //   } else {
+          //     console.log('提交失败');
+          //     return false;
+          //   }
+          // });
         },
 
         comeBack(){
-          this.$router.go(-1);
+          this.$router.go(0);
         },
 
         handleExceed(files, fileList) {

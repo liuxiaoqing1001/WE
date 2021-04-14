@@ -2,10 +2,14 @@ package com.example.liu.weidea.service.impl;
 
 import com.example.liu.weidea.dao.ConsultantsDao;
 import com.example.liu.weidea.dao.UserDao;
+import com.example.liu.weidea.dao.VolunteerDao;
 import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.User;
+import com.example.liu.weidea.entity.Volunteer;
 import com.example.liu.weidea.service.UserService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
@@ -20,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     ConsultantsDao consultantsDao;
+
+    @Autowired
+    VolunteerDao volunteerDao;
 
     /**
      * 登录
@@ -202,6 +209,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer id) {
         return userDao.getUserById(id);
+    }
+
+    /**
+     * 根据name获取自愿者相关信息
+     * @param name
+     * @return
+     */
+    @Override
+    public Volunteer getVolunteerByName(String name) {
+        Volunteer v = volunteerDao.getVolunteerByName(name);
+        User u = userDao.getUserByName(name);
+        v.setBirth(u.getBirthday());
+        v.setSender(u.getSex());
+        v.setPhoneNum(u.getPhone());
+        System.out.println("自愿者：---------------"+v);
+//        name;realName;birth ;sender ;comeFrom , phoneNum, identity;
+//        certificate;diploma;
+        return v;
     }
 
     /**

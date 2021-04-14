@@ -201,4 +201,12 @@ public interface UserDao {
      */
     @Select("select count(*) from user where role=2")
     Integer getVolunteerNum();
+
+    /**
+     * 根据name获取
+     * @param name
+     * @return
+     */
+    @Select("select * from user where name=#{name}")
+    User getUserByName(String name);
 }

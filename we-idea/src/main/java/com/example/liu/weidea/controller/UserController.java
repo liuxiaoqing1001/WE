@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.User;
+import com.example.liu.weidea.entity.Volunteer;
 import com.example.liu.weidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -241,6 +242,21 @@ public class UserController {
                 u !=null ? 0 : 1 ,
                 u !=null ? "获取成功" : "获取失败" ,
                 u
+        );
+    }
+
+    /**
+     * 根据name获取自愿者相关信息
+     * @param name
+     * @return
+     */
+    @GetMapping("/getVolunteerByName")
+    public ResponseData getVolunteerByName(@RequestParam(value = "name",required = false) String name) {
+        Volunteer volunteer = userService.getVolunteerByName(name) ;
+        return new ResponseData(
+                volunteer !=null ? 0 : 1 ,
+                volunteer !=null ? "获取成功" : "获取失败" ,
+                volunteer
         );
     }
 

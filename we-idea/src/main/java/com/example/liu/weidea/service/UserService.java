@@ -2,6 +2,7 @@ package com.example.liu.weidea.service;
 
 import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.User;
+import com.example.liu.weidea.entity.Volunteer;
 
 import java.util.Date;
 import java.util.List;
@@ -147,4 +148,11 @@ public interface UserService {
      * @return
      */
     Integer getVolunteerNum();
+
+    /**
+     * 根据name获取自愿者相关信息
+     * @param name
+     * @return
+     */
+    Volunteer getVolunteerByName(String name);
 }

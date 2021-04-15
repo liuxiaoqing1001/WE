@@ -155,4 +155,11 @@ public interface UserService {
      * @return
      */
     Volunteer getVolunteerByName(String name);
+
+    /**
+     * 修改自愿者信息
+     * @param volunteer
+     * @return
+     */
+    Volunteer updateVByName(Volunteer volunteer);
 }

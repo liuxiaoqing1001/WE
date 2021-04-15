@@ -246,21 +246,6 @@ public class UserController {
     }
 
     /**
-     * 根据name获取自愿者相关信息
-     * @param name
-     * @return
-     */
-    @GetMapping("/getVolunteerByName")
-    public ResponseData getVolunteerByName(@RequestParam(value = "name",required = false) String name) {
-        Volunteer volunteer = userService.getVolunteerByName(name) ;
-        return new ResponseData(
-                volunteer !=null ? 0 : 1 ,
-                volunteer !=null ? "获取成功" : "获取失败" ,
-                volunteer
-        );
-    }
-
-    /**
      * 根据关键字查询用户
      * @param keyword
      * @return
@@ -375,6 +360,49 @@ public class UserController {
                 volunteerNum != null?"查询成功":"查询失败",
                 volunteerNum
         );
+    }
+
+    /**
+     * 根据name获取自愿者相关信息
+     * @param name
+     * @return
+     */
+    @GetMapping("/getVolunteerByName")
+    public ResponseData getVolunteerByName(@RequestParam(value = "name",required = false) String name) {
+        Volunteer volunteer = userService.getVolunteerByName(name) ;
+        return new ResponseData(
+                volunteer !=null ? 0 : 1 ,
+                volunteer !=null ? "获取成功" : "获取失败" ,
+                volunteer
+        );
+    }
+
+    /**
+     * 更新自愿者
+     * @param map
+     * @return
+     */
+    @PostMapping("/updateVByName")
+    public ResponseData updateVByName(@RequestBody Map<String , Object> map) throws ParseException {
+        JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("volunteer")));
+        Volunteer volunteer = new Volunteer();
+        volunteer.setName(json.getString("name"));
+        volunteer.setRealName(json.getString("realName"));
+        volunteer.setSender(json.getString("sender"));
+        if (json.getString("birth")!=null){
+            volunteer.setBirth(new SimpleDateFormat("yyyy年MM月dd日").parse(json.getString("birth")));
+        }
+        volunteer.setComeFrom(json.getString("comeFrom"));
+        volunteer.setPhoneNum(json.getString("phoneNum"));
+        volunteer.setIdentity(json.getString("identity"));
+        volunteer.setCertificate(json.getString("certificate"));
+        volunteer.setDiploma(json.getString("diploma"));
+        Volunteer u = userService.updateVByName(volunteer) ;
+        return new ResponseData(
+                u !=null ? 0 : 1 ,
+                u !=null ? "更新成功" : "更新失败" ,
+                u
+        ) ;
     }
 
 //

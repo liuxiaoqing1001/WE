@@ -191,21 +191,22 @@
           });
         },
         submitForm(formName) {
-
-          //修改
-
-          // this.$refs[formName].validate(valid => {
-          //   if (valid) {
-          //     this.$message({
-          //       typeId: 'success',
-          //       message: '提交成功'
-          //     });
-          //     // this.activeName: 'first',
-          //   } else {
-          //     console.log('提交失败');
-          //     return false;
-          //   }
-          // });
+          this.$refs[formName].validate(valid => {
+            if (valid) {
+              this.$http.post("/user/updateVByName",{
+                volunteer:this.VForm
+              }).then(response => {
+                if (response.data.errorCode===0){
+                  this.$message.success(response.data.msg);
+                }else {
+                  this.$message.error(response.data.msg);
+                }
+              });
+            } else {
+              console.log('提交失败');
+              return false;
+            }
+          });
         },
 
         comeBack(){

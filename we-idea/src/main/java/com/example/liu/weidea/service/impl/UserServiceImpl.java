@@ -212,24 +212,6 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 根据name获取自愿者相关信息
-     * @param name
-     * @return
-     */
-    @Override
-    public Volunteer getVolunteerByName(String name) {
-        Volunteer v = volunteerDao.getVolunteerByName(name);
-        User u = userDao.getUserByName(name);
-        v.setBirth(u.getBirthday());
-        v.setSender(u.getSex());
-        v.setPhoneNum(u.getPhone());
-        System.out.println("自愿者：---------------"+v);
-//        name;realName;birth ;sender ;comeFrom , phoneNum, identity;
-//        certificate;diploma;
-        return v;
-    }
-
-    /**
      * 根据id删除用户信息
      * @param id
      * @return
@@ -319,5 +301,45 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userDao.getAll();
+    }
+
+    /**
+     * 根据name获取自愿者相关信息
+     * @param name
+     * @return
+     */
+    @Override
+    public Volunteer getVolunteerByName(String name) {
+        Volunteer v = volunteerDao.getVolunteerByName(name);
+        User u = userDao.getUserByName(name);
+        v.setBirth(u.getBirthday());
+        v.setSender(u.getSex());
+        v.setPhoneNum(u.getPhone());
+        System.out.println("自愿者：---------------"+v);
+        return v;
+    }
+
+    /**
+     * 修改自愿者信息
+     * @param v
+     * @return
+     */
+    @Override
+    public Volunteer updateVByName(Volunteer v) {
+        if(null == v) {
+            return null ;
+        }
+        User user = new User();
+        user.setName(v.getName());
+        user.setSex(v.getSender());
+        user.setBirthday(v.getBirth());
+        user.setPhone(v.getPhoneNum());
+        int r1 = volunteerDao.updateVByName(v) ;
+        int r2 = userDao.updateByName(user) ;
+        if(r1 != 1&&r2!=1) {
+            return null ;
+        } else {
+            return volunteerDao.getVolunteerByName(v.getName()) ;
+        }
     }
 }

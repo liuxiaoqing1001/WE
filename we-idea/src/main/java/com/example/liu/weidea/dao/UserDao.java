@@ -209,4 +209,38 @@ public interface UserDao {
      */
     @Select("select * from user where name=#{name}")
     User getUserByName(String name);
+
+    /**
+     * 根据name更新内容
+     * @param user
+     * @return
+     */
+    @Update("<script>" +
+            "update user " +
+            "        <set> " +
+            "            <if test=\"null != password\">" +
+            "                password=#{password} , " +
+            "            </if>\n" +
+            "            <if test=\"null != sex\"> " +
+            "                sex=#{sex}, " +
+            "            </if>\n" +
+            "            <if test=\"null != email\"> " +
+            "                email = #{email} , " +
+            "            </if>\n" +
+            "            <if test=\"null != phone\"> " +
+            "                phone=#{phone} , " +
+            "            </if>" +
+            "            <if test=\"null != photourl\"> " +
+            "                photourl=#{photourl}, " +
+            "            </if>\n" +
+            "            <if test=\"null != birthday\"> " +
+            "                birthday = #{birthday} , " +
+            "            </if>\n" +
+            "            <if test=\"null != role\">" +
+            "                role=#{role} , " +
+            "            </if>\n" +
+            "        </set> " +
+            "        where name=#{name}"
+            +"</script>")
+    int updateByName(User user) ;
 }

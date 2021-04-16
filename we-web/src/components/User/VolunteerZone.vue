@@ -34,7 +34,7 @@
         <div class="VForm">
           <el-form :model="VForm" :rules="rules" ref="ruleForm" label-width="100px">
             <el-form-item label="用户名" prop="name">
-              <span style="float: left;margin-left: 10px">{{VForm.name}}</span>
+              <span class="vFormName" style="float: left;margin-left: 10px">{{VForm.name}}</span>
             </el-form-item>
             <el-form-item label="真实姓名" prop="realName">
               <el-input v-model="VForm.realName"></el-input>
@@ -199,13 +199,20 @@
       methods:{
         into:function () {
           this.applyV=true;
-
+          if(window.sessionStorage.getItem("name")==="null"){
+            this.VForm.name = "未设置用户名，请先前往个人中心设置用户名，否则申请无效";
+            // vFormName设置颜色
+          }else {
+            this.VForm.name = window.sessionStorage.getItem("name");
+          }
         },
         del:function () {
           this.applyV=false;
         },
 
         submitForm(formName) {
+
+          //提交申请
 
           this.$refs[formName].validate(valid => {
             if (valid) {

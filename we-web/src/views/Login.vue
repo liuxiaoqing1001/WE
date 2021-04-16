@@ -101,8 +101,10 @@
                 // 将登录成功之后的用户id保存到客户端的sessionStorage中
                 if(response.data.data.name===null){
                   window.sessionStorage.setItem('token',response.data.data.phone);
+                  window.sessionStorage.setItem('name',"null");
                 }else {
                   window.sessionStorage.setItem('token',response.data.data.name);
+                  window.sessionStorage.setItem('name',response.data.data.name);
                 }
                 window.sessionStorage.setItem('id',response.data.data.id);
                 if (response.data.data.role===0){

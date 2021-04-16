@@ -315,7 +315,7 @@ public class UserServiceImpl implements UserService {
         v.setBirth(u.getBirthday());
         v.setSender(u.getSex());
         v.setPhoneNum(u.getPhone());
-        System.out.println("自愿者：---------------"+v);
+//        System.out.println("自愿者：---------------"+v);
         return v;
     }
 

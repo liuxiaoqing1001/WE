@@ -33,11 +33,11 @@
         <h2>咨询师入驻申请</h2>
         <div class="VForm">
           <el-form :model="VForm" :rules="rules" ref="ruleForm" label-width="100px">
-            <el-form-item label="用户名" prop="userName">
-              <span style="float: left;margin-left: 10px">{{VForm.userName}}</span>
+            <el-form-item label="用户名" prop="name">
+              <span style="float: left;margin-left: 10px">{{VForm.name}}</span>
             </el-form-item>
-            <el-form-item label="姓名" prop="name">
-              <el-input v-model="VForm.name"></el-input>
+            <el-form-item label="真实姓名" prop="realName">
+              <el-input v-model="VForm.realName"></el-input>
             </el-form-item>
             <el-form-item label="性别" prop="sender">
               <el-select v-model="VForm.sender" placeholder="请选择性别" class="special">
@@ -93,8 +93,8 @@
         return{
           applyV: false,
           VForm: {
-            userName:'xxx',
-            name: '',
+            name:'',
+            realName: '',
             sender: '',
             birth: '',
             comeFrom: '',
@@ -104,17 +104,17 @@
             diploma: '',
           },
           rules: {
-            userName: [
+            // userName: [
+            //   {
+            //     required: true,
+            //     message: '请输入您的姓名',
+            //     trigger: 'blur'
+            //   }
+            // ],
+            realName: [
               {
                 required: true,
-                message: '请输入您的姓名',
-                trigger: 'blur'
-              }
-            ],
-            name: [
-              {
-                required: true,
-                message: '请输入您的姓名',
+                message: '请输入您的真实姓名',
                 trigger: 'blur'
               }
             ],
@@ -180,17 +180,33 @@
           ],
         }
       },
+      created() {
+        this.$http.get("/user/getRoleById",{
+          params:{
+            id:window.sessionStorage.getItem("id"),
+          }
+        }).then(response => {
+          if (response.data.errorCode===0){
+            if(response.data.data==="2"){
+              this.$router.push("/VolunteerCenter");
+            }
+          }else {
+            this.$message.error(response.data.msg);
+          }
+        });
+
+      },
       methods:{
         into:function () {
           this.applyV=true;
-          this.$router.push("/VolunteerCenter");
-          this.$message.success('跳转');
+
         },
         del:function () {
           this.applyV=false;
         },
 
         submitForm(formName) {
+
           this.$refs[formName].validate(valid => {
             if (valid) {
               this.$message({
@@ -203,6 +219,7 @@
               return false;
             }
           });
+
         },
 
         fileUploadSuffix : function (fileList, suffix) {

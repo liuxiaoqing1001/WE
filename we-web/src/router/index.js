@@ -19,7 +19,7 @@ import Square from "../components/User/Square";
 import Article from "../components/User/Article";
 import TreeHole from "../components/User/TreeHole";
 import VolunteerZone from "../components/User/VolunteerZone";
-import VolunteerCenter from "../components/User/VolunteerCenter";
+import VolunteerCenter from "../components/User/Volunteer/VolunteerCenter";
 import Other from "../components/Other/Other";
 import Home from "../components/User/Home";
 import Detail from "../components/User/Detail";

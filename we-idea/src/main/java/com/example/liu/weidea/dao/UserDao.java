@@ -243,4 +243,12 @@ public interface UserDao {
             "        where name=#{name}"
             +"</script>")
     int updateByName(User user) ;
+
+    /**
+     * 根据id查询身份
+     * @param id
+     * @return
+     */
+    @Select("select role from user where id=#{id}")
+    String getRoleById(Integer id);
 }

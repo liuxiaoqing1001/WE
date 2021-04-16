@@ -142,20 +142,6 @@
                 message: '请输入您的身份证号',
                 trigger: 'blur'
               }
-            ],
-            certificate: [
-              {
-                required: true,
-                message: '请输入您的执业资格证',
-                trigger: 'blur'
-              }
-            ],
-            diploma: [
-              {
-                required: true,
-                message: '请输入您的学历学位证书',
-                trigger: 'blur'
-              }
             ]
           },
           optionSender: [

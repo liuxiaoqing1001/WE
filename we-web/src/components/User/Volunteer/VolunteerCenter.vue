@@ -15,7 +15,7 @@
           <div class="right-wrapper-fixed">
             <div class="menu-title">
 <!--              姓名的名字作为头像-->
-              <img src="../../assets/logo/we_logo.png" @click="intoC()" height="200" width="200"/><br>
+              <img src="../../../assets/logo/we_logo.png" @click="intoC()" height="200" width="200"/><br>
               <a class="userName" @click="intoC()">{{userName}}</a>
               <p class="level">{{level}}</p>
             </div>

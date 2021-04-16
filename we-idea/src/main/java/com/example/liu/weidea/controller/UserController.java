@@ -389,9 +389,9 @@ public class UserController {
         volunteer.setName(json.getString("name"));
         volunteer.setRealName(json.getString("realName"));
         volunteer.setSender(json.getString("sender"));
-        if (json.getString("birth")!=null){
-            volunteer.setBirth(new SimpleDateFormat("yyyy年MM月dd日").parse(json.getString("birth")));
-        }
+//        if (json.getString("birth")!=null){
+//            volunteer.setBirth(new SimpleDateFormat("yyyy年MM月dd日").parse(json.getString("birth")));
+//        }
         volunteer.setComeFrom(json.getString("comeFrom"));
         volunteer.setPhoneNum(json.getString("phoneNum"));
         volunteer.setIdentity(json.getString("identity"));
@@ -403,6 +403,21 @@ public class UserController {
                 u !=null ? "更新成功" : "更新失败" ,
                 u
         ) ;
+    }
+
+    /**
+     * 根据id查询身份
+     * @param id
+     * @return
+     */
+    @GetMapping("/getRoleById")
+    public ResponseData getRoleById(@RequestParam(value = "id",required = false) Integer id) {
+        String role = userService.getRoleById(id) ;
+        return new ResponseData(
+                role !=null ? 0 : 1 ,
+                role !=null ? "获取成功" : "获取失败" ,
+                role
+        );
     }
 
 //

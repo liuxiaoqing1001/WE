@@ -162,4 +162,11 @@ public interface UserService {
      * @return
      */
     Volunteer updateVByName(Volunteer volunteer);
+
+    /**
+     * 根据id查询身份
+     * @param id
+     * @return
+     */
+    String getRoleById(Integer id);
 }

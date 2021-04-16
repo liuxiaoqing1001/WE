@@ -332,7 +332,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(v.getName());
         user.setSex(v.getSender());
-        user.setBirthday(v.getBirth());
+//        user.setBirthday(v.getBirth());
         user.setPhone(v.getPhoneNum());
         int r1 = volunteerDao.updateVByName(v) ;
         int r2 = userDao.updateByName(user) ;
@@ -341,5 +341,15 @@ public class UserServiceImpl implements UserService {
         } else {
             return volunteerDao.getVolunteerByName(v.getName()) ;
         }
+    }
+
+    /**
+     * 根据id查询身份
+     * @param id
+     * @return
+     */
+    @Override
+    public String getRoleById(Integer id) {
+        return userDao.getRoleById(id);
     }
 }

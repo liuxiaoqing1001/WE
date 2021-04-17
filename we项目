@@ -298,8 +298,8 @@ insert into user(phone,password,regdate) values('16600274434','1234567890',now()
 //state 审核/驳回/通过
 CREATE TABLE volunteer (
   id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(255) DEFAULT NULL COMMENT '用户名',
-  realName varchar(255) DEFAULT NULL COMMENT '真实姓名',
+  name varchar(255) NOT NULL COMMENT '用户名',
+  realName varchar(255) NOT NULL COMMENT '真实姓名',
   comeFrom varchar(255) NOT NULL COMMENT '籍贯',
   identity varchar(255) NOT NULL COMMENT '身份证',
   certificate varchar(255) NOT NULL COMMENT '执业资格证',

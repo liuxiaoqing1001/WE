@@ -25,7 +25,8 @@
         </aside>
       </transition>
       <div class="main-wrapper">
-        <router-view  v-if="isRouterAlive"></router-view>
+<!--        <router-view  v-if="isRouterAlive"></router-view>-->
+        <router-view></router-view>
       </div>
     </div>
   </div>
@@ -34,14 +35,14 @@
 <script>
     export default {
       name: "Square",
-      provide (){
-        return {
-          reload:this.reload
-        }
-      },
+      // provide (){
+      //   return {
+      //     reload:this.reload
+      //   }
+      // },
       data () {
         return {
-          isRouterAlive:true,
+          // isRouterAlive:true,
           //当前选中菜单
           menuIndex: '1',
           li_links: []
@@ -56,12 +57,12 @@
         this.toSwitch(1);
       },
       methods:{
-        reload (){
-          this.isRouterAlive = false;
-          this.$nextTick(function(){
-            this.isRouterAlive = true;
-          })
-        },
+        // reload (){
+        //   this.isRouterAlive = false;
+        //   this.$nextTick(function(){
+        //     this.isRouterAlive = true;
+        //   })
+        // },
         // 监听窗口滚动
         isScroll(){
           var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
@@ -90,6 +91,7 @@
         toSwitch(id){
           window.sessionStorage.setItem('tid',id);
           this.$router.push('/Article');
+          // this.$router.go('/Article');
         },
       },
     }

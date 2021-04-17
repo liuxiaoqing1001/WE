@@ -26,8 +26,8 @@
           }
       },
       created() {
-        // console.log(window.sessionStorage.getItem('tid'));
         this.getArticleList(window.sessionStorage.getItem('tid'));
+        window.sessionStorage.removeItem('tid');
       },
       methods:{
         toDetail(id){

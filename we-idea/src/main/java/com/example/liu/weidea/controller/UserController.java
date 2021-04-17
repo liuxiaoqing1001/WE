@@ -420,6 +420,84 @@ public class UserController {
         );
     }
 
+    /**
+     * 修改自愿者状态
+     * @param map
+     * @return
+     */
+    @PostMapping("/updateVSateByName")
+    public ResponseData updateVSateByName(@RequestBody Map<String , Object> map) throws ParseException {
+//        JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("volunteer")));
+        Volunteer volunteer = new Volunteer();
+//        volunteer.setState(json.getString("state"));
+        volunteer.setState((String) map.get("state"));
+        Volunteer u = userService.updateVSateByName(volunteer) ;
+        return new ResponseData(
+                u !=null ? 0 : 1 ,
+                u !=null ? "更新成功" : "更新失败" ,
+                u
+        ) ;
+    }
+
+    /**
+     * 根据name从用户表中获取sender(sex)/birth(birthday)/phoneNum(phone)
+     * @param name
+     * @return
+     */
+    @GetMapping("/getUserByName")
+    public ResponseData getUserByName(@RequestParam(value = "name",required = false) String name) {
+        Volunteer volunteer = userService.getUserByName(name) ;
+        return new ResponseData(
+                volunteer !=null ? 0 : 1 ,
+                volunteer !=null ? "获取成功" : "获取失败" ,
+                volunteer
+        );
+    }
+
+    /**
+     * 提交自愿者申请
+     * @param map
+     * @return
+     */
+    @PostMapping("/addVRequest")
+    public ResponseData addVRequest(@RequestBody Map<String , Object> map) throws ParseException {
+        JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(map.get("volunteer")));
+        Volunteer volunteer = new Volunteer();
+        volunteer.setName(jsonObject.getString("name"));
+        volunteer.setRealName(jsonObject.getString("realName"));
+        volunteer.setSender(jsonObject.getString("sender"));
+        if (jsonObject.getString("birth")!=null){
+            volunteer.setBirth(new SimpleDateFormat("yyyy年MM月dd日").parse(jsonObject.getString("birth")));
+        }
+        volunteer.setComeFrom(jsonObject.getString("comeFrom"));
+        volunteer.setPhoneNum(jsonObject.getString("phoneNum"));
+        volunteer.setIdentity(jsonObject.getString("identity"));
+        volunteer.setCertificate(jsonObject.getString("certificate"));
+        volunteer.setDiploma(jsonObject.getString("diploma"));
+        Integer result = userService.addVRequest(volunteer) ;
+        String msg = "" ;
+        switch (result) {
+            case UserService.REG_MSG_OK :
+                msg = "提交申请成功" ;
+                break;
+            case UserService.REG_MSG_FAIL_NAMEEXISTS :
+                msg = "已提交申请，目前处于审核中，请勿重复提交" ;
+                break;
+            case UserService.REG_MSG_FAIL_INFO_NON:
+                msg = "信息不完整" ;
+                break;
+            default :
+                msg = "提交申请失败" ;
+                break;
+        }
+        return new ResponseData(
+                result ,
+                msg,
+                result == 0
+        ) ;
+    }
+
+
 //
 //    @GetMapping("RolePage/{curPage}/{size}")
 //    public Map<String , Object> page(@PathVariable("curPage") Integer curPage , @PathVariable("size")Integer size ){

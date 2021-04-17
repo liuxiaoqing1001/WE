@@ -4,7 +4,6 @@ import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.entity.Volunteer;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -169,4 +168,25 @@ public interface UserService {
      * @return
      */
     String getRoleById(Integer id);
+
+    /**
+     * 修改自愿者状态
+     * @param volunteer
+     * @return
+     */
+    Volunteer updateVSateByName(Volunteer volunteer);
+
+    /**
+     * 提交自愿者申请
+     * @param volunteer
+     * @return
+     */
+    Integer addVRequest(Volunteer volunteer);
+
+    /**
+     * 根据name从用户表中获取sender(sex)/birth(birthday)/phoneNum(phone)
+     * @param name
+     * @return
+     */
+    Volunteer getUserByName(String name);
 }

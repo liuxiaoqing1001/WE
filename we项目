@@ -295,6 +295,7 @@ ALTER TABLE Persons AUTO_INCREMENT=10011;//以其他的值起始
 
 insert into user(phone,password,regdate) values('16600274434','1234567890',now());
 
+//state 审核/驳回/通过
 CREATE TABLE volunteer (
   id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(255) DEFAULT NULL COMMENT '用户名',
@@ -303,6 +304,7 @@ CREATE TABLE volunteer (
   identity varchar(255) NOT NULL COMMENT '身份证',
   certificate varchar(255) NOT NULL COMMENT '执业资格证',
   diploma varchar(255) NOT NULL COMMENT '学历学位证',
+  state varchar(255) DEFAULT '审核' COMMENT '状态',
   entryTime datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '入驻时间',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -348,6 +350,14 @@ CREATE TABLE module (
   text varchar(255) NOT NULL COMMENT '显示名',
   createDate datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   state varchar(255) DEFAULT '0' COMMENT '状态',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE say (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  sender int(11) NOT NULL COMMENT '发送者',
+  content varchar(255) DEFAULT NULL COMMENT '内容',
+  sendDate datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '发送时间',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 

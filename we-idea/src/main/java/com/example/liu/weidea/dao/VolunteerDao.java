@@ -2,6 +2,7 @@ package com.example.liu.weidea.dao;
 
 import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.Volunteer;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -49,8 +50,28 @@ public interface VolunteerDao {
             "            <if test=\"null != diploma\"> " +
             "                diploma=#{diploma} , " +
             "            </if>" +
+            "            <if test=\"null != state\"> " +
+            "                state=#{state} , " +
+            "            </if>" +
             "        </set> " +
             "        where name=#{name}"
             +"</script>")
     int updateVByName(Volunteer volunteer);
+
+    /**
+     * 提交自愿者申请
+     * @param volunteer
+     * @return
+     */
+    @Insert("insert into volunteer(name,realName,comeFrom,identity,certificate,diploma,entryTime) " +
+            "values(#{name},#{realName},#{comeFrom},#{identity},#{certificate},#{diploma},now())")
+    Integer addVRequest(Volunteer volunteer);
+
+    /**
+     * 申请是否存在
+     * @param identity
+     * @return
+     */
+    @Select("select count(*) from volunteer where identity=#{identity}")
+    int volunteerSearch(String identity);
 }

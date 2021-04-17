@@ -34,7 +34,7 @@
         <div class="VForm">
           <el-form :model="VForm" :rules="rules" ref="ruleForm" label-width="100px">
             <el-form-item label="用户名" prop="name">
-              <span class="vFormName" style="float: left;margin-left: 10px">{{VForm.name}}</span>
+              <span class="vFormName" :style="{'color':vFormNameColor}">{{VForm.name}}</span>
             </el-form-item>
             <el-form-item label="真实姓名" prop="realName">
               <el-input v-model="VForm.realName"></el-input>
@@ -44,9 +44,9 @@
                 <el-option v-for="item in optionSender" :key="item.value" :label="item.label" :value="item.value"/>
               </el-select>
             </el-form-item>
-            <el-form-item label="出生年月" prop="birth">
-              <el-date-picker v-model="VForm.birth" type="date" placeholder="选择日期" class="special"></el-date-picker>
-            </el-form-item>
+<!--            <el-form-item label="出生年月" prop="birth">-->
+<!--              <el-date-picker v-model="VForm.birth" type="date" placeholder="选择日期" class="special"></el-date-picker>-->
+<!--            </el-form-item>-->
             <el-form-item label="籍贯" prop="comeFrom">
               <el-input v-model="VForm.comeFrom"></el-input>
             </el-form-item>
@@ -92,6 +92,7 @@
       data(){
         return{
           applyV: false,
+          vFormNameColor:'',
           VForm: {
             name:'',
             realName: '',
@@ -153,20 +154,20 @@
                 trigger: 'blur'
               }
             ],
-            certificate: [
-              {
-                required: true,
-                message: '请输入您的执业资格证',
-                trigger: 'blur'
-              }
-            ],
-            diploma: [
-              {
-                required: true,
-                message: '请输入您的学历学位证书',
-                trigger: 'blur'
-              }
-            ]
+            // certificate: [
+            //   {
+            //     required: true,
+            //     message: '请输入您的执业资格证',
+            //     trigger: 'blur'
+            //   }
+            // ],
+            // diploma: [
+            //   {
+            //     required: true,
+            //     message: '请输入您的学历学位证书',
+            //     trigger: 'blur'
+            //   }
+            // ]
           },
           optionSender: [
             {
@@ -201,9 +202,21 @@
           this.applyV=true;
           if(window.sessionStorage.getItem("name")==="null"){
             this.VForm.name = "未设置用户名，请先前往个人中心设置用户名，否则申请无效";
-            // vFormName设置颜色
+            this.vFormNameColor = "#ff0000";
           }else {
-            this.VForm.name = window.sessionStorage.getItem("name");
+            // this.VForm.name = window.sessionStorage.getItem("name");
+            // 根据name从用户表中获取sender/birth/phoneNum
+            this.$http.get("/user/getUserByName",{
+              params:{
+                name:window.sessionStorage.getItem("name"),
+              }
+            }).then(response => {
+              if (response.data.errorCode===0){
+                this.VForm = response.data.data;
+              }else {
+                this.$message.error(response.data.msg);
+              }
+            });
           }
         },
         del:function () {
@@ -211,19 +224,19 @@
         },
 
         submitForm(formName) {
-
           //提交申请
-
           this.$refs[formName].validate(valid => {
             if (valid) {
-              this.$message({
-                typeId: 'success',
-                message: '提交成功'
+              this.$http.post("/user/addVRequest",{
+                volunteer:this.VForm
+              }).then(response =>{
+                if (response.data.errorCode===0){
+                  this.$message.success(response.data.msg);
+                  this.del();
+                }else {
+                  this.$message.error(response.data.msg);
+                }
               });
-              // this.activeName: 'first',
-            } else {
-              console.log('提交失败');
-              return false;
             }
           });
 
@@ -308,6 +321,11 @@
   .VForm{
     margin-right: 150px;
     margin-left: 150px;
+  }
+
+  .vFormName{
+    float: left;
+    margin-left: 10px
   }
 
   .special{

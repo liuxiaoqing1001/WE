@@ -7,14 +7,11 @@ import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.entity.Volunteer;
 import com.example.liu.weidea.service.UserService;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -315,7 +312,6 @@ public class UserServiceImpl implements UserService {
         v.setBirth(u.getBirthday());
         v.setSender(u.getSex());
         v.setPhoneNum(u.getPhone());
-//        System.out.println("自愿者：---------------"+v);
         return v;
     }
 
@@ -351,5 +347,69 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getRoleById(Integer id) {
         return userDao.getRoleById(id);
+    }
+
+    /**
+     * 修改自愿者状态
+     * @param volunteer
+     * @return
+     */
+    @Override
+    public Volunteer updateVSateByName(Volunteer volunteer) {
+        if(null == volunteer) {
+            return null ;
+        }
+        int r1 = volunteerDao.updateVByName(volunteer) ;
+        if(r1 != 1) {
+            return null ;
+        } else {
+            return volunteerDao.getVolunteerByName(volunteer.getName()) ;
+        }
+    }
+
+    /**
+     * 提交自愿者申请
+     * @param volunteer
+     * @return
+     */
+    @Override
+    public Integer addVRequest(Volunteer volunteer) {
+        if(null == volunteer) {
+            return REG_MSG_FAIL_INFO_NON ;
+        }
+        // 先进行账号是否存在检测
+        int count = volunteerDao.volunteerSearch(volunteer.getIdentity()) ;
+        if(count > 0) {
+            return REG_MSG_FAIL_NAMEEXISTS ;
+        }
+        // 提交自愿者申请
+        User user = new User();
+        user.setName(volunteer.getName());
+        user.setSex(volunteer.getSender());
+//        user.setBirthday(v.getBirth());
+        user.setPhone(volunteer.getPhoneNum());
+        int r1 = userDao.updateByName(user);
+        int r2 = volunteerDao.addVRequest(volunteer) ;
+        if(r2 > 0&&r1>0) {
+            return REG_MSG_OK ;
+        } else {
+            return REG_MSG_FAIL_OTHER ;
+        }
+    }
+
+    /**
+     * 根据name从用户表中获取sender(sex)/birth(birthday)/phoneNum(phone)
+     * @param name
+     * @return
+     */
+    @Override
+    public Volunteer getUserByName(String name) {
+        User user = userDao.getUserByName(name);
+        Volunteer volunteer = new Volunteer();
+        volunteer.setName(name);
+        volunteer.setSender(user.getSex());
+        volunteer.setBirth(user.getBirthday());
+        volunteer.setPhoneNum(user.getPhone());
+        return volunteer;
     }
 }

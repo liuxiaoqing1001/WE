@@ -1,9 +1,11 @@
 package com.example.liu.weidea.service.impl;
 
 import com.example.liu.weidea.dao.ConsultantsDao;
+import com.example.liu.weidea.dao.SayDao;
 import com.example.liu.weidea.dao.UserDao;
 import com.example.liu.weidea.dao.VolunteerDao;
 import com.example.liu.weidea.entity.Consultants;
+import com.example.liu.weidea.entity.Say;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.entity.Volunteer;
 import com.example.liu.weidea.service.UserService;
@@ -24,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     VolunteerDao volunteerDao;
+
+    @Autowired
+    SayDao sayDao;
 
     /**
      * 登录
@@ -411,5 +416,33 @@ public class UserServiceImpl implements UserService {
         volunteer.setBirth(user.getBirthday());
         volunteer.setPhoneNum(user.getPhone());
         return volunteer;
+    }
+
+    /**
+     * （树洞）发送say
+     * @param say
+     * @return
+     */
+    @Override
+    public Integer sendSay(Say say) {
+        if(null == say) {
+            return REG_MSG_FAIL_INFO_NON ;
+        }
+        // 发送
+        int r = sayDao.add(say) ;
+        if(r > 0) {
+            return REG_MSG_OK ;
+        } else {
+            return REG_MSG_FAIL_OTHER ;
+        }
+    }
+
+    /**
+     * （树洞）随机获取say
+     * @return
+     */
+    @Override
+    public Say getRandSay() {
+        return sayDao.getRandSay();
     }
 }

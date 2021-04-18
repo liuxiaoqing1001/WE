@@ -30,25 +30,26 @@
 
       <div v-if="showIndex===1" class="bulletFrame">
         <el-button @click="del()" type="danger" size="mini" icon="" style="font-size: medium;float: right">X</el-button>
-        <div v-if="!isWrite" class="talkAbout">
+        <div class="talkAbout">
           <div class="word">
-            <span>x<br>xx<br>xxx<br></span>
+            <span>{{randSay.content}}</span>
           </div>
           <div class="option">
 <!--            <i v-if="!isPraise" class="el-icon-star-off praise"></i>-->
 <!--            <i v-else class="el-icon-star-on praise" style="color: darkred"></i>-->
             <i @click="comment()" class="el-icon-edit comment"></i>
           </div>
+          <div v-if="isWrite" >
+            <textarea class="write" v-model="myComment" placeholder="To:亲爱的陌生人"></textarea>
+            <button @click="send2(randSay.id,randSay.sender)" type="button" class="btn_say">发送</button>
+          </div>
         </div>
-        <div v-else>
-          <textarea class="write" placeholder="To:亲爱的陌生人"></textarea>
-          <button @click="send2()" type="button" class="btn_say">发送</button>
-        </div>
+
       </div>
       <div v-if="showIndex===2" class="bulletFrame">
         <el-button @click="del()" type="danger" size="mini" icon="" style="font-size: medium;float: right">X</el-button>
         <div>
-          <textarea class="write" placeholder="To:未来的自己"></textarea>
+          <textarea class="write" v-model="myContent" placeholder="To:未来的自己"></textarea>
           <button @click="send1()" type="button" class="btn_say">发送</button>
         </div>
       </div>
@@ -78,32 +79,70 @@
       data() {
         return {
           showIndex: 0,
-          isWrite: false
+          isWrite: false,
+          myContent:'',
+          randSay:{
+            id:'',
+            sender:'',
+            content:''
+          },
+          myComment:''
         }
       },
       methods: {
         listen:function(){
           this.showIndex=1;
-          this.$message.success('聆听');
+          this.$http.get("/user/getRandSay").then(response => {
+            if (response.data.errorCode===0){
+              this.randSay = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+          // this.$message.success('聆听');
         },
         say:function(){
           this.showIndex=2;
-          this.$message.success('倾诉');
+          // this.$message.success('倾诉');
         },
         del:function () {
           this.showIndex=0;
         },
         send1:function () {
-          this.showIndex=0;
-          this.$message.success('发送成功');
+          this.$http.post("/user/sendSay",{
+            sender:window.sessionStorage.getItem("id"),
+            content:this.myContent
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.$message.success(response.data.msg);
+              this.showIndex=0;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
         },
-        send2:function () {
-          this.isWrite=false;
-          this.$message.success('发送成功');
+        send2:function (sid,receiver) {
+          //发送评论
+          this.$http.post("/comment/addS",{
+            sid:sid,
+            content:this.myComment,
+            sender:window.sessionStorage.getItem("id"),
+            receiver:receiver
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.isWrite=false;
+              this.showIndex=0;
+              this.$message.success(response.data.msg);
+              this.myComment='';
+              this.reload();
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
         },
         comment:function () {
           this.isWrite=true;
-          this.$message.success('评论');
+          // this.$message.success('评论');
         }
       },
     }

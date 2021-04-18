@@ -1,6 +1,7 @@
 package com.example.liu.weidea.service;
 
 import com.example.liu.weidea.entity.Consultants;
+import com.example.liu.weidea.entity.Say;
 import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.entity.Volunteer;
 
@@ -189,4 +190,17 @@ public interface UserService {
      * @return
      */
     Volunteer getUserByName(String name);
+
+    /**
+     * （树洞）发送say
+     * @param say
+     * @return
+     */
+    Integer sendSay(Say say);
+
+    /**
+     * （树洞）随机获取say
+     * @return
+     */
+    Say getRandSay();
 }

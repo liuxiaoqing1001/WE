@@ -3,9 +3,7 @@ package com.example.liu.weidea.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
-import com.example.liu.weidea.entity.Consultants;
-import com.example.liu.weidea.entity.User;
-import com.example.liu.weidea.entity.Volunteer;
+import com.example.liu.weidea.entity.*;
 import com.example.liu.weidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -495,6 +493,50 @@ public class UserController {
                 msg,
                 result == 0
         ) ;
+    }
+
+    /**
+     * （树洞）发送say
+     * @param map
+     * @return
+     */
+    @PostMapping("/sendSay")
+    public ResponseData sendSay(@RequestBody Map<String , Object> map) {
+        Say say = new Say();
+        say.setSender((String) map.get("sender"));
+        say.setContent((String) map.get("content"));
+        Integer result = userService.sendSay(say) ;
+        String msg = "" ;
+        switch (result) {
+            case UserService.REG_MSG_OK :
+                msg = "发送成功" ;
+                break;
+            case UserService.REG_MSG_FAIL_INFO_NON:
+                msg = "信息不完整" ;
+                break;
+            default :
+                msg = "发送失败" ;
+                break;
+        }
+        return new ResponseData(
+                result ,
+                msg,
+                result == 0
+        ) ;
+    }
+
+    /**
+     * （树洞）随机获取say
+     * @return
+     */
+    @GetMapping("/getRandSay")
+    public ResponseData getRandSay(){
+        Say say = userService.getRandSay();
+        return new ResponseData(
+                say != null?0:1,
+                say != null?"获取成功":"获取失败",
+                say
+        );
     }
 
 

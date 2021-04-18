@@ -25,41 +25,10 @@ public interface SayDao {
     @Select("select * from say where id=#{id}")
     Say getSayById(Integer id);
 
-//    /**
-//     * 获取所有
-//     * @return
-//     */
-//    @Select("select * from say")
-//    List<Say> getAll();
-//
-//    /**
-//     * 根据id删除
-//     * @param id
-//     * @return
-//     */
-//    @Delete("delete from say where id=#{id}")
-//    int deleteById(Integer id);
-//
-//    /**
-//     * 根据关键字查询
-//     * @param keyword
-//     * @return
-//     */
-//    @Select("<script>" +
-//            "select * from say " +
-//            "        <if test=\"keyword != null\"> " +
-//            "            <bind name=\"key\" value=\"'%'+keyword+'%'\"/> " +
-//            "            where sender like #{key} or title like #{key} or content like #{key} or type like #{key}" +
-//            "        </if>"
-//            +"</script>")
-//    List<Say> getSay(String keyword);
-//
-//    /**
-//     * 获取
-//     * @param sender
-//     * @return
-//     */
-//    @Select("select * from say where sender=#{sender}")
-//    List<Say> getsayByUser(Integer sender);
-    
+    /**
+     * （树洞）随机获取say
+     * @return
+     */
+    @Select("select * from say")
+    Say getRandSay();
 }

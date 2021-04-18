@@ -1,9 +1,6 @@
 package com.example.liu.weidea.service;
 
-import com.example.liu.weidea.entity.Consultants;
-import com.example.liu.weidea.entity.Say;
-import com.example.liu.weidea.entity.User;
-import com.example.liu.weidea.entity.Volunteer;
+import com.example.liu.weidea.entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -203,4 +200,11 @@ public interface UserService {
      * @return
      */
     Say getRandSay();
+
+    /**
+     * 根据用户id获取消息
+     * @param receiver
+     * @return
+     */
+    List<Comment> getMsgList(String receiver);
 }

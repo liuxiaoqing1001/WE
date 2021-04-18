@@ -29,6 +29,19 @@ public interface SayDao {
      * （树洞）随机获取say
      * @return
      */
-    @Select("select * from say")
+    @Select("select * from say " +
+            "AS t1 JOIN " +
+            "(select ROUND(RAND()*((select MAX(id) from say)-(select MIN(id) from say))+(select MIN(id) from say)) " +
+            "AS id) AS t2 " +
+            "WHERE t1.id >= t2.id ORDER BY t1.id LIMIT 1")
+//    @Select("select * from say order by rand() limit 1")
     Say getRandSay();
+
+    /**
+     * 根据id获取内容
+     * @param sid
+     * @return
+     */
+    @Select("select content from say where id=#{sid}")
+    String getByAid(Integer sid);
 }

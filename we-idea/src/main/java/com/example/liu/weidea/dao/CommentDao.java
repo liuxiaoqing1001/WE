@@ -58,4 +58,11 @@ public interface CommentDao {
             "values(#{sid},#{content},#{sender},#{receiver},now())")
     int addS(Comment comment);
 
+    /**
+     * 根据用户id获取消息
+     * @param receiver
+     * @return
+     */
+    @Select("select * from comment where receiver=#{receiver} order by time desc,id asc")
+    List<Comment> getMsgList(String receiver);
 }

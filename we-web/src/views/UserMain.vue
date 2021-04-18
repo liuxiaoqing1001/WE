@@ -23,6 +23,7 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="personalCenter">个人中心</el-dropdown-item>
+              <el-dropdown-item @click.native="myMsg">我的消息</el-dropdown-item>
               <el-dropdown-item @click.native="modifyPwd">修改密码</el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
@@ -97,6 +98,9 @@
         },
         personalCenter(){
           this.$router.push("/PersonalCenter");
+        },
+        myMsg(){
+          this.$router.push("/MyMsg");
         },
         modifyPwd(){
           this.$router.push('/ModifyPwd');

@@ -32,17 +32,24 @@
         <el-button @click="del()" type="danger" size="mini" icon="" style="font-size: medium;float: right">X</el-button>
         <div class="talkAbout">
           <div class="word">
-            <span>{{randSay.content}}</span>
+            <span style="font-size: 15px;color: blue">来自缘分的轻语：</span>
+            <br/>
+            <p style="font-size: 20px;text-indent: 2em">{{randSay.content}}</p>
           </div>
           <div class="option">
-<!--            <i v-if="!isPraise" class="el-icon-star-off praise"></i>-->
-<!--            <i v-else class="el-icon-star-on praise" style="color: darkred"></i>-->
-            <i @click="comment()" class="el-icon-edit comment"></i>
+            <!--            <i v-if="!isPraise" class="el-icon-star-off praise"></i>-->
+            <!--            <i v-else class="el-icon-star-on praise" style="color: darkred"></i>-->
+            <i @click="listen()" class="el-icon-refresh" style="color: blue; margin-right: 15px">
+              <span style="font-size:15px;color: black">切换</span>
+            </i>
+            <i @click="comment()" class="el-icon-edit"></i>
           </div>
           <div v-if="isWrite" >
-            <textarea class="write" v-model="myComment" placeholder="To:亲爱的陌生人"></textarea>
-            <button @click="send2(randSay.id,randSay.sender)" type="button" class="btn_say">发送</button>
+            <textarea class="comment" v-model="myComment" placeholder="To:亲爱的陌生人"></textarea>
+<!--            <button @click="listen()" type="button" class="btn_say">换一个</button>-->
+            <button @click="send2(randSay.id,randSay.sender)" type="button" class="btn_say" style="margin-left: 40%">发送</button>
           </div>
+
         </div>
 
       </div>
@@ -80,6 +87,7 @@
         return {
           showIndex: 0,
           isWrite: false,
+          isShowWrite:false,
           myContent:'',
           randSay:{
             id:'',
@@ -95,6 +103,8 @@
           this.$http.get("/user/getRandSay").then(response => {
             if (response.data.errorCode===0){
               this.randSay = response.data.data;
+              this.myContent='';
+              this.myComment='';
             }else {
               this.$message.error(response.data.msg);
             }
@@ -107,6 +117,10 @@
         },
         del:function () {
           this.showIndex=0;
+          this.isWrite=false;
+          this.isShowWrite=false;
+          this.myContent='';
+          this.myComment='';
         },
         send1:function () {
           this.$http.post("/user/sendSay",{
@@ -116,6 +130,7 @@
             if (response.data.errorCode===0){
               this.$message.success(response.data.msg);
               this.showIndex=0;
+              this.myContent='';
             }else {
               this.$message.error(response.data.msg);
             }
@@ -141,7 +156,13 @@
           });
         },
         comment:function () {
-          this.isWrite=true;
+          if(!this.isShowWrite){
+            this.isWrite=true;
+            this.isShowWrite=true;
+          }else{
+            this.isWrite=false;
+            this.isShowWrite=false;
+          }
           // this.$message.success('评论');
         }
       },
@@ -257,6 +278,18 @@
     max-height: 80%;
     margin-left: 30px;
     margin-top: 50px;
+  }
+
+  .comment{
+    width: 90%;
+    height: 100px;
+    max-height: 80%;
+    margin-left: 30px;
+    margin-top: 30px;
+  }
+
+  i:hover{
+    cursor: pointer;
   }
 
 </style>

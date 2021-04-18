@@ -1,41 +1,65 @@
 <template>
-  <div class="detail">
-    <div id="content">
-      <h3>{{articleList.title}}</h3>
-      <h6>{{articleList.sender}}</h6>
-      <div>
-        <span style="font-size:15px;margin-right: 30px">{{articleList.sendDate}}</span>
-        <span style="font-size:18px">
+  <div class="msg">
+    <div v-if="!showArticle" lass="index-wrapper">
+      <ul>
+        <li class="msg-wrapper" v-for="item in list" :key="item.id" v-on:click="toDetail(item.aid,item.sid)">
+          <p class="msg-sender" style="color: blue">{{item.sender}}</p>
+          <p class="msg-sendDate">{{item.time}}</p>
+<!--          <h2 class="msg-title">{{item.title}}</h2>-->
+          <p class="msg-msgContent">{{item.msgContent}}</p>
+          <div class="msg-tag">
+            <ul>
+              <li>
+                <p style="text-indent: 2em">{{item.content}}</p>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div v-else class="detail">
+      <i class="el-icon-arrow-left" style="float: left;font-weight: bold" @click="comeBack()">
+        <span style="font-weight: normal;font-size: 15px;color: blue">返回</span>
+      </i>
+      <div id="content">
+        <h3>{{articleList.title}}</h3>
+        <h6>{{articleList.sender}}</h6>
+        <div>
+          <span style="font-size:15px;margin-right: 30px">{{articleList.sendDate}}</span>
+          <span style="font-size:18px">
           <i v-if="!isPraise" class="el-icon-star-off" @click="changeP(articleList.id)" style="margin-right: 10px">{{praiseNum}}</i>
           <i v-else class="el-icon-star-on " @click="changeP(articleList.id)" style="margin-right: 10px">{{praiseNum}}</i>
           <i class="el-icon-edit">{{commentNum}}</i>
         </span>
+        </div>
+        <!-- 用v-html解析后台传来的HTML代码 -->
+        <div v-html="articleList.content"></div>
       </div>
-      <!-- 用v-html解析后台传来的HTML代码 -->
-      <div v-html="articleList.content"></div>
-    </div>
-    <div class="commentArea">
-      <div class="send">
-        <textarea v-model="comment.content" class="write" placeholder="说点什么吧！"></textarea>
-        <button @click="send(articleList.id)" type="button" class="btn_say">发送</button>
+      <div class="commentArea">
+        <div class="send">
+          <textarea v-model="comment.content" class="write" placeholder="说点什么吧！"></textarea>
+          <button @click="send(articleList.id)" type="button" class="btn_say">发送</button>
+        </div>
+        <span v-if="!isComment" class="noComment">暂无评论</span>
+        <ul v-else class="list-group">
+          <li class="list-group-item" v-for="cItem in cList" :key="cItem.id">
+            <span class="badge">{{ cItem.sender }}</span>
+            {{ cItem.content }}
+          </li>
+        </ul>
       </div>
-      <span v-if="!isComment" class="noComment">暂无评论</span>
-      <ul v-else class="list-group">
-        <li class="list-group-item" v-for="cItem in cList" :key="cItem.id">
-          <span class="badge">{{ cItem.sender }}</span>
-          {{ cItem.content }}
-        </li>
-      </ul>
     </div>
   </div>
 </template>
 
 <script>
     export default {
-      name: "Detail",
+      name: "MyMsg",
       inject:['reload'],
       data(){
         return{
+          list:[],
+          showArticle:false,
           articleList:[],
           cList:[],
           comment:{
@@ -47,13 +71,29 @@
           isPraise:false
         }
       },
-      created(){
-        // 获取动态路由传值
-        var aid=this.$route.query.id;
-        // 调用requestData()方法请求数据
-        this.requestData(aid);
+      created() {
+        this.getMsgList(window.sessionStorage.getItem('id'));
       },
       methods:{
+        toDetail(aid,sid){
+          if(sid===null){
+            this.showArticle=true;
+            this.requestData(aid);
+          }
+        },
+        getMsgList(id){
+          this.$http.get("/user/getMsgList",{
+            params:{
+              receiver:id
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.list = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        },
         requestData(aid){
           this.$http.get("/article/getArticleById",{
             params:{
@@ -164,18 +204,72 @@
               this.$message.error(response.data.msg);
             }
           });
+        },
+        comeBack() {
+          this.showArticle=false;
         }
       }
     }
 </script>
 
 <style scoped>
-  .detail{
-    width: 1100px;
-    margin-right: 100px;
+  .msg{
+    width: 60%;
     margin-top: 60px;
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+  .index-wrapper{
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  .msg-wrapper{
+    margin-bottom: 30px;
+    padding: 12px 12px 0;
+    background: beige;
+    border-radius: 3px;
+    text-align: left;
+    list-style: none;
+    box-shadow: 0 1px 2px rgba(151,151,151,0.58);
+    max-width: 100%;
+  }
+  .msg-sender,.msg-sendDate{
+    line-height: 24px;
+    margin: 0 0 0px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #727272;
+    overflow: hidden;
+  }
+  .msg-msgContent{
+    line-height: 24px;
+    font-size: 15px;
+    /*font-weight: bold;*/
+    color: black;
+    overflow: hidden;
+    text-indent: 2em;
   }
 
+  .msg-tag li{
+    display: inline-block;
+    margin: 0 8px 8px 0;
+    border-radius: 2px;
+    /*background: white;*/
+    /*padding: 0 16px;*/
+    line-height: 28px;
+    color: mediumseagreen;
+    font-size: 18px;
+  }
+  li:hover{
+    cursor: pointer;
+  }
+
+  .detail{
+    width: 70%;
+    margin-right: 10%;
+    margin-left: 10%;
+    /*margin-top: 60px;*/
+  }
 
   #content {
     padding: 1rem;
@@ -187,36 +281,13 @@
 
   .commentArea{
     margin-top: 10%;
-    /*width: 66%;*/
-    /*!*margin-right: 30%;*!*/
-    /*!*text-align: center;*!*/
-    margin-left: 16%;
+    margin-right: 20%;
+    margin-left: 20%;
     font-size: 15px;
     background:rgba(312,500,500,0.5);
-    width: 500px;
-    /*height: 400px;*/
+    width: 60%;
     border-radius: 10px;
-    position: absolute;
-    /*left: 25%;*/
-    /*top: 30%;*/
   }
-
-  /*.send{*/
-  /*  float: left;*/
-  /*  height: 100px;*/
-  /*  width: 100%;*/
-  /*}*/
-
-
-  /*.send{*/
-  /*  background:rgba(312,500,500,0.5);*/
-  /*  width: 500px;*/
-  /*  !*height: 400px;*!*/
-  /*  border-radius: 10px;*/
-  /*  position: absolute;*/
-  /*  !*left: 25%;*!*/
-  /*  !*top: 30%;*!*/
-  /*}*/
 
   .write{
     float: left;

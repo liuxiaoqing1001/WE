@@ -1,13 +1,7 @@
 package com.example.liu.weidea.service.impl;
 
-import com.example.liu.weidea.dao.ConsultantsDao;
-import com.example.liu.weidea.dao.SayDao;
-import com.example.liu.weidea.dao.UserDao;
-import com.example.liu.weidea.dao.VolunteerDao;
-import com.example.liu.weidea.entity.Consultants;
-import com.example.liu.weidea.entity.Say;
-import com.example.liu.weidea.entity.User;
-import com.example.liu.weidea.entity.Volunteer;
+import com.example.liu.weidea.dao.*;
+import com.example.liu.weidea.entity.*;
 import com.example.liu.weidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +23,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     SayDao sayDao;
+
+    @Autowired
+    CommentDao commentDao;
+
+    @Autowired
+    ArticleDao articleDao;
 
     /**
      * 登录
@@ -444,5 +444,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public Say getRandSay() {
         return sayDao.getRandSay();
+    }
+
+    /**
+     * 根据用户id获取消息
+     * @param receiver
+     * @return
+     */
+    @Override
+    public List<Comment> getMsgList(String receiver) {
+        List<Comment> comments = commentDao.getMsgList(receiver);
+        for (int i=0;i<comments.size();i++){
+            if(comments.get(i).getSid()==null){
+                String msgContent = articleDao.getByAid(comments.get(i).getAid());
+                comments.get(i).setMsgContent(msgContent);
+            }else {
+                String msgContent = sayDao.getByAid(comments.get(i).getSid());
+                comments.get(i).setMsgContent(msgContent);
+            }
+        }
+        return comments;
     }
 }

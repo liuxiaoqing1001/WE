@@ -1,5 +1,5 @@
 <template>
-  <div class="article">
+  <div class="msg">
     <div class="index-wrapper">
       <ul>
         <li class="blog-wrapper" v-for="item in articleList" :key="item.id" v-on:click="toDetail(item.id)">
@@ -56,7 +56,7 @@
 </script>
 
 <style scoped>
-  .article{
+  .msg{
     width: 1100px;
     margin-right: 100px;
     margin-top: 60px;

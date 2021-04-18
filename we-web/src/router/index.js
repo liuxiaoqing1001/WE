@@ -13,6 +13,7 @@ import Setting from "../components/Admin/Setting";
 import ModifyPwd from "../components/Other/ModifyPwd";
 import ForgetPwd from "../components/Other/ForgetPwd";
 import PersonalCenter from "../components/Other/PersonalCenter";
+import MyMsg from "../components/Other/MyMsg";
 import Register from "../components/Other/Register";
 import Consulting from "../components/User/Consulting";
 import Square from "../components/User/Square";
@@ -118,6 +119,17 @@ export default new Router({
           path: '/PersonalCenter',
           name: 'PersonalCenter',
           component: PersonalCenter
+        },
+        {
+          path: '/MyMsg',
+          name: 'MyMsg',
+          component: MyMsg
+        },
+        ,
+        {
+          name: Detail,
+          path: '/Detail',
+          component: Detail
         },
         {
           name: MentalTest,

@@ -98,6 +98,14 @@ public interface ArticleDao {
     @Select("select * from article where sender=#{sender}")
     List<Article> getArticleByUser(Integer sender);
 
+    /**
+     * 根据id获取内容
+     * @param aid
+     * @return
+     */
+    @Select("select content from article where id=#{aid}")
+    String getByAid(Integer aid);
+
 //    /**
 //     * 根据id改变显示状态
 //     * @param id

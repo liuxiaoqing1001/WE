@@ -22,4 +22,5 @@ public class Comment implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "Asia/Shanghai")
     private Date time ;
+    private String msgContent;
 }

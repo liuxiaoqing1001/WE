@@ -539,6 +539,21 @@ public class UserController {
         );
     }
 
+    /**
+     * 根据用户id获取消息
+     * @param receiver
+     * @return
+     */
+    @GetMapping("/getMsgList")
+    public ResponseData getMsgList(@RequestParam(value = "receiver",required = false) String receiver) {
+        List<Comment> comments = userService.getMsgList(receiver) ;
+        return new ResponseData(
+                comments !=null ? 0 : 1 ,
+                comments !=null ? "获取成功" : "获取失败" ,
+                comments
+        );
+    }
+
 
 //
 //    @GetMapping("RolePage/{curPage}/{size}")

@@ -1,0 +1,74 @@
+package com.example.liu.weidea.controller;
+
+import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+@CrossOrigin
+@RestController
+@RequestMapping("file")
+public class FileUploadAndDownController {
+    @Autowired
+    HttpServletRequest request;
+
+    //可上传文件类型定义
+    private List fileTypes = new ArrayList(){
+        {
+            add("doc");
+            add("docx");
+            add("png");
+            add("jpeg");
+            add("pdf");
+        }
+    };
+
+    @RequestMapping("upload")
+    public String uploadFile(@RequestParam("file") MultipartFile file){
+        JSONObject jsonResult = new JSONObject();
+        if (file.isEmpty()){
+            jsonResult.put("code",201);
+            jsonResult.put("msg","请选择文件");
+            return jsonResult.toJSONString();
+        }
+        String originalFilename = file.getOriginalFilename();
+        String fileType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1, originalFilename.length());
+        if (!fileTypes.contains(fileType)){
+            jsonResult.put("code",201);
+            jsonResult.put("msg","仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传");
+            return jsonResult.toJSONString();
+        }
+        System.out.println(fileType);
+//        String path = "D:/idea-workspace/upload-file-demo/src/main/resources/files/";
+        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/file/";
+        // 判断文件保存的物理路径是否存在，不存在创建
+        File f = new File(path) ;
+        if(! f.exists()) {
+            f.mkdirs() ;
+        }
+        Path filePath = Paths.get(path + originalFilename);
+        try {
+            byte[] fileBytes = file.getBytes();
+            Files.write(filePath, fileBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        jsonResult.put("code",0);
+        jsonResult.put("msg","加载成功");
+        return jsonResult.toJSONString();
+    }
+}
+

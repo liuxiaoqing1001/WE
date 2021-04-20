@@ -48,20 +48,46 @@
               <el-input v-model="VForm.identity"></el-input>
             </el-form-item>
             <el-form-item label="执业资格证" prop="certificate">
-              <!--      :before-upload  文件上传前的回调-->
-              <!--      :accept 接收的文件类型-->
-              <el-upload class="special" ref="upload" action="/System/fileUpload.mvc" :on-change="getFiles"
-                         :before-upload="fileUploadSuffix" multiple :accept="doc,docx,xls,xlsx" :data="addFilesDate" :file-list="fileList">
+<!--              拖拽框上传-->
+<!--              <el-upload-->
+<!--                class="special"-->
+<!--                drag-->
+<!--                action="http://127.0.0.1:8618/file/upload"-->
+<!--                :show-file-list="true"-->
+<!--                :on-success="uploadFileHandler"-->
+<!--                :on-error="uploadFileErrorHandler"-->
+<!--                :on-progress="uploadFileOnProgressHandler">-->
+<!--                <i class="el-icon-upload"></i>-->
+<!--                <div class="el-upload__text">-->
+<!--                  将文件拖到此处，或<em>点击上传</em>-->
+<!--                  <br>-->
+<!--                  <span style="color: mediumseagreen;font-size: 10px">仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传</span>-->
+<!--                </div>-->
+<!--              </el-upload>-->
+
+<!--              按钮上传-->
+              <el-upload
+                class="special"
+                action="http://127.0.0.1:8618/file/upload"
+                :show-file-list="true"
+                :on-success="uploadFileHandler"
+                :on-error="uploadFileErrorHandler"
+                :on-progress="uploadFileOnProgressHandler">
                 <el-button size="small" type="primary">选择文件</el-button>
+                <span style="color: indianred;font-size: 10px">仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传</span>
               </el-upload>
-              <!--      <el-input v-model="VForm.certificate"></el-input>-->
             </el-form-item>
             <el-form-item label="学历学位证" prop="diploma">
-              <el-upload class="special" ref="upload" action="/System/fileUpload.mvc" :on-change="getFiles"
-                         :before-upload="fileUploadSuffix" multiple :accept="doc,docx,xls,xlsx" :data="addFilesDate" :file-list="fileList">
+              <el-upload
+                class="special"
+                action="http://127.0.0.1:8618/file/upload"
+                :show-file-list="true"
+                :on-success="uploadFileHandler"
+                :on-error="uploadFileErrorHandler"
+                :on-progress="uploadFileOnProgressHandler">
                 <el-button size="small" type="primary">选择文件</el-button>
+                <span style="color: indianred;font-size: 10px">仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传</span>
               </el-upload>
-              <!--      <el-input v-model="VForm.diploma"></el-input>-->
             </el-form-item>
             <el-form-item>
 <!--              <el-button @click="comeBack()" class="option">取消</el-button>-->
@@ -82,6 +108,8 @@
       name: "VolunteerZone",
       data(){
         return{
+          visible: false,
+          loading: null,
           applyV: false,
           vFormNameColor:'',
           VForm: {
@@ -214,6 +242,7 @@
           this.applyV=false;
         },
 
+        //未将文件路径存入数据库
         submitForm(formName) {
           //提交申请
           this.$refs[formName].validate(valid => {
@@ -230,25 +259,32 @@
               });
             }
           });
-
         },
-
-        fileUploadSuffix : function (fileList, suffix) {
-          let blooean = null
-          for (let i in fileList) {
-            let item = fileList[i] // 某一条文件信息
-            let fileName = item.name.lastIndexOf('.') // 取到文件名开始到最后一个点的长度
-            let fileNameLength = item.name.length // 取到文件名长度
-            let hz = item.name.substring(fileName + 1, fileNameLength) // 获取上传文件的后缀名
-            // 判断文件名后缀是否合法
-            if (suffix.indexOf(hz) === -1) { // 不合法上传文件
-              // 删除上传的文件列表中的不合法文件类型
-              fileList.splice(i--, 1) // 删除列表中的数据（删除后文件调整）
-              // 弹窗显示判断
-              blooean = true
+        uploadFileHandler(res){
+          console.log(res)
+          setTimeout(() => {
+            this.loading.close();
+            if (res.code === 201) {
+              this.$message.error(res.msg)
+            }else{
+              this.$message.success(res.msg)
             }
-          }
-          return blooean // 返回参数
+          }, 1000);
+        },
+        uploadFileErrorHandler(res){
+          this.$message.error("上传失败,请检查网络连接")
+        },
+        uploadFileOnProgressHandler(res){
+          // this.$message("上传中...")
+          this.fullScreenLoading()
+        },
+        fullScreenLoading() {
+          this.loading = this.$loading({
+            lock: true,
+            text: '文件加载中...',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          });
         }
       }
     }

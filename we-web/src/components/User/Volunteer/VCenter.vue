@@ -36,44 +36,30 @@
 <!--        auto-upload	是否在选取文件后立即进行上传	boolean	—	true-->
 <!--        file-list	上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}]	array	—	[]-->
 <!--        limit	最大允许上传个数	number	—	—-->
+
+<!--        未显示文件，可在线查看-->
         <el-upload
-          class="special xj-upload clearfix"
-          ref="upload"
-          action="/FileUpload/upload2"
-          :on-change="getFiles"
-          :before-upload="beforeUpload"
-          :before-remove="beforeRemove"
-          :auto-upload="false"
-          multiple
-          :limit="1"
-          :on-exceed="handleExceed"
-          name="提交文件"
-          accept="doc,docx,xls,xlsx"
-          :on-success="fileSuccessUpload"
-          :on-error="fileError">
+          class="special"
+          action="http://127.0.0.1:8618/file/upload"
+          :show-file-list="true"
+          :on-success="uploadFileHandler"
+          :on-error="uploadFileErrorHandler"
+          :on-progress="uploadFileOnProgressHandler">
           <el-button size="small" type="primary">选择文件</el-button>
+          <span style="color: indianred;font-size: 10px">仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传</span>
         </el-upload>
-        <!--      <el-input v-model="VForm.certificate"></el-input>-->
       </el-form-item>
       <el-form-item label="学历学位证" prop="diploma">
         <el-upload
-          class="special xj-upload clearfix"
-          ref="upload"
-          action="/FileUpload/upload2"
-          :on-change="getFiles"
-          :before-upload="beforeUpload"
-          :before-remove="beforeRemove"
-          :auto-upload="false"
-          multiple
-          :limit="1"
-          :on-exceed="handleExceed"
-          name="提交文件"
-          accept="doc,docx,xls,xlsx"
-          :on-success="fileSuccessUpload"
-          :on-error="fileError">
+          class="special"
+          action="http://127.0.0.1:8618/file/upload"
+          :show-file-list="true"
+          :on-success="uploadFileHandler"
+          :on-error="uploadFileErrorHandler"
+          :on-progress="uploadFileOnProgressHandler">
           <el-button size="small" type="primary">选择文件</el-button>
+          <span style="color: indianred;font-size: 10px">仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传</span>
         </el-upload>
-        <!--      <el-input v-model="VForm.diploma"></el-input>-->
       </el-form-item>
       <el-form-item>
         <el-button @click="comeBack()" class="option">取消</el-button>
@@ -89,6 +75,8 @@
       name: "VCenter",
       data() {
         return {
+          visible: false,
+          loading: null,
           VForm: {
             name:'',
             realName: '',
@@ -199,42 +187,32 @@
           this.$router.go(0);
         },
 
-        handleExceed(files, fileList) {
-          this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-        },
-        beforeRemove(file, fileList) {
-          return this.$confirm(`确定移除 ${ file.name }？`);
-        },
-        uploadFile(){
-          this.loading = true;
-          this.$refs.upload.submit();
-        },
-        fileSuccessUpload(response,file,fileList){
-          this.VForm['提交文件'] = response.split('?')[1].split('&')[1].split('=')[1];
-          this.$refs.uploadattachment.submit();
-        },
-        fileSuccessUploadattachment(response,file,fileList){
-          this.VForm['提交内容'] = response.split('?')[1].split('&')[1].split('=')[1];
-          this.uploadForm();
-        },
-        uploadForm(){
-          const self = this;
-          this.$refs['VForm'].validate((valid)=>{
-            if(valid){
-              self.VForm['提交时间']=Vue.filter('formatdate')(new Date(),'yyyy-MM-dd hh:mm:ss');
-              self.$axios({
-                method:'post',
-                url:self.uploadUrl,
-                data:self.VForm,
-                headers:self.headers
-              })
-              .then(function (res) {
-                self.$message.success('上传成功');
-                self.loading=false;
-              })
+        uploadFileHandler(res){
+          console.log(res)
+          setTimeout(() => {
+            this.loading.close();
+            if (res.code === 201) {
+              this.$message.error(res.msg)
+            }else{
+              this.$message.success(res.msg)
             }
-          })
-        }
+          }, 1000);
+        },
+        uploadFileErrorHandler(res){
+          this.$message.error("上传失败,请检查网络连接")
+        },
+        uploadFileOnProgressHandler(res){
+          // this.$message("上传中...")
+          this.fullScreenLoading()
+        },
+        fullScreenLoading() {
+          this.loading = this.$loading({
+            lock: true,
+            text: '文件加载中...',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          });
+        },
 
       }
     }

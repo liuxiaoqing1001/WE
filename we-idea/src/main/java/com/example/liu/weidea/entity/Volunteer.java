@@ -19,7 +19,7 @@ public class Volunteer implements Serializable {
     @DateTimeFormat(pattern = "yyyy年MM月dd日")
     @JsonFormat(pattern = "yyyy年MM月dd日" , timezone = "Asia/Shanghai")
     private Date birth ;
-    private  String sender ;
+    private  String gender ;
     private String comeFrom , phoneNum, identity,state;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "Asia/Shanghai")

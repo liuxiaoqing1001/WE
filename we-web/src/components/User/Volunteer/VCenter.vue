@@ -9,8 +9,8 @@
       <el-form-item label="姓名" prop="realName">
         <el-input v-model="VForm.realName"></el-input>
       </el-form-item>
-      <el-form-item label="性别" prop="sender">
-        <el-select v-model="VForm.sender" placeholder="请选择性别" class="special">
+      <el-form-item label="性别" prop="gender">
+        <el-select v-model="VForm.gender" placeholder="请选择性别" class="special">
           <el-option v-for="item in optionSender" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
@@ -40,9 +40,10 @@
 <!--        未显示文件，可在线查看-->
         <el-upload
           class="special"
+          v-model="VForm.certificate"
           action="http://127.0.0.1:8618/file/upload"
           :show-file-list="true"
-          :on-success="uploadFileHandler"
+          :on-success="uploadFileHandler_certificate"
           :on-error="uploadFileErrorHandler"
           :on-progress="uploadFileOnProgressHandler">
           <el-button size="small" type="primary">选择文件</el-button>
@@ -52,9 +53,10 @@
       <el-form-item label="学历学位证" prop="diploma">
         <el-upload
           class="special"
+          v-model="VForm.diploma"
           action="http://127.0.0.1:8618/file/upload"
           :show-file-list="true"
-          :on-success="uploadFileHandler"
+          :on-success="uploadFileHandler_diploma"
           :on-error="uploadFileErrorHandler"
           :on-progress="uploadFileOnProgressHandler">
           <el-button size="small" type="primary">选择文件</el-button>
@@ -77,10 +79,14 @@
         return {
           visible: false,
           loading: null,
+          filePack:{
+            certificate: '',
+            diploma: ''
+          },
           VForm: {
             name:'',
             realName: '',
-            sender: '',
+            gender: '',
             birth: '',
             comeFrom: '',
             phoneNum: '',
@@ -96,7 +102,7 @@
                 trigger: 'blur'
               }
             ],
-            sender: [
+            gender: [
               {
                 required: true,
                 message: '请输入您的性别',
@@ -165,6 +171,8 @@
           });
         },
         submitForm(formName) {
+          this.VForm.certificate = this.filePack.certificate;
+          this.VForm.diploma = this.filePack.diploma;
           this.$refs[formName].validate(valid => {
             if (valid) {
               this.$http.post("/user/updateVByName",{
@@ -187,22 +195,32 @@
           this.$router.go(0);
         },
 
-        uploadFileHandler(res){
-          console.log(res)
+        uploadFileHandler_diploma(res){
+          this.uploadFileHandler(res,"diploma");
+        },
+        uploadFileHandler_certificate(res){
+          this.uploadFileHandler(res,"certificate");
+        },
+        uploadFileHandler(res,type){
+          console.log(res);
           setTimeout(() => {
             this.loading.close();
             if (res.code === 201) {
               this.$message.error(res.msg)
             }else{
-              this.$message.success(res.msg)
+              if (type==="certificate"){
+                this.filePack.certificate=res.data;
+              }else {
+                this.filePack.diploma=res.data;
+              }
+              this.$message.success(res.msg);
             }
           }, 1000);
         },
         uploadFileErrorHandler(res){
-          this.$message.error("上传失败,请检查网络连接")
+          this.$message.error("加载失败,请检查网络连接")
         },
         uploadFileOnProgressHandler(res){
-          // this.$message("上传中...")
           this.fullScreenLoading()
         },
         fullScreenLoading() {

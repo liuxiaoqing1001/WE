@@ -3,10 +3,7 @@ package com.example.liu.weidea.controller;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ClassUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +14,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("file")
+@RequestMapping("/file")
 public class FileUploadAndDownController {
     @Autowired
     HttpServletRequest request;
@@ -36,7 +34,7 @@ public class FileUploadAndDownController {
         }
     };
 
-    @RequestMapping("upload")
+    @RequestMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file){
         JSONObject jsonResult = new JSONObject();
         if (file.isEmpty()){
@@ -59,7 +57,10 @@ public class FileUploadAndDownController {
         if(! f.exists()) {
             f.mkdirs() ;
         }
-        Path filePath = Paths.get(path + originalFilename);
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
+        String initFileName = uuid + "." +fileType;
+        Path filePath = Paths.get(path + initFileName);
+        System.out.println("filePath-------------"+filePath);
         try {
             byte[] fileBytes = file.getBytes();
             Files.write(filePath, fileBytes);
@@ -68,6 +69,7 @@ public class FileUploadAndDownController {
         }
         jsonResult.put("code",0);
         jsonResult.put("msg","加载成功");
+        jsonResult.put("data",initFileName);
         return jsonResult.toJSONString();
     }
 }

@@ -315,7 +315,7 @@ public class UserServiceImpl implements UserService {
         Volunteer v = volunteerDao.getVolunteerByName(name);
         User u = userDao.getUserByName(name);
         v.setBirth(u.getBirthday());
-        v.setSender(u.getSex());
+        v.setGender(u.getSex());
         v.setPhoneNum(u.getPhone());
         return v;
     }
@@ -332,7 +332,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = new User();
         user.setName(v.getName());
-        user.setSex(v.getSender());
+        user.setSex(v.getGender());
 //        user.setBirthday(v.getBirth());
         user.setPhone(v.getPhoneNum());
         int r1 = volunteerDao.updateVByName(v) ;
@@ -390,7 +390,7 @@ public class UserServiceImpl implements UserService {
         // 提交自愿者申请
         User user = new User();
         user.setName(volunteer.getName());
-        user.setSex(volunteer.getSender());
+        user.setSex(volunteer.getGender());
 //        user.setBirthday(v.getBirth());
         user.setPhone(volunteer.getPhoneNum());
         int r1 = userDao.updateByName(user);
@@ -412,7 +412,7 @@ public class UserServiceImpl implements UserService {
         User user = userDao.getUserByName(name);
         Volunteer volunteer = new Volunteer();
         volunteer.setName(name);
-        volunteer.setSender(user.getSex());
+        volunteer.setGender(user.getSex());
         volunteer.setBirth(user.getBirthday());
         volunteer.setPhoneNum(user.getPhone());
         return volunteer;

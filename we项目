@@ -283,7 +283,7 @@ CREATE TABLE user (
   phone varchar(255) NOT NULL COMMENT '电话',
   password varchar(255) NOT NULL COMMENT '密码',
   birthday date DEFAULT NULL COMMENT '生日',
-  sex varchar(10) DEFAULT NULL COMMENT '性别',
+  sex varchar(10) DEFAULT '1' COMMENT '性别',
   email varchar(50) DEFAULT NULL COMMENT '邮箱',
   photourl varchar(60) DEFAULT NULL COMMENT '头像地址',
   regdate datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',

@@ -386,7 +386,7 @@ public class UserController {
         Volunteer volunteer = new Volunteer();
         volunteer.setName(json.getString("name"));
         volunteer.setRealName(json.getString("realName"));
-        volunteer.setSender(json.getString("sender"));
+        volunteer.setGender(json.getString("gender"));
 //        if (json.getString("birth")!=null){
 //            volunteer.setBirth(new SimpleDateFormat("yyyy年MM月dd日").parse(json.getString("birth")));
 //        }
@@ -463,7 +463,7 @@ public class UserController {
         Volunteer volunteer = new Volunteer();
         volunteer.setName(jsonObject.getString("name"));
         volunteer.setRealName(jsonObject.getString("realName"));
-        volunteer.setSender(jsonObject.getString("sender"));
+        volunteer.setGender(jsonObject.getString("gender"));
         if (jsonObject.getString("birth")!=null){
             volunteer.setBirth(new SimpleDateFormat("yyyy年MM月dd日").parse(jsonObject.getString("birth")));
         }

@@ -293,7 +293,7 @@ CREATE TABLE user (
 
 ALTER TABLE Persons AUTO_INCREMENT=10011;//以其他的值起始
 
-insert into user(name,phone,password,regdate) values('liu','16600274434','1234567890',now());
+insert into user(phone,password,regdate,role) values('admin','e807f1fcf82d132f9bb018ca6738a19f',now(),0);
 
 //state 审核/驳回/通过
 CREATE TABLE volunteer (

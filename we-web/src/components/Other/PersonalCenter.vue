@@ -31,7 +31,7 @@
       </el-form-item>
       <el-form-item label="性别">
         <el-select v-model="UForm.sex" style="float: left">
-          <el-option v-for="item in sexes" :key="item.label" :label="item.label" :value="item.label">
+          <el-option v-for="item in sexes" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
@@ -169,12 +169,11 @@
               this.$message.error('请填写信息！！！');
             }else {
               this.$http.post("/user/update",{
-                user:this.editForm
+                user:this.UForm
               }).then(response => {
                 if (response.data.errorCode===0){
                   this.$message.success(response.data.msg);
-                  this.editDialogVisible = false;
-                  this.getUserList();
+                  this.getUser();
                 }else {
                   this.$message.error(response.data.msg);
                 }

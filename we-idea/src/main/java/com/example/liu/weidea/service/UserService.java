@@ -91,7 +91,7 @@ public interface UserService {
      * 查询数据库中所有自愿者
      * @return
      */
-    List<User> getAllVolunteer();
+    List<Volunteer> getAllVolunteer();
 
     /**
      * 添加管理员

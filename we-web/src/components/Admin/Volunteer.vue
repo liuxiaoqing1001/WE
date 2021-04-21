@@ -29,22 +29,31 @@
       <el-table :data="userList" style="width: 100%" border stripe>
         <el-table-column prop="id" label="ID"></el-table-column>
         <el-table-column prop="name" label="用户名"></el-table-column>
-        <el-table-column prop="phone" label="手机号"></el-table-column>
-        <el-table-column prop="sex" label="性别"></el-table-column>
-        <el-table-column prop="birthday" label="出生日期"></el-table-column>
-        <el-table-column prop="email" label="邮箱"></el-table-column>
+        <el-table-column prop="realName" label="真实姓名"></el-table-column>
+        <el-table-column prop="phoneNum" label="手机号"></el-table-column>
+<!--        <el-table-column prop="gender" label="性别"></el-table-column>-->
+<!--        <el-table-column prop="birth" label="出生日期"></el-table-column>-->
+<!--        <el-table-column prop="comeFrom" label="邮箱"></el-table-column>-->
+<!--        <el-table-column prop="identity" label="身份证号"></el-table-column>-->
         <el-table-column prop="role" label="角色"></el-table-column>
-        <el-table-column prop="regdate" label="创建时间"></el-table-column>
+        <el-table-column prop="state" label="状态"></el-table-column>
+        <el-table-column prop="certificate" label="执业资格证"></el-table-column>
+        <el-table-column prop="diploma" label="学历学位证"></el-table-column>
+<!--        <el-table-column prop="entryTime" label="申请时间"></el-table-column>-->
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <!--修改-->
-            <el-tooltip class="item" effect="dark" content="修改" placement="top" :enterable="false">
-              <el-button type="primary" size="mini" icon="el-icon-edit" @click="showEditDialog(scope.row.id)"></el-button>
+            <!--详情-->
+            <el-tooltip class="item" effect="dark" content="详情" placement="top" :enterable="false">
+              <el-button type="primary" size="mini" @click="showEditDialog(scope.row.id)">详情</el-button>
             </el-tooltip>
-            <!--删除-->
-            <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">
-              <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeUserById(scope.row.id)"></el-button>
+            <!--审核通过-->
+            <el-tooltip class="item" effect="dark" content="审核通过" placement="top" :enterable="false">
+              <el-button type="danger" size="mini" @click="changeUserRoleById(scope.row.id)">审核通过</el-button>
             </el-tooltip>
+<!--            &lt;!&ndash;删除&ndash;&gt;-->
+<!--            <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">-->
+<!--              <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeUserById(scope.row.id)"></el-button>-->
+<!--            </el-tooltip>-->
 <!--            &lt;!&ndash;分配角色&ndash;&gt;-->
 <!--            <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">-->
 <!--              <el-button type="warning" size="mini" icon="el-icon-setting"></el-button>-->
@@ -63,37 +72,55 @@
         :total="total">
       </el-pagination>
       <!--修改用户信息的对话框-->
-      <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%"  @close="editDialogClosed">
+      <el-dialog title="自愿者详情" :visible.sync="showDialogVisible" width="50%" @close="showDialogClosed">
         <!--内容主体区域-->
-        <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
+        <el-form :model="VForm" :rules="VFormRules" ref="VFormRef" label-width="70px">
           <el-form-item label="ID">
-            <el-input v-model="editForm.id" :disabled="true"></el-input>
+            <el-input v-model="VForm.id" readonly></el-input>
           </el-form-item>
           <el-form-item label="用户名" prop="name">
-            <el-input v-model="editForm.name"></el-input>
+            <el-input v-model="VForm.name" readonly></el-input>
+          </el-form-item>
+          <el-form-item label="真实姓名" prop="name">
+            <el-input v-model="VForm.realName" readonly></el-input>
+          </el-form-item>
+          <el-form-item label="身份证号" prop="identity">
+            <el-input v-model="VForm.identity" readonly></el-input>
           </el-form-item>
           <el-form-item label="性别">
-            <el-select v-model="editForm.sex" style="float: left">
-              <el-option v-for="item in sexes" :key="item.label" :label="item.label" :value="item.label">
+            <el-select v-model="VForm.gender" style="float: left">
+              <el-option v-for="item in sexes" :key="item.value" :label="item.label" :value="item.value" readonly>
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-model="editForm.email"></el-input>
+          <el-form-item label="籍贯" prop="comeFrom">
+            <el-input v-model="VForm.comeFrom" readonly></el-input>
           </el-form-item>
-          <el-form-item label="手机号" prop="phone">
-            <el-input v-model="editForm.phone"></el-input>
+<!--          <el-form-item label="邮箱" prop="email">-->
+<!--            <el-input v-model="editForm.email"></el-input>-->
+<!--          </el-form-item>-->
+          <el-form-item label="手机号" prop="phoneNum">
+            <el-input v-model="VForm.phoneNum" readonly></el-input>
           </el-form-item>
           <el-form-item label="出生日期">
-            <el-date-picker v-model="editForm.birthday" type="datetime"
-                            format="yyyy年MM月dd日" value-format="yyyy年MM月dd日" style="float: left">
+            <el-date-picker v-model="VForm.birth" type="datetime"
+                            format="yyyy年MM月dd日" value-format="yyyy年MM月dd日" style="float: left" readonly>
             </el-date-picker>
           </el-form-item>
+          <el-form-item label="申请时间" prop="entryTime">
+            <el-input v-model="VForm.entryTime" readonly></el-input>
+          </el-form-item>
+          <el-form-item label="执业资格证" prop="certificate">
+            <el-input v-model="VForm.certificate" readonly></el-input>
+          </el-form-item>
+          <el-form-item label="学历学位证" prop="diploma">
+            <el-input v-model="VForm.diploma" readonly></el-input>
+          </el-form-item>
         </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="editDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="editUserInfo">确 定</el-button>
-        </span>
+<!--        <span slot="footer" class="dialog-footer">-->
+<!--          <el-button @click="showDialogVisible = false">取 消</el-button>-->
+<!--          <el-button type="primary" @click="editUserInfo">确 定</el-button>-->
+<!--        </span>-->
       </el-dialog>
     </el-container>
   </div>
@@ -131,7 +158,7 @@
           pageNum:1,//当前页码
           pageSize:2//每页显示条数
         },
-        editDialogVisible: false, // 控制修改用户信息对话框是否显示
+        showDialogVisible: false, // 控制修改用户信息对话框是否显示
         //多条件查询是否性别下拉框
         sexes: [
           {
@@ -144,51 +171,20 @@
           }
         ],
         // 修改用户信息的表单数据
-        editForm: {
-          name: '',
-          sex:'',
-          email: '',
-          phone: '',
-          birthday:''
+        VForm: {
+          id:'',
+          name:'',
+          realName: '',
+          gender: '',
+          birth: '',
+          comeFrom: '',
+          phoneNum: '',
+          identity: '',
+          state:'',
+          entryTime:'',
+          certificate: '',
+          diploma: '',
         },
-        // 修改用户信息表单的验证规则对象
-        editFormRules: {
-          name: [
-            {
-              required: true, //表示是否必填
-              message: '账号不可为空',
-              trigger: 'blur' //表示触发时机（blur失去焦点）
-            },
-            {
-              min: 3,
-              max: 11,
-              message: '长度在 3 到 11 个字符',
-              trigger: 'blur'
-            }
-          ],
-          email: [
-            {
-              required: true,
-              message: '请输入用户邮箱',
-              trigger: 'blur'
-            },
-            {
-              validator: checkEmail,
-              trigger: 'blur'
-            }
-          ],
-          phone: [
-            {
-              required: true,
-              message: '请输入用户手机',
-              trigger: 'blur'
-            },
-            {
-              validator: checkPhone,
-              trigger: 'blur'
-            }
-          ]
-        }
       }
     },
     created() {
@@ -230,67 +226,75 @@
         });
       },
       // 监听 修改用户信息对话框的关闭事件
-      editDialogClosed() {
+      showDialogClosed() {
         // 表单内容重置为空
         this.$refs.editFormRef.resetFields() // 通过ref引用调用resetFields方法
       },
       // 监听 修改用户状态
       showEditDialog(id) {
-        this.$http.get("/user/getUserById",{
-          params:{
-            id:id
-          }
-        }).then(response => {
-          if (response.data.errorCode===0){
-            this.editDialogVisible = true;
-            this.editForm = response.data.data;
-          }else {
-            this.$message.error(response.data.msg);
-          }
-        });
+
+        //查看详情
+        //两个证书在线查看？下载（判断存在不下载）？
+
+        // this.$http.get("/user/getUserById",{
+        //   params:{
+        //     id:id
+        //   }
+        // }).then(response => {
+        //   if (response.data.errorCode===0){
+        //     this.showDialogVisible = true;
+        //     this.VForm = response.data.data;
+        //   }else {
+        //     this.$message.error(response.data.msg);
+        //   }
+        // });
+
       },
-      // 点击按钮 修改用户信息
-      editUserInfo() {
-        this.$refs.editFormRef.validate(valid => {
-          if (!valid){
-            this.$message.error('请填写信息！！！');
-          }else {
-            this.$http.post("/user/update",{
-              user:this.editForm
-            }).then(response => {
-              if (response.data.errorCode===0){
-                this.$message.success(response.data.msg);
-                this.editDialogVisible = false;
-                this.getUserList();
-              }else {
-                this.$message.error(response.data.msg);
-              }
-            });
-          }
-        })
-      },
-      // 根据ID删除对应的用户信息
-      removeUserById(id) {
-        this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
-          confirmButtonText: '确定',
+      changeUserRoleById(id){
+        this.$confirm('此操作将通过该用户提交的自愿者咨询师申请, 是否继续?', '提示', {
+          confirmButtonText: '审核通过',
           cancelButtonText: '取消',
           typeId: 'warning'
         }).then(() => {
-          this.$http.delete("/user/delete/"+id).then(response => {
-            if (response.data.errorCode===0){
-              this.$message.success(response.data.msg);
-              this.getUserList();
-            }else {
-              this.$message.error(response.data.msg);
-            }
-          });
+          // 修改状态
+
+          // this.$http.post("/user/delete/"+id).then(response => {
+          //   if (response.data.errorCode===0){
+          //     this.$message.success(response.data.msg);
+          //     this.getUserList();
+          //   }else {
+          //     this.$message.error(response.data.msg);
+          //   }
+          // });
+
         }).catch(() => {
           this.$message({
             typeId: 'info',
-            message: '已取消删除'
+            message: '已取消审核'
           })
         })
-      },
+      }
+      // // 点击按钮 修改用户信息
+      // editUserInfo() {
+      //   this.$refs.editFormRef.validate(valid => {
+      //     if (!valid){
+      //       this.$message.error('请填写信息！！！');
+      //     }else {
+      //       this.$http.post("/user/update",{
+      //         user:this.VForm
+      //       }).then(response => {
+      //         if (response.data.errorCode===0){
+      //           this.$message.success(response.data.msg);
+      //           this.showDialogVisible = false;
+      //           this.getUserList();
+      //         }else {
+      //           this.$message.error(response.data.msg);
+      //         }
+      //       });
+      //     }
+      //   })
+      // },
+
     }
   }
 </script>

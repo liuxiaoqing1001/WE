@@ -35,8 +35,10 @@
                 <el-option v-for="item in optionGender" :key="item.value" :label="item.label" :value="item.value"/>
               </el-select>
             </el-form-item>
-<!--            <el-form-item label="出生年月" prop="birth">-->
-<!--              <el-date-picker v-model="VForm.birth" type="date" placeholder="选择日期" class="special"></el-date-picker>-->
+<!--            <el-form-item label="出生日期" prop="birth">-->
+<!--              <el-date-picker v-model="VForm.birth" type="datetime"-->
+<!--                              format="yyyy年MM月dd日" value-format="yyyy年MM月dd日" style="float: left">-->
+<!--              </el-date-picker>-->
 <!--            </el-form-item>-->
             <el-form-item label="籍贯" prop="comeFrom">
               <el-input v-model="VForm.comeFrom"></el-input>
@@ -122,7 +124,7 @@
             name:'',
             realName: '',
             gender: '',
-            birth: '',
+            // birth: '',
             comeFrom: '',
             phoneNum: '',
             identity: '',

@@ -175,8 +175,10 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<User> getAllVolunteer() {
-        return userDao.getAllVolunteer();
+    public List<Volunteer> getAllVolunteer() {
+        List<Volunteer> volunteerList = volunteerDao.getAll();
+        System.out.println("*******"+volunteerList);
+        return volunteerList;
     }
 
     /**

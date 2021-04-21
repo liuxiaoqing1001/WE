@@ -98,7 +98,7 @@
           </el-form-item>
           <el-form-item label="性别">
             <el-select v-model="editForm.sex" style="float: left">
-              <el-option v-for="item in sexes" :key="item.label" :label="item.label" :value="item.label">
+              <el-option v-for="item in sexes" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>

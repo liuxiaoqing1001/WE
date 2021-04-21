@@ -188,7 +188,7 @@ public class UserController {
      */
     @GetMapping("/getAllVolunteer")
     public ResponseData getAllVolunteer(){
-        List<User> volunteerList = userService.getAllVolunteer();
+        List<Volunteer> volunteerList = userService.getAllVolunteer();
         return new ResponseData(
                 volunteerList != null?0:1,
                 volunteerList != null?"查询成功":"查询失败",

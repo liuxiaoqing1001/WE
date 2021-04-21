@@ -118,15 +118,15 @@
         }
         callback(new Error('请输入合法的邮箱'))
       };
-      // 验证手机的规则
-      var checkPhone = (rule, value, callback) => {
-        const regMobile = /^1[0-9][0-9]{9}$/;
-        if (regMobile.test(value)) {
-          // 合法的手机
-          return callback()
-        }
-        callback(new Error('请输入合法的手机号'))
-      };
+      // // 验证手机的规则
+      // var checkPhone = (rule, value, callback) => {
+      //   const regMobile = /^1[0-9][0-9]{9}$/;
+      //   if (regMobile.test(value)) {
+      //     // 合法的手机
+      //     return callback()
+      //   }
+      //   callback(new Error('请输入合法的手机号'))
+      // };
       return{
         userList:[],//管理员列表
         total:0,//管理员总数
@@ -152,10 +152,10 @@
               trigger: 'blur' //表示触发时机（blur失去焦点）
             },
             {
-              // min: 3,
-              // max: 11,
-              // message: '长度在 3 到 11 个字符',
-              validator: checkPhone,
+              min: 3,
+              max: 11,
+              message: '长度在 3 到 11 个字符',
+              // validator: checkPhone,
               trigger: 'blur'
             }
           ],
@@ -221,11 +221,14 @@
           phone: [
             {
               required: true,
-              message: '请输入用户手机',
-              trigger: 'blur'
+              message: '请输入手机号',
+              trigger: 'blur' //表示触发时机（blur失去焦点）
             },
             {
-              validator: checkPhone,
+              min: 3,
+              max: 11,
+              message: '长度在 3 到 11 个字符',
+              // validator: checkPhone,
               trigger: 'blur'
             }
           ]

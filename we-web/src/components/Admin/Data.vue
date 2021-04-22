@@ -63,10 +63,9 @@
         chartData: {
           columns: ['角色', '总数量','占比'],
           rows: [
-            { '角色': '普通用户', '总数量': 4 , '占比': 2},
-            { '角色': '自愿者', '总数量': 4 , '占比': 1},
-            { '角色': '管理员', '总数量': 4 , '占比': 1},
-
+            // { '角色': '普通用户', '总数量': 4 , '占比': 2},
+            // { '角色': '自愿者', '总数量': 4 , '占比': 1},
+            // { '角色': '管理员', '总数量': 4 , '占比': 1},
           ]
         },
         chartData2: {
@@ -75,25 +74,34 @@
             { '角色': '普通用户', '数量': 2 },
             { '角色': '自愿者', '数量': 1 },
             { '角色': '管理员', '数量': 1 },
-
           ]
         },
         count: '',
       }
     },
+    created () {
+      this.load();
+    },
     methods: {
       load () {
-        this.selectUserCount();
+        this.getUserCountData();
       },
-      selectUserCount () {
-
+      getUserCountData () {
+        this.$http.get("/user/getUserCountData").then(response => {
+          if (response.data.errorCode===0){
+            this.$message.success(response.data.msg);
+            console.log(response);
+            this.chartData.rows = response.data.data;
+            // this.userList = response.data.data;
+          }else {
+            this.$message.error(response.data.msg);
+          }
+        });
       },
 
     },
 
-    created () {
-      this.load();
-    }
+
 
   }
 </script>

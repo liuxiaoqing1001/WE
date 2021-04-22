@@ -257,12 +257,9 @@
         // 表单内容重置为空
         this.$refs.editFormRef.resetFields() // 通过ref引用调用resetFields方法
       },
-      // 监听 修改用户状态
       showEditDialog(name) {
-
         //查看详情
         //两个证书在线查看？下载（判断存在不下载）？
-
         this.$http.get("/user/getVolunteerByName",{
           params:{
             name:name

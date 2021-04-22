@@ -1,16 +1,19 @@
 package com.example.liu.weidea.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.*;
 import com.example.liu.weidea.service.UserService;
+import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -343,45 +346,42 @@ public class UserController {
     }
 
     /**
-     * 查询管理员数量
+     * 获取数据
      * @return
      */
-    @GetMapping("/getAdminNum")
-    public ResponseData getAdminNum(){
-        Integer adminNum = userService.getAdminNum();
+    @GetMapping("/getUserCountData")
+    public ResponseData getUserCountData(){
+        JSONArray jsonArray = new JSONArray();
+        List<String> listRole = new ArrayList<String>();
+        listRole.add("普通用户");
+        listRole.add("自愿者");
+        listRole.add("管理员");
+        Integer num = getNum("all");
+        for(int i=0;i<listRole.size();i++){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("角色",listRole.get(i));
+            jsonObject.put("总数量", num);
+            jsonObject.put("占比", getNum(listRole.get(i)));
+            jsonArray.add(i, jsonObject);
+        }
         return new ResponseData(
-                adminNum != null?0:1,
-                adminNum != null?"查询成功":"查询失败",
-                adminNum
+                0,
+                "获取成功",
+                jsonArray
         );
     }
 
-    /**
-     * 查询所有用户（除管理员）数量
-     * @return
-     */
-    @GetMapping("/getUserNum")
-    public ResponseData getUserNum(){
-        Integer userNum = userService.getUserNum();
-        return new ResponseData(
-                userNum != null?0:1,
-                userNum != null?"查询成功":"查询失败",
-                userNum
-        );
-    }
-
-    /**
-     * 查询所有自愿者数量
-     * @return
-     */
-    @GetMapping("/getVolunteerNum")
-    public ResponseData getVolunteerNum(){
-        Integer volunteerNum = userService.getVolunteerNum();
-        return new ResponseData(
-                volunteerNum != null?0:1,
-                volunteerNum != null?"查询成功":"查询失败",
-                volunteerNum
-        );
+    public Integer getNum(String role){
+        if(role.equals("普通用户")){
+            return userService.getUserNum();
+        }
+        if(role.equals("自愿者")){
+            return userService.getVolunteerNum();
+        }
+        if(role.equals("管理员")){
+            return userService.getAdminNum();
+        }
+        return userService.getAdminNum()+userService.getUserNum()+userService.getVolunteerNum();
     }
 
     /**

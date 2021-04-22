@@ -1,6 +1,7 @@
 package com.example.liu.weidea.dao;
 
 import com.example.liu.weidea.entity.Consultants;
+import com.example.liu.weidea.entity.User;
 import com.example.liu.weidea.entity.Volunteer;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -74,4 +75,40 @@ public interface VolunteerDao {
      */
     @Select("select count(*) from volunteer where identity=#{identity}")
     int volunteerSearch(String identity);
+
+    /**
+     * 查询审核通过的自愿者
+     * @return
+     */
+    @Select("select * from volunteer where state='通过'")
+    List<Volunteer> getV();
+
+    /**
+     * 查询审核中的自愿者
+     * @return
+     */
+    @Select("select * from volunteer where state!='通过'")
+    List<Volunteer> getNotV();
+
+    /**
+     * 根据关键字查询自愿者
+     * @param keyword
+     * @return
+     */
+    @Select("<script>" +
+            "select * from volunteer " +
+            "        <if test=\"keyword != null\"> " +
+            "            <bind name=\"key\" value=\"'%'+keyword+'%'\"/> " +
+            "            where name like #{key} or realName like #{key}" +
+            "        </if>"
+            +"</script>")
+    List<Volunteer> getVolunteer(String keyword) ;
+
+//    /**
+//     * 审核自愿者
+//     * @param name
+//     * @return
+//     */
+//    @Update("update volunteer set state='通过' where name=#{name}")
+//    int updateVState(String name);
 }

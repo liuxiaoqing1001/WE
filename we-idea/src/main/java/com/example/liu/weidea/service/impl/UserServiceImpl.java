@@ -177,8 +177,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Volunteer> getAllVolunteer() {
         List<Volunteer> volunteerList = volunteerDao.getAll();
-        System.out.println("*******"+volunteerList);
-        return volunteerList;
+        return getVolunteers(volunteerList);
     }
 
     /**
@@ -239,16 +238,51 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 查询审核通过的自愿者
+     * @return
+     */
+    @Override
+    public List<Volunteer> getV() {
+        List<Volunteer> volunteerList = volunteerDao.getV();
+        return getVolunteers(volunteerList);
+    }
+
+    /**
+     * 查询审核中的自愿者
+     * @return
+     */
+    @Override
+    public List<Volunteer> getNotV() {
+        List<Volunteer> volunteerList = volunteerDao.getNotV();
+        return getVolunteers(volunteerList);
+    }
+
+    private List<Volunteer> getVolunteers(List<Volunteer> volunteerList) {
+        for (int i=0;i<volunteerList.size();i++){
+            Volunteer v = volunteerList.get(i);
+            String name = v.getName();
+            User u = userDao.getUserByName(name);
+            v.setId(u.getId());
+            v.setBirth(u.getBirthday());
+            v.setGender(u.getSex());
+            v.setPhoneNum(u.getPhone());
+            v.setRole(u.getRole());
+        }
+        return volunteerList;
+    }
+
+    /**
      * 根据关键字查询自愿者
      * @param keyword
      * @return
      */
     @Override
-    public List<User> getVolunteer(String keyword) {
-        if(keyword==""||keyword==null){
-            return userDao.getAllVolunteer();
+    public List<Volunteer> getVolunteer(String keyword) {
+        if(keyword.equals("") ||keyword==null){
+            return getAllVolunteer();
         }
-        return userDao.getVolunteer(keyword);
+        List<Volunteer> volunteerList = volunteerDao.getVolunteer(keyword);
+        return getVolunteers(volunteerList);
     }
 
     /**
@@ -316,9 +350,11 @@ public class UserServiceImpl implements UserService {
     public Volunteer getVolunteerByName(String name) {
         Volunteer v = volunteerDao.getVolunteerByName(name);
         User u = userDao.getUserByName(name);
+        v.setId(u.getId());
         v.setBirth(u.getBirthday());
         v.setGender(u.getSex());
         v.setPhoneNum(u.getPhone());
+        v.setRole(u.getRole());
         return v;
     }
 
@@ -367,7 +403,11 @@ public class UserServiceImpl implements UserService {
             return null ;
         }
         int r1 = volunteerDao.updateVByName(volunteer) ;
-        if(r1 != 1) {
+        User u =new User();
+        u.setName(volunteer.getName());
+        u.setRole(volunteer.getRole());
+        int r2 = userDao.updateByName(u);
+        if(r1 != 1&&r2!=1) {
             return null ;
         } else {
             return volunteerDao.getVolunteerByName(volunteer.getName()) ;
@@ -467,4 +507,14 @@ public class UserServiceImpl implements UserService {
         }
         return comments;
     }
+
+//    /**
+//     * 审核自愿者
+//     * @param name
+//     * @return
+//     */
+//    @Override
+//    public int updateVState(String name) {
+//        return volunteerDao.updateVState(name);
+//    }
 }

@@ -21,6 +21,7 @@ public class Volunteer implements Serializable {
     private Date birth ;
     private  String gender ;
     private String comeFrom , phoneNum, identity,state;
+    private Integer role ;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "Asia/Shanghai")
     private Date entryTime ;

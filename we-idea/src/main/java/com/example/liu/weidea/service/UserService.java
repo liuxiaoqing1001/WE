@@ -108,11 +108,23 @@ public interface UserService {
     List<User> getUser(String keyword);
 
     /**
+     * 查询审核通过的自愿者
+     * @return
+     */
+    List<Volunteer> getV();
+
+    /**
+     * 查询审核中的自愿者
+     * @return
+     */
+    List<Volunteer> getNotV();
+
+    /**
      * 根据关键字查询自愿者
      * @param keyword
      * @return
      */
-    List<User> getVolunteer(String keyword);
+    List<Volunteer> getVolunteer(String keyword);
 
     /**
      * 根据关键字查询自愿者
@@ -207,4 +219,13 @@ public interface UserService {
      * @return
      */
     List<Comment> getMsgList(String receiver);
+
+
+
+//    /**
+//     * 审核自愿者
+//     * @param id
+//     * @return
+//     */
+//    int updateVState(String id);
 }

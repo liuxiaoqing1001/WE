@@ -147,20 +147,6 @@ public interface UserDao {
     List<User> getUser(String keyword) ;
 
     /**
-     * 根据关键字查询自愿者
-     * @param keyword
-     * @return
-     */
-    @Select("<script>" +
-            "select * from user " +
-            "        <if test=\"keyword != null\"> " +
-            "            <bind name=\"key\" value=\"'%'+keyword+'%'\"/> " +
-            "            where (name like #{key} and role!=0) or (phone like #{key} and role=2)" +
-            "        </if>"
-            +"</script>")
-    List<User> getVolunteer(String keyword) ;
-
-    /**
      * 根据关键字查询管理员
      * @param keyword
      * @return
@@ -251,4 +237,14 @@ public interface UserDao {
      */
     @Select("select role from user where id=#{id}")
     String getRoleById(Integer id);
+
+
+
+//    /**
+//     * 根据id找name
+//     * @param id
+//     * @return
+//     */
+//    @Select("select name from user where id=#{id}")
+//    String getNameById(Integer id);
 }

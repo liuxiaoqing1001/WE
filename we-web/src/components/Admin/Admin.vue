@@ -48,7 +48,7 @@
       <el-table :data="userList" style="width: 100%" border stripe>
         <el-table-column prop="id" label="ID"></el-table-column>
         <el-table-column prop="name" label="用户名"></el-table-column>
-        <el-table-column prop="phone" label="手机号"></el-table-column>
+        <el-table-column prop="phone" label="账号"></el-table-column>
         <el-table-column prop="role" label="角色"></el-table-column>
         <el-table-column prop="regdate" label="创建时间"></el-table-column>
         <el-table-column label="操作">

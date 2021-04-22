@@ -295,6 +295,8 @@ ALTER TABLE Persons AUTO_INCREMENT=10011;//以其他的值起始
 
 insert into user(phone,password,regdate,role) values('admin','e807f1fcf82d132f9bb018ca6738a19f',now(),0);
 
+update user set password='e807f1fcf82d132f9bb018ca6738a19f' where id=10012
+
 //state 审核/驳回/通过
 CREATE TABLE volunteer (
   id int(11) NOT NULL AUTO_INCREMENT,

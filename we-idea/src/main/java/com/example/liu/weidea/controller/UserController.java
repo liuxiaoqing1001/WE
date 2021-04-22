@@ -196,10 +196,6 @@ public class UserController {
         );
     }
 
-//    public List<User> getAll() {
-//        return userService.getAll() ;
-//    }
-
     /**
      * 更新
      * @param map
@@ -259,17 +255,45 @@ public class UserController {
     }
 
     /**
+     * 查询审核通过的自愿者
+     * @return
+     */
+    @GetMapping("/getV")
+    public ResponseData getV() {
+        List<Volunteer> v = userService.getV() ;
+        return new ResponseData(
+                v !=null ? 0 : 1 ,
+                v !=null ? "筛选成功" : "筛选失败" ,
+                v
+        );
+    }
+
+    /**
+     * 查询审核中的自愿者
+     * @return
+     */
+    @GetMapping("/getNotV")
+    public ResponseData getNotV() {
+        List<Volunteer> v = userService.getNotV() ;
+        return new ResponseData(
+                v !=null ? 0 : 1 ,
+                v !=null ? "筛选成功" : "筛选失败" ,
+                v
+        );
+    }
+
+    /**
      * 根据关键字查询自愿者
      * @param keyword
      * @return
      */
     @GetMapping("/getVolunteer/{keyword}")
     public ResponseData getVolunteer(@PathVariable("keyword") String keyword) {
-        List<User> u = userService.getVolunteer(keyword) ;
+        List<Volunteer> v = userService.getVolunteer(keyword) ;
         return new ResponseData(
-                u !=null ? 0 : 1 ,
-                u !=null ? "查询成功" : "查询失败" ,
-                u
+                v !=null ? 0 : 1 ,
+                v !=null ? "查询成功" : "查询失败" ,
+                v
         );
     }
 
@@ -427,8 +451,14 @@ public class UserController {
     public ResponseData updateVSateByName(@RequestBody Map<String , Object> map) throws ParseException {
 //        JSONObject json = JSONObject.parseObject(JSON.toJSONString(map.get("volunteer")));
         Volunteer volunteer = new Volunteer();
-//        volunteer.setState(json.getString("state"));
+        volunteer.setName((String) map.get("name"));
         volunteer.setState((String) map.get("state"));
+        System.out.println(map.get("state"));
+        if(map.get("state").equals("通过")){
+            volunteer.setRole(2);
+        }else {
+            volunteer.setRole(1);
+        }
         Volunteer u = userService.updateVSateByName(volunteer) ;
         return new ResponseData(
                 u !=null ? 0 : 1 ,
@@ -553,6 +583,21 @@ public class UserController {
                 comments
         );
     }
+
+//    /**
+//     * 审核自愿者
+//     * @param name
+//     * @return
+//     */
+//    @PostMapping("/updateVState/{name}")
+//    public ResponseData updateVState(@PathVariable("name") String name) {
+//        int result = userService.updateVState(name) ;
+//        return  new ResponseData(
+//                result !=0 ? 0 : 1 ,
+//                result !=0 ? "审核通过" : "审核失败" ,
+//                result
+//        ) ;
+//    }
 
 
 //

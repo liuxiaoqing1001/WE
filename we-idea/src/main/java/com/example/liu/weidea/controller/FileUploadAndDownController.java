@@ -72,5 +72,10 @@ public class FileUploadAndDownController {
         jsonResult.put("data",initFileName);
         return jsonResult.toJSONString();
     }
+
+    @RequestMapping("/down")
+    public String downFile(@RequestParam("file") MultipartFile file){
+        return null;
+    }
 }
 

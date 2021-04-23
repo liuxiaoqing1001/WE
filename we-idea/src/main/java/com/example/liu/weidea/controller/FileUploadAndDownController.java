@@ -73,8 +73,15 @@ public class FileUploadAndDownController {
         return jsonResult.toJSONString();
     }
 
-    @RequestMapping("/down")
+    @RequestMapping("/show")
     public String downFile(@RequestParam("file") MultipartFile file){
+//        // 获取文件路径前缀
+//        String filePrefix = RuoYiConfig.getProfile();
+//        // 获取文件名
+//        String fileName = tPath.substring(tPath.lastIndexOf("/") + 1);
+//        // 文件下载
+//        FileUtils.downloadUtil(response, filePrefix + tPath, fileName);
+
         return null;
     }
 }

@@ -43,8 +43,30 @@
 <!--        <el-table-column prop="identity" label="身份证号"></el-table-column>-->
 <!--        <el-table-column prop="role" label="角色"></el-table-column>-->
         <el-table-column prop="state" label="状态"></el-table-column>
-        <el-table-column prop="certificate" label="执业资格证"></el-table-column>
-        <el-table-column prop="diploma" label="学历学位证"></el-table-column>
+        <el-table-column prop="certificate" label="执业资格证">
+<!--          <template slot-scope="scope">-->
+<!--            <el-button-->
+<!--              size="mini"-->
+<!--              type="text"-->
+<!--              icon="el-icon-download"-->
+<!--              @click="downFile(scope.row.certificate)"-->
+<!--              v-hasPermi="['hospital:treatment:download']">-->
+<!--              下载执业资格证-->
+<!--            </el-button>-->
+<!--          </template>-->
+        </el-table-column>
+        <el-table-column prop="diploma" label="学历学位证">
+<!--          <template slot-scope="scope">-->
+<!--            <el-button-->
+<!--              size="mini"-->
+<!--              type="text"-->
+<!--              icon="el-icon-download"-->
+<!--              @click="downFile(scope.row.diploma)"-->
+<!--              v-hasPermi="['hospital:treatment:download']">-->
+<!--              下载执业资格证-->
+<!--            </el-button>-->
+<!--          </template>-->
+        </el-table-column>
 <!--        <el-table-column prop="entryTime" label="申请时间"></el-table-column>-->
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -303,6 +325,18 @@
             message: '已取消审核'
           })
         })
+      },
+      downFile(file){
+        console.log(file)
+        // this.$http.post("/file/down",{
+        //   file:file
+        // }).then(response => {
+        //   if (response.data.errorCode===0){
+        //     this.$message.success(response.data.msg);
+        //   }else {
+        //     this.$message.error(response.data.msg);
+        //   }
+        // });
       }
       // // 点击按钮 修改用户信息
       // editUserInfo() {

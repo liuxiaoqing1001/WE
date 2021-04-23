@@ -104,6 +104,22 @@ public interface VolunteerDao {
             +"</script>")
     List<Volunteer> getVolunteer(String keyword) ;
 
+    /**
+     * 获取自愿者申请数据
+     * @param time
+     * @return
+     */
+    @Select("select count(*) from volunteer where entryTime=#{time}")
+    Integer getTimeNum(String time);
+
+    /**
+     * 获取自愿者申请数据
+     * 根据时间排序（年月日）取前七个（少于7个少几个为空）
+     * @return
+     */
+    @Select("")
+    List<Volunteer> getVolunteerData();
+
 //    /**
 //     * 审核自愿者
 //     * @param name

@@ -508,6 +508,25 @@ public class UserServiceImpl implements UserService {
         return comments;
     }
 
+    /**
+     * 获取自愿者申请数据
+     * @param time
+     * @return
+     */
+    @Override
+    public Integer getTimeNum(String time) {
+        return volunteerDao.getTimeNum(time);
+    }
+
+    /**
+     * 获取自愿者申请数据
+     * @return
+     */
+    @Override
+    public List<Volunteer> getVolunteerData() {
+        return volunteerDao.getVolunteerData();
+    }
+
 //    /**
 //     * 审核自愿者
 //     * @param name

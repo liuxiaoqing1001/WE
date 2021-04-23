@@ -346,7 +346,7 @@ public class UserController {
     }
 
     /**
-     * 获取数据
+     * 获取用户数据
      * @return
      */
     @GetMapping("/getUserCountData")
@@ -382,6 +382,39 @@ public class UserController {
             return userService.getAdminNum();
         }
         return userService.getAdminNum()+userService.getUserNum()+userService.getVolunteerNum();
+    }
+
+    /**
+     * 获取自愿者申请数据
+     * @return
+     */
+    @GetMapping("/getVolunteerData")
+    public ResponseData getVolunteerData(){
+        JSONArray jsonArray = new JSONArray();
+        List<String> listRole = new ArrayList<String>();
+        List<Volunteer> volunteers = userService.getVolunteerData() ;
+        //根据时间排序（年月日）取前七个（少于7个少几个为空）
+        for (int i=0;i<7;i++){
+            volunteers.get(i);
+            String time = String.valueOf(new SimpleDateFormat("2021-04-24"));
+            listRole.add(time);
+        }
+
+        for(int i=0;i<listRole.size();i++){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("申请时间",listRole.get(i));
+            jsonObject.put("申请人数", getTimeNum(listRole.get(i)));
+            jsonArray.add(i, jsonObject);
+        }
+        return new ResponseData(
+                0,
+                "获取成功",
+                jsonArray
+        );
+    }
+
+    public Integer getTimeNum(String time){
+        return userService.getTimeNum(time);
     }
 
     /**

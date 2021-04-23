@@ -220,6 +220,18 @@ public interface UserService {
      */
     List<Comment> getMsgList(String receiver);
 
+    /**
+     * 获取自愿者申请数据
+     * @param time
+     * @return
+     */
+    Integer getTimeNum(String time);
+
+    /**
+     * 获取自愿者申请数据
+     * @return
+     */
+    List<Volunteer> getVolunteerData();
 
 
 //    /**

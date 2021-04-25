@@ -18,7 +18,7 @@
 
       <el-row :gutter="20">
         <el-col :span="8">
-          <ve-pie :data="chartUserData"></ve-pie>
+          <ve-ring :data="chartUserData"></ve-ring>
         </el-col>
         <el-col :span="15">
           <ve-line :data="chartArticleData" width="100%"></ve-line>
@@ -28,8 +28,8 @@
 <!--      <ve-bar :data="chartUserData"></ve-bar>-->
 
       <el-row :gutter="20">
-        <el-col :span="15">
-          <ve-line :data="chartSayData" width="100%"></ve-line>
+        <el-col :span="13">
+          <ve-line :data="chartVolunteerData" width="100%"></ve-line>
 <!--          <ve-histogram-->
 <!--            :data="chartUserData"-->
 <!--            :legend-visible="true"-->
@@ -39,8 +39,8 @@
 <!--            :settings="chartSettings">-->
 <!--          </ve-histogram>-->
         </el-col>
-        <el-col :span="6">
-          <ve-line :data="chartVolunteerData" width="100%"></ve-line>
+        <el-col :span="10">
+          <ve-bar :data="chartSayData" width="100%"></ve-bar>
 <!--          <ve-ring :data="chartData2"></ve-ring>-->
         </el-col>
       </el-row>
@@ -75,19 +75,9 @@
           rows: []
         },
         chartVolunteerData: {
-          columns: ['申请时间', '申请人数'],
+          columns: ['申请时间', '申请人数','审核通过人数'],
           rows: []
         },
-
-        chartData2: {
-          columns: ['角色', '数量'],
-          rows: [
-            { '角色': '普通用户', '数量': 2 },
-            { '角色': '自愿者', '数量': 1 },
-            { '角色': '管理员', '数量': 1 },
-          ]
-        },
-        count: '',
       }
     },
     created () {
@@ -96,17 +86,14 @@
     methods: {
       load () {
         this.getUserCountData();
-        // this.getArticleData();
-        // this.getSayData();
-        // this.getVolunteerData();
+        this.getArticleData();
+        this.getSayData();
+        this.getVolunteerData();
       },
       getUserCountData () {
         this.$http.get("/user/getUserCountData").then(response => {
           if (response.data.errorCode===0){
-            this.$message.success(response.data.msg);
-            console.log(response);
             this.chartUserData.rows = response.data.data;
-            // this.userList = response.data.data;
           }else {
             this.$message.error(response.data.msg);
           }
@@ -115,22 +102,16 @@
       getArticleData(){
         this.$http.get("/article/getArticleData").then(response => {
           if (response.data.errorCode===0){
-            this.$message.success(response.data.msg);
-            console.log(response);
             this.chartArticleData.rows = response.data.data;
-            // this.userList = response.data.data;
           }else {
             this.$message.error(response.data.msg);
           }
         });
       },
       getSayData(){
-        this.$http.get("/say/getSayData").then(response => {
+        this.$http.get("/user/getSayData").then(response => {
           if (response.data.errorCode===0){
-            this.$message.success(response.data.msg);
-            console.log(response);
             this.chartSayData.rows = response.data.data;
-            // this.userList = response.data.data;
           }else {
             this.$message.error(response.data.msg);
           }
@@ -139,20 +120,13 @@
       getVolunteerData(){
         this.$http.get("/user/getVolunteerData").then(response => {
           if (response.data.errorCode===0){
-            this.$message.success(response.data.msg);
-            console.log(response);
             this.chartVolunteerData.rows = response.data.data;
-            // this.userList = response.data.data;
           }else {
             this.$message.error(response.data.msg);
           }
         });
       }
-
     },
-
-    //用户的数据，文章的数据（时间，数量），树洞的数据（时间，数量），申请自愿者的数据（时间，数量）
-
   }
 </script>
 

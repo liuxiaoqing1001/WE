@@ -6,16 +6,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.*;
 import com.example.liu.weidea.service.UserService;
-import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //import com.isoft.video.util.FileUtil;
 
@@ -389,22 +386,25 @@ public class UserController {
      * @return
      */
     @GetMapping("/getVolunteerData")
-    public ResponseData getVolunteerData(){
+    public ResponseData getVolunteerData() throws ParseException {
         JSONArray jsonArray = new JSONArray();
-        List<String> listRole = new ArrayList<String>();
-        List<Volunteer> volunteers = userService.getVolunteerData() ;
-        //根据时间排序（年月日）取前七个（少于7个少几个为空）
-        for (int i=0;i<7;i++){
-            volunteers.get(i);
-            String time = String.valueOf(new SimpleDateFormat("2021-04-24"));
-            listRole.add(time);
-        }
-
-        for(int i=0;i<listRole.size();i++){
+        String lastTime = userService.getLastVolunteerData() ;
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(lastTime);
+        String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        for(int i=0;i<7;i++){
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("申请时间",listRole.get(i));
-            jsonObject.put("申请人数", getTimeNum(listRole.get(i)));
+            jsonObject.put("申请时间", time);
+            List<Volunteer> volunteers = userService.getVolunteerByTime(time);
+            jsonObject.put("申请人数", volunteers.size());
+            List<Volunteer> volunteersPass = userService.getVolunteerPassByTime(time);
+            jsonObject.put("审核通过人数", volunteersPass.size());
             jsonArray.add(i, jsonObject);
+            if (i!=6){
+                Calendar c = Calendar.getInstance();
+                c.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(time));
+                c.set(Calendar.DATE, c.get(Calendar.DATE) - 1);
+                time = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+            }
         }
         return new ResponseData(
                 0,
@@ -413,8 +413,34 @@ public class UserController {
         );
     }
 
-    public Integer getTimeNum(String time){
-        return userService.getTimeNum(time);
+    /**
+     * 获取树洞发布数据
+     * @return
+     */
+    @GetMapping("/getSayData")
+    public ResponseData getSayData() throws ParseException {
+        JSONArray jsonArray = new JSONArray();
+        String lastTime = userService.getLastSayData() ;
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(lastTime);
+        String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        for(int i=0;i<7;i++){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("发布时间", time);
+            List<Say> say = userService.getSayByTime(time);
+            jsonObject.put("发布数量", say.size());
+            jsonArray.add(i, jsonObject);
+            if (i!=6){
+                Calendar c = Calendar.getInstance();
+                c.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(time));
+                c.set(Calendar.DATE, c.get(Calendar.DATE) - 1);
+                time = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+            }
+        }
+        return new ResponseData(
+                0,
+                "获取成功",
+                jsonArray
+        );
     }
 
     /**

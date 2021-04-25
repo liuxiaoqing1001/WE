@@ -1,6 +1,7 @@
 package com.example.liu.weidea.dao;
 
 import com.example.liu.weidea.entity.Article;
+import com.example.liu.weidea.entity.Say;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -105,6 +106,21 @@ public interface ArticleDao {
      */
     @Select("select content from article where id=#{aid}")
     String getByAid(Integer aid);
+
+    /**
+     * 获取最后一条数据
+     * @return
+     */
+    @Select("select sendDate from article order by id desc limit 1")
+    String getLastArticleData();
+
+    /**
+     * 根据时间查询
+     * @param time
+     * @return
+     */
+    @Select("select * from article where date_format(sendDate,'%Y-%m-%d') = #{time}")
+    List<Article> getArticleByTime(String time);
 
 //    /**
 //     * 根据id改变显示状态

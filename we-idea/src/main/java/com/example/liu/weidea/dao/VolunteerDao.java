@@ -105,20 +105,37 @@ public interface VolunteerDao {
     List<Volunteer> getVolunteer(String keyword) ;
 
     /**
-     * 获取自愿者申请数据
-     * @param time
-     * @return
-     */
-    @Select("select count(*) from volunteer where entryTime=#{time}")
-    Integer getTimeNum(String time);
-
-    /**
-     * 获取自愿者申请数据
+     * 获取最后一条自愿者申请数据
      * 根据时间排序（年月日）取前七个（少于7个少几个为空）
      * @return
      */
-    @Select("")
-    List<Volunteer> getVolunteerData();
+    @Select("select entryTime from volunteer order by id desc limit 1")
+    String getLastVolunteerData();
+
+//    /**
+//     * Volunteer数量
+//     * @return
+//     */
+//    @Select("select count(*) from volunteer")
+//    int getVCount();
+
+    /**
+     * 根据时间查询自愿者申请
+     * @param time
+     * @return
+     */
+    @Select("select * from volunteer where date_format(entryTime,'%Y-%m-%d') = #{time}")
+    List<Volunteer> getVolunteerByTime(String time);
+
+    /**
+     * 根据时间查询审核通过的自愿者申请
+     * @param time
+     * @return
+     */
+    @Select("select * from volunteer where date_format(entryTime,'%Y-%m-%d') = #{time} and state='通过'")
+    List<Volunteer> getVolunteerPassByTime(String time);
+
+
 
 //    /**
 //     * 审核自愿者

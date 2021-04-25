@@ -221,17 +221,43 @@ public interface UserService {
     List<Comment> getMsgList(String receiver);
 
     /**
-     * 获取自愿者申请数据
+     * 获取最后一条自愿者申请数据
+     * @return
+     */
+    String getLastVolunteerData();
+
+//    /**
+//     *Volunteer数量
+//     * @return
+//     */
+//    int getVCount();
+
+    /**
+     *根据时间查询自愿者申请
      * @param time
      * @return
      */
-    Integer getTimeNum(String time);
+    List<Volunteer> getVolunteerByTime(String time);
 
     /**
-     * 获取自愿者申请数据
+     * 根据时间查询审核通过的自愿者申请
+     * @param time
      * @return
      */
-    List<Volunteer> getVolunteerData();
+    List<Volunteer> getVolunteerPassByTime(String time);
+
+    /**
+     * 获取最后一条数据
+     * @return
+     */
+    String getLastSayData();
+
+    /**
+     * 根据时间查询
+     * @param time
+     * @return
+     */
+    List<Say> getSayByTime(String time);
 
 
 //    /**

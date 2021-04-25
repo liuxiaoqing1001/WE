@@ -7,6 +7,7 @@ import com.example.liu.weidea.dao.TypeDao;
 import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.entity.Comment;
 import com.example.liu.weidea.entity.Praise;
+import com.example.liu.weidea.entity.Volunteer;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -208,6 +209,25 @@ public class ArticleServiceImpl implements ArticleService {
         praise.setAid(praise.getAid());
         praise.setUid(praise.getUid());
         return praiseDao.getIsP(praise);
+    }
+
+    /**
+     * 获取最后一条数据
+     * @return
+     */
+    @Override
+    public String getLastArticleData() {
+        return articleDao.getLastArticleData();
+    }
+
+    /**
+     * 根据时间查询
+     * @param time
+     * @return
+     */
+    @Override
+    public List<Article> getArticleByTime(String time) {
+        return articleDao.getArticleByTime(time);
     }
 
 //    /**

@@ -509,22 +509,60 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 获取自愿者申请数据
+     * 获取最后一条自愿者申请数据
+     * @return
+     */
+    @Override
+    public String getLastVolunteerData() {
+        return volunteerDao.getLastVolunteerData();
+    }
+
+//    /**
+//     * Volunteer数量
+//     * @return
+//     */
+//    @Override
+//    public int getVCount() {
+//        return volunteerDao.getVCount();
+//    }
+
+    /**
+     * 根据时间查询自愿者申请
      * @param time
      * @return
      */
     @Override
-    public Integer getTimeNum(String time) {
-        return volunteerDao.getTimeNum(time);
+    public List<Volunteer> getVolunteerByTime(String time) {
+        return volunteerDao.getVolunteerByTime(time);
     }
 
     /**
-     * 获取自愿者申请数据
+     * 根据时间查询审核通过的自愿者申请
+     * @param time
      * @return
      */
     @Override
-    public List<Volunteer> getVolunteerData() {
-        return volunteerDao.getVolunteerData();
+    public List<Volunteer> getVolunteerPassByTime(String time) {
+        return volunteerDao.getVolunteerPassByTime(time);
+    }
+
+    /**
+     * 获取最后一条数据
+     * @return
+     */
+    @Override
+    public String getLastSayData() {
+        return sayDao.getLastSayData();
+    }
+
+    /**
+     * 根据时间查询
+     * @param time
+     * @return
+     */
+    @Override
+    public List<Say> getSayByTime(String time) {
+        return sayDao.getSayByTime(time);
     }
 
 //    /**

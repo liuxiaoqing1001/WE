@@ -1,6 +1,7 @@
 package com.example.liu.weidea.dao;
 
 import com.example.liu.weidea.entity.Say;
+import com.example.liu.weidea.entity.Volunteer;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -44,4 +45,19 @@ public interface SayDao {
      */
     @Select("select content from say where id=#{sid}")
     String getByAid(Integer sid);
+
+    /**
+     * 获取最后一条数据
+     * @return
+     */
+    @Select("select sendDate from say order by id desc limit 1")
+    String getLastSayData();
+
+    /**
+     * 根据时间查询
+     * @param time
+     * @return
+     */
+    @Select("select * from say where date_format(sendDate,'%Y-%m-%d') = #{time}")
+    List<Say> getSayByTime(String time);
 }

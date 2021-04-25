@@ -3,6 +3,7 @@ package com.example.liu.weidea.service;
 import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.entity.Comment;
 import com.example.liu.weidea.entity.Praise;
+import com.example.liu.weidea.entity.Volunteer;
 
 import java.util.List;
 
@@ -117,6 +118,19 @@ public interface ArticleService {
      * @return
      */
     int getIsP(Praise praise);
+
+    /**
+     * 获取最后一条数据
+     * @return
+     */
+    String getLastArticleData();
+
+    /**
+     * 根据时间查询
+     * @param time
+     * @return
+     */
+    List<Article> getArticleByTime(String time);
 
 //    /**
 //     * 根据id改变显示状态

@@ -1,15 +1,21 @@
 package com.example.liu.weidea.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.Article;
 import com.example.liu.weidea.entity.Comment;
 import com.example.liu.weidea.entity.Praise;
+import com.example.liu.weidea.entity.Volunteer;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -257,6 +263,36 @@ public class ArticleController {
                 result !=0 ? "获取成功" : "未点赞" ,
                 result
         ) ;
+    }
+
+    /**
+     * 获取文章发布数据
+     * @return
+     */
+    @GetMapping("/getArticleData")
+    public ResponseData getArticleData() throws ParseException {
+        JSONArray jsonArray = new JSONArray();
+        String lastTime = articleService.getLastArticleData() ;
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(lastTime);
+        String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        for(int i=0;i<7;i++){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("发布时间", time);
+            List<Article> article = articleService.getArticleByTime(time);
+            jsonObject.put("发布数量", article.size());
+            jsonArray.add(i, jsonObject);
+            if (i!=6){
+                Calendar c = Calendar.getInstance();
+                c.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(time));
+                c.set(Calendar.DATE, c.get(Calendar.DATE) - 1);
+                time = new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+            }
+        }
+        return new ResponseData(
+                0,
+                "获取成功",
+                jsonArray
+        );
     }
 
 }

@@ -87,9 +87,6 @@ public interface UserDao {
     @Update("<script>" +
             "update user " +
             "        <set> " +
-            "            <if test=\"null != password\">" +
-            "                password=#{password} , " +
-            "            </if>\n" +
             "            <if test=\"null != name\">" +
             "                name=#{name} , " +
             "            </if>\n" +

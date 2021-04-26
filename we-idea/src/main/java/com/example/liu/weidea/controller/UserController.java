@@ -207,7 +207,7 @@ public class UserController {
         User user = new User();
         user.setId(Integer.valueOf(json.getString("id")));
         user.setName(json.getString("name"));
-        user.setPassword(json.getString("password"));
+//        user.setPassword(json.getString("password"));
         if (json.getString("birthday")!=null){
             user.setBirthday(new SimpleDateFormat("yyyy年MM月dd日").parse(json.getString("birthday")));
         }

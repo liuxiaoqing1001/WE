@@ -24,9 +24,6 @@
               <el-button slot="append" icon="el-icon-search" @click="getVolunteer"></el-button>
             </el-input>
           </el-col>
-<!--          <el-col :span="4">-->
-<!--            <el-button type="primary">添加自愿者</el-button>-->
-<!--          </el-col>-->
         </el-row>
       </el-card>
       <!--自愿者列表区域-->
@@ -78,14 +75,6 @@
             <el-tooltip class="item" effect="dark" content="审核通过" placement="top" :enterable="false">
               <el-button type="danger" size="mini" @click="changeUserRoleById(scope.row.name)">审核通过</el-button>
             </el-tooltip>
-<!--            &lt;!&ndash;删除&ndash;&gt;-->
-<!--            <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">-->
-<!--              <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeUserById(scope.row.id)"></el-button>-->
-<!--            </el-tooltip>-->
-<!--            &lt;!&ndash;分配角色&ndash;&gt;-->
-<!--            <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">-->
-<!--              <el-button type="warning" size="mini" icon="el-icon-setting"></el-button>-->
-<!--            </el-tooltip>-->
           </template>
         </el-table-column>
       </el-table>
@@ -94,7 +83,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="queryInfo.pageNum"
-        :page-sizes="[1, 2, 5, 10]"
+        :page-sizes="[5, 10,15]"
         :page-size="queryInfo.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
@@ -102,7 +91,7 @@
       <!--修改用户信息的对话框-->
       <el-dialog title="自愿者详情" :visible.sync="showDialogVisible" width="50%" @close="showDialogClosed">
         <!--内容主体区域-->
-        <el-form :model="VForm" :rules="VFormRules" ref="VFormRef" label-width="70px">
+        <el-form :model="VForm" ref="VFormRef" label-width="70px">
           <el-form-item label="ID" class="inputDeep">
             <el-input v-model="VForm.id" readonly></el-input>
           </el-form-item>
@@ -117,17 +106,10 @@
           </el-form-item>
           <el-form-item label="性别" class="inputDeep">
             <el-input v-model="VForm.gender" readonly></el-input>
-<!--            <el-select v-model="VForm.gender" style="float: left" readonly>-->
-<!--              <el-option v-for="item in sexes" :key="item.value" :label="item.label" :value="item.value" readonly>-->
-<!--              </el-option>-->
-<!--            </el-select>-->
           </el-form-item>
           <el-form-item label="籍贯" prop="comeFrom" class="inputDeep">
             <el-input v-model="VForm.comeFrom" readonly></el-input>
           </el-form-item>
-<!--          <el-form-item label="邮箱" prop="email">-->
-<!--            <el-input v-model="editForm.email"></el-input>-->
-<!--          </el-form-item>-->
           <el-form-item label="手机号" prop="phoneNum" class="inputDeep">
             <el-input v-model="VForm.phoneNum" readonly></el-input>
           </el-form-item>
@@ -141,51 +123,48 @@
           </el-form-item>
           <el-form-item label="执业资格证书" prop="certificate" class="inputDeep">
             <el-input v-model="VForm.certificate" readonly></el-input>
+            <a @click="showCertificate" class="showFile">在线查看</a>
           </el-form-item>
           <el-form-item label="学历学位证书" prop="diploma" class="inputDeep">
             <el-input v-model="VForm.diploma" readonly></el-input>
+            <a @click="showDiploma" class="showFile">在线查看</a>
           </el-form-item>
         </el-form>
-<!--        <span slot="footer" class="dialog-footer">-->
-<!--          <el-button @click="showDialogVisible = false">取 消</el-button>-->
-<!--          <el-button type="primary" @click="editUserInfo">确 定</el-button>-->
-<!--        </span>-->
       </el-dialog>
+
+      <el-dialog title="执业资格证书" :visible.sync="isShowFileCertificate" width="50%" @close="showDialogClosed">
+        <pdf ref="pdf" :src="urlFile" v-for="i in numPages" :key="i" :page="i"></pdf>
+      </el-dialog>
+
+      <el-dialog title="学历学位证书" :visible.sync="isShowFileDiploma" width="50%" @close="showDialogClosed">
+        <pdf ref="pdf" :src="urlFile"></pdf>
+      </el-dialog>
+
     </el-container>
   </div>
 </template>
 
 <script>
+  import pdf from 'vue-pdf'
+
   export default {
+    components:{
+      pdf
+    },
     name: "Volunteer",
     data(){
-      // 验证邮箱的规则(验证规则 验证的值 回调函数)
-      var checkEmail = (rule, value, callback) => {
-        // 验证邮箱的正则表达式
-        const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-        if (regEmail.test(value)) {
-          // 合法的邮箱
-          return callback()
-        }
-        callback(new Error('请输入合法的邮箱'))
-      };
-      // 验证手机的规则
-      var checkPhone = (rule, value, callback) => {
-        const regMobile = /^1[0-9][0-9]{9}$/;
-        if (regMobile.test(value)) {
-          // 合法的手机
-          return callback()
-        }
-        callback(new Error('请输入合法的手机号'))
-      };
       return{
+        urlFile:"",
+        numPages: 1, // pdf 总页数
+        isShowFileCertificate:false,
+        isShowFileDiploma:false,
         userList:[],//自愿者列表
         total:0,//自愿者总数
         //获取自愿者列表的参数对象
         queryInfo:{
           query:'',//查询参数
           pageNum:1,//当前页码
-          pageSize:2//每页显示条数
+          pageSize:5//每页显示条数
         },
         showDialogVisible: false, // 控制修改用户信息对话框是否显示
         //多条件查询是否性别下拉框
@@ -281,7 +260,6 @@
       },
       showEditDialog(name) {
         //查看详情
-        //两个证书在线查看？下载（判断存在不下载）？
         this.$http.get("/user/getVolunteerByName",{
           params:{
             name:name
@@ -299,7 +277,6 @@
             this.$message.error(response.data.msg);
           }
         });
-
       },
       changeUserRoleById(name){
         this.$confirm('此操作将通过该用户提交的自愿者咨询师申请, 是否继续?', '提示', {
@@ -326,6 +303,26 @@
           })
         })
       },
+      showCertificate(){
+        this.urlFile="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
+        // this.getNumPages(this.urlFile);
+        this.isShowFileCertificate=true;
+      },
+      showDiploma(){
+        this.urlFile=this.require("../assets/1.pdf");
+        // this.urlFile="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
+        // this.getNumPages(this.urlFile);
+        this.isShowFileDiploma=true;
+      },
+      getNumPages(url) {
+        var loadingTask = pdf.createLoadingTask(url);
+        loadingTask.then(pdf => {
+          // this.url = loadingTask;
+          this.numPages = pdf.numPages
+        }).catch((err) => {
+          console.error('pdf加载失败')
+        })
+      },
       downFile(file){
         console.log(file)
         // this.$http.post("/file/down",{
@@ -338,27 +335,6 @@
         //   }
         // });
       }
-      // // 点击按钮 修改用户信息
-      // editUserInfo() {
-      //   this.$refs.editFormRef.validate(valid => {
-      //     if (!valid){
-      //       this.$message.error('请填写信息！！！');
-      //     }else {
-      //       this.$http.post("/user/update",{
-      //         user:this.VForm
-      //       }).then(response => {
-      //         if (response.data.errorCode===0){
-      //           this.$message.success(response.data.msg);
-      //           this.showDialogVisible = false;
-      //           this.getUserList();
-      //         }else {
-      //           this.$message.error(response.data.msg);
-      //         }
-      //       });
-      //     }
-      //   })
-      // },
-
     }
   }
 </script>
@@ -391,5 +367,13 @@
     border: 0;
     height: 400px;
     /*resize: none;*/
+  }
+  .showFile{
+    color:blue;
+    float: left;
+    margin-left: 15px;
+  }
+  a:hover{
+    cursor: pointer;
   }
 </style>

@@ -174,6 +174,9 @@
                 if (response.data.errorCode===0){
                   this.$message.success(response.data.msg);
                   this.getUser();
+                  console.log(response)
+                  window.sessionStorage.setItem('token',response.data.data.name);
+                  window.sessionStorage.setItem('name',response.data.data.name);
                 }else {
                   this.$message.error(response.data.msg);
                 }

@@ -26,8 +26,6 @@ public class FileUploadAndDownController {
     //可上传文件类型定义
     private List fileTypes = new ArrayList(){
         {
-            add("doc");
-            add("docx");
             add("png");
             add("jpeg");
             add("pdf");
@@ -46,7 +44,7 @@ public class FileUploadAndDownController {
         String fileType = originalFilename.substring(originalFilename.lastIndexOf(".") + 1, originalFilename.length());
         if (!fileTypes.contains(fileType)){
             jsonResult.put("code",201);
-            jsonResult.put("msg","仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传");
+            jsonResult.put("msg","仅支持 .pdf/.png/.jpeg 文件上传");
             return jsonResult.toJSONString();
         }
         System.out.println(fileType);

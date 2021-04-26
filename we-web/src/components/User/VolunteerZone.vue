@@ -77,7 +77,7 @@
                 :on-error="uploadFileErrorHandler"
                 :on-progress="uploadFileOnProgressHandler">
                 <el-button size="small" type="primary">选择文件</el-button>
-                <span style="color: indianred;font-size: 10px">仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传</span>
+                <span style="color: indianred;font-size: 10px">仅支持 .pdf / .png / .jpeg 文件上传</span>
               </el-upload>
             </el-form-item>
             <el-form-item label="学历学位证" prop="diploma">
@@ -90,7 +90,7 @@
                 :on-error="uploadFileErrorHandler"
                 :on-progress="uploadFileOnProgressHandler">
                 <el-button size="small" type="primary">选择文件</el-button>
-                <span style="color: indianred;font-size: 10px">仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传</span>
+                <span style="color: indianred;font-size: 10px">仅支持 .pdf / .png / .jpeg 文件上传</span>
               </el-upload>
             </el-form-item>
             <el-form-item>

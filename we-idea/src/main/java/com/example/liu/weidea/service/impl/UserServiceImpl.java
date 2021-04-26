@@ -193,9 +193,9 @@ public class UserServiceImpl implements UserService {
         if(user.getId() == null || user.getId() < 1) {
             return null ;
         }
-        if(null != user.getPassword()) {
-            user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
-        }
+//        if(null != user.getPassword()) {
+//            user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+//        }
         int r = userDao.updateById(user) ;
         if(r != 1) {
             return null ;

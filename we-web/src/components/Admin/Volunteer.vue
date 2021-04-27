@@ -132,12 +132,37 @@
         </el-form>
       </el-dialog>
 
-      <el-dialog title="执业资格证书" :visible.sync="isShowFileCertificate" width="50%" @close="showDialogClosed">
-        <pdf ref="pdf" :src="urlFile" v-for="i in numPages" :key="i" :page="i"></pdf>
+      <el-dialog title="执业资格证书" :visible.sync="isShowFileCertificate" width="60%" @close="showDialogClosed">
+<!--        <pdf ref="pdf" :src="src" v-for="i in numPages" :key="i" :page="i"></pdf>-->
+        <p class="arrow">
+          <span @click="changePdfPage(0)" class="turn" :class="{grey:currentPage===1}">上一页</span>
+          << {{currentPage}} / {{pageCount}} >>
+          <span @click="changePdfPage(1)" class="turn" :class="{grey:currentPage===pageCount}">下一页</span>
+        </p>
+        <pdf
+          :src="src"
+          :page="currentPage"
+          @num-pages="pageCount=$event"
+          @page-loaded="currentPage=$event"
+          @loaded="loadPdfHandler">
+        </pdf>
+
       </el-dialog>
 
-      <el-dialog title="学历学位证书" :visible.sync="isShowFileDiploma" width="50%" @close="showDialogClosed">
-        <pdf ref="pdf" :src="urlFile"></pdf>
+      <el-dialog title="学历学位证书" :visible.sync="isShowFileDiploma" width="60%" @close="showDialogClosed">
+        <p class="arrow">
+          <span @click="changePdfPage(0)" class="turn" :class="{grey:currentPage===1}">上一页</span>
+          << {{currentPage}} / {{pageCount}} >>
+          <span @click="changePdfPage(1)" class="turn" :class="{grey:currentPage===pageCount}">下一页</span>
+        </p>
+        <pdf
+          :src="src"
+          :page="currentPage"
+          @num-pages="pageCount=$event"
+          @page-loaded="currentPage=$event"
+          @loaded="loadPdfHandler">
+        </pdf>
+<!--        <pdf ref="pdf" :src="src"></pdf>-->
       </el-dialog>
 
     </el-container>
@@ -154,8 +179,9 @@
     name: "Volunteer",
     data(){
       return{
-        urlFile:"",
-        numPages: 1, // pdf 总页数
+        src:"",
+        currentPage: 0, // pdf文件页码
+        pageCount: 0, // pdf文件总页数
         isShowFileCertificate:false,
         isShowFileDiploma:false,
         userList:[],//自愿者列表
@@ -197,6 +223,8 @@
     },
     created() {
       this.getUserList();
+      // 有时PDF文件地址会出现跨域的情况,这里最好处理一下　　　　
+      this.src = pdf.createLoadingTask(this.src);
     },
     methods:{
       // 监听 pageSize 改变的事件
@@ -256,7 +284,7 @@
       // 监听 修改用户信息对话框的关闭事件
       showDialogClosed() {
         // 表单内容重置为空
-        this.$refs.editFormRef.resetFields() // 通过ref引用调用resetFields方法
+        this.$refs.editFormRef.resetFields(); // 通过ref引用调用resetFields方法
       },
       showEditDialog(name) {
         //查看详情
@@ -304,25 +332,32 @@
         })
       },
       showCertificate(){
-        this.urlFile="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
-        // this.getNumPages(this.urlFile);
+        this.src="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
         this.isShowFileCertificate=true;
       },
       showDiploma(){
-        this.urlFile=this.require("../assets/1.pdf");
-        // this.urlFile="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
-        // this.getNumPages(this.urlFile);
+        // this.src="/home/liu/liu_source/softwareCode/ideaCode/WE/we-idea/target/classes/static/file/181827a2fedc461da9d3357486a7934f.pdf"
+        // this.src="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
+        this.src="/static/redis.pdf";
         this.isShowFileDiploma=true;
       },
-      getNumPages(url) {
-        var loadingTask = pdf.createLoadingTask(url);
-        loadingTask.then(pdf => {
-          // this.url = loadingTask;
-          this.numPages = pdf.numPages
-        }).catch((err) => {
-          console.error('pdf加载失败')
-        })
+
+      // 改变PDF页码,val传过来区分上一页下一页的值,0上一页,1下一页
+      changePdfPage (val) {
+        // console.log(val)
+        if (val === 0 && this.currentPage > 1) {
+          this.currentPage--;
+        }
+        if (val === 1 && this.currentPage < this.pageCount) {
+          this.currentPage++;
+        }
       },
+
+      // pdf加载时
+      loadPdfHandler (e) {
+        this.currentPage = 1; // 加载的时候先加载第一页
+      },
+
       downFile(file){
         console.log(file)
         // this.$http.post("/file/down",{
@@ -374,6 +409,15 @@
     margin-left: 15px;
   }
   a:hover{
+    cursor: pointer;
+  }
+
+  .turn{
+    color: blue;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  span:hover{
     cursor: pointer;
   }
 </style>

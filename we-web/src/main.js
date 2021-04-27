@@ -23,6 +23,10 @@ import Chat from 'jwchat'
 
 import VCharts from 'v-charts'
 
+import pdf from 'vue-pdf'
+
+Vue.use(pdf);
+
 Vue.use(VCharts);
 
 Vue.use(Chat);

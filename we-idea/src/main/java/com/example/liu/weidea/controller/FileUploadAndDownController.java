@@ -1,14 +1,18 @@
 package com.example.liu.weidea.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.tomcat.jni.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -82,5 +86,24 @@ public class FileUploadAndDownController {
 
         return null;
     }
+
+//    public void filePreview(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
+//
+//        FileInfo fileInfo = fileInfoService.selectFileInfoById(Long.valueOf(id));
+//        String url = "";
+//        String token = httpClientUtils.getTicker();
+//        FileStream fileStream = httpClientUtils.getStreamFile(fileInfo.getAlfreId(), url, token);
+//
+//        response.reset();
+//        response.setContentLengthLong(fileStream.getLen());
+//        response.setContentType(fileStream.getType());
+//
+//        OutputStream ops = new BufferedOutputStream(response.getOutputStream());
+//        ops.write(fileStream.getData());
+//        ops.flush();
+//        ops.close();
+//    }
+
+
 }
 

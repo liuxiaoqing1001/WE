@@ -134,35 +134,43 @@
 
       <el-dialog title="执业资格证书" :visible.sync="isShowFileCertificate" width="60%" @close="showDialogClosed">
 <!--        <pdf ref="pdf" :src="src" v-for="i in numPages" :key="i" :page="i"></pdf>-->
-        <p class="arrow">
-          <span @click="changePdfPage(0)" class="turn" :class="{grey:currentPage===1}">上一页</span>
-          << {{currentPage}} / {{pageCount}} >>
-          <span @click="changePdfPage(1)" class="turn" :class="{grey:currentPage===pageCount}">下一页</span>
-        </p>
-        <pdf
-          :src="src"
-          :page="currentPage"
-          @num-pages="pageCount=$event"
-          @page-loaded="currentPage=$event"
-          @loaded="loadPdfHandler">
-        </pdf>
-
+        <div v-if="fileType===1">
+          <img :src="src" />
+        </div>
+        <div v-else>
+          <p class="arrow">
+            <span @click="changePdfPage(0)" class="turn" :class="{grey:currentPage===1}">上一页</span>
+            << {{currentPage}} / {{pageCount}} >>
+            <span @click="changePdfPage(1)" class="turn" :class="{grey:currentPage===pageCount}">下一页</span>
+          </p>
+          <pdf
+            :src="src"
+            :page="currentPage"
+            @num-pages="pageCount=$event"
+            @page-loaded="currentPage=$event"
+            @loaded="loadPdfHandler">
+          </pdf>
+        </div>
       </el-dialog>
 
       <el-dialog title="学历学位证书" :visible.sync="isShowFileDiploma" width="60%" @close="showDialogClosed">
-        <p class="arrow">
-          <span @click="changePdfPage(0)" class="turn" :class="{grey:currentPage===1}">上一页</span>
-          << {{currentPage}} / {{pageCount}} >>
-          <span @click="changePdfPage(1)" class="turn" :class="{grey:currentPage===pageCount}">下一页</span>
-        </p>
-        <pdf
-          :src="src"
-          :page="currentPage"
-          @num-pages="pageCount=$event"
-          @page-loaded="currentPage=$event"
-          @loaded="loadPdfHandler">
-        </pdf>
-<!--        <pdf ref="pdf" :src="src"></pdf>-->
+        <div v-if="fileType===1">
+          <img :src="src" />
+        </div>
+        <div v-else>
+          <p class="arrow">
+            <span @click="changePdfPage(0)" class="turn" :class="{grey:currentPage===1}">上一页</span>
+            << {{currentPage}} / {{pageCount}} >>
+            <span @click="changePdfPage(1)" class="turn" :class="{grey:currentPage===pageCount}">下一页</span>
+          </p>
+          <pdf
+            :src="src"
+            :page="currentPage"
+            @num-pages="pageCount=$event"
+            @page-loaded="currentPage=$event"
+            @loaded="loadPdfHandler">
+          </pdf>
+        </div>
       </el-dialog>
 
     </el-container>
@@ -179,6 +187,7 @@
     name: "Volunteer",
     data(){
       return{
+        fileType:0,
         src:"",
         currentPage: 0, // pdf文件页码
         pageCount: 0, // pdf文件总页数
@@ -285,6 +294,7 @@
       showDialogClosed() {
         // 表单内容重置为空
         this.$refs.editFormRef.resetFields(); // 通过ref引用调用resetFields方法
+        this.src="";
       },
       showEditDialog(name) {
         //查看详情
@@ -332,19 +342,44 @@
         })
       },
       showCertificate(){
-        this.src="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
+        this.getFileByFileName(this.VForm.certificate);
+        // this.src="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
         this.isShowFileCertificate=true;
       },
       showDiploma(){
-        // this.src="/home/liu/liu_source/softwareCode/ideaCode/WE/we-idea/target/classes/static/file/181827a2fedc461da9d3357486a7934f.pdf"
-        // this.src="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
-        this.src="/static/redis.pdf";
+        // this.src="/static/redis.pdf";
+        this.getFileByFileName(this.VForm.diploma);
         this.isShowFileDiploma=true;
+      },
+
+      getFileByFileName(fileName){
+        var type = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length);
+        if(type==="pdf"){
+          this.fileType=0;
+        }else{
+          this.fileType=1;
+        }
+        this.$http.get("/file/getFileByFileName",{
+          params:{
+            file:fileName
+          },
+          responseType:"arraybuffer"
+        }).then(response => {
+          console.log(response)
+          if (response.status===200){
+            var binaryData = [];
+            binaryData.push(response.data);
+            this.src = window.URL.createObjectURL(new Blob(binaryData, {
+              type: "application/pdf"
+            }));
+          }else {
+            this.$message.error("预览失败");
+          }
+        });
       },
 
       // 改变PDF页码,val传过来区分上一页下一页的值,0上一页,1下一页
       changePdfPage (val) {
-        // console.log(val)
         if (val === 0 && this.currentPage > 1) {
           this.currentPage--;
         }
@@ -357,19 +392,6 @@
       loadPdfHandler (e) {
         this.currentPage = 1; // 加载的时候先加载第一页
       },
-
-      downFile(file){
-        console.log(file)
-        // this.$http.post("/file/down",{
-        //   file:file
-        // }).then(response => {
-        //   if (response.data.errorCode===0){
-        //     this.$message.success(response.data.msg);
-        //   }else {
-        //     this.$message.error(response.data.msg);
-        //   }
-        // });
-      }
     }
   }
 </script>

@@ -40,6 +40,7 @@
 <!--        limit	最大允许上传个数	number	—	—-->
 
 <!--        未显示文件，可在线查看-->
+        <a v-if="!isCanShowCertificate" @click="showCertificate" class="showFile">在线查看</a>
         <el-upload
           class="special"
           v-model="VForm.certificate"
@@ -49,10 +50,11 @@
           :on-error="uploadFileErrorHandler"
           :on-progress="uploadFileOnProgressHandler">
           <el-button size="small" type="primary">选择文件</el-button>
-          <span style="color: indianred;font-size: 10px">仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传</span>
+          <span style="color: indianred;font-size: 10px">仅支持 .pdf / .png / .jpeg 文件上传</span>
         </el-upload>
       </el-form-item>
       <el-form-item label="学历学位证" prop="diploma">
+        <a v-if="!isCanShowDiploma" @click="showDiploma" class="showFile">在线查看</a>
         <el-upload
           class="special"
           v-model="VForm.diploma"
@@ -62,7 +64,7 @@
           :on-error="uploadFileErrorHandler"
           :on-progress="uploadFileOnProgressHandler">
           <el-button size="small" type="primary">选择文件</el-button>
-          <span style="color: indianred;font-size: 10px">仅支持.doc/.docx/.pdf/.png/.jpeg 文件上传</span>
+          <span style="color: indianred;font-size: 10px">仅支持 .pdf / .png / .jpeg 文件上传</span>
         </el-upload>
       </el-form-item>
       <el-form-item>
@@ -70,15 +72,70 @@
         <el-button type="primary" @click="submitForm('ruleForm')" class="option">修改</el-button>
       </el-form-item>
     </el-form>
+
+    <el-dialog title="执业资格证书" :visible.sync="isShowFileCertificate" width="60%" @close="showDialogClosed">
+      <!--        <pdf ref="pdf" :src="src" v-for="i in numPages" :key="i" :page="i"></pdf>-->
+      <div v-if="fileType===1">
+        <img :src="src" />
+      </div>
+      <div v-else>
+        <p class="arrow">
+          <span @click="changePdfPage(0)" class="turn" :class="{grey:currentPage===1}">上一页</span>
+          << {{currentPage}} / {{pageCount}} >>
+          <span @click="changePdfPage(1)" class="turn" :class="{grey:currentPage===pageCount}">下一页</span>
+        </p>
+        <pdf
+          :src="src"
+          :page="currentPage"
+          @num-pages="pageCount=$event"
+          @page-loaded="currentPage=$event"
+          @loaded="loadPdfHandler">
+        </pdf>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="学历学位证书" :visible.sync="isShowFileDiploma" width="60%" @close="showDialogClosed">
+      <div v-if="fileType===1">
+        <img :src="src" />
+      </div>
+      <div v-else>
+        <p class="arrow">
+          <span @click="changePdfPage(0)" class="turn" :class="{grey:currentPage===1}">上一页</span>
+          << {{currentPage}} / {{pageCount}} >>
+          <span @click="changePdfPage(1)" class="turn" :class="{grey:currentPage===pageCount}">下一页</span>
+        </p>
+        <pdf
+          :src="src"
+          :page="currentPage"
+          @num-pages="pageCount=$event"
+          @page-loaded="currentPage=$event"
+          @loaded="loadPdfHandler">
+        </pdf>
+      </div>
+    </el-dialog>
+
   </div>
 
 </template>
 
 <script>
+    import pdf from 'vue-pdf'
+
     export default {
+      components:{
+        pdf
+      },
       name: "VCenter",
       data() {
         return {
+          fileType:0,
+          src:"",
+          currentPage: 0, // pdf文件页码
+          pageCount: 0, // pdf文件总页数
+          isShowFileCertificate:false,
+          isShowFileDiploma:false,
+          isCanShowCertificate:false,
+          isCanShowDiploma:false,
           visible: false,
           loading: null,
           filePack:{
@@ -157,6 +214,8 @@
       },
       created() {
         this.getMsg();
+        // 有时PDF文件地址会出现跨域的情况,这里最好处理一下　　　　
+        this.src = pdf.createLoadingTask(this.src);
       },
       methods: {
         getMsg(){
@@ -197,6 +256,64 @@
           this.$router.go(0);
         },
 
+        // 监听 修改用户信息对话框的关闭事件
+        showDialogClosed() {
+          // 表单内容重置为空
+          this.$refs.editFormRef.resetFields(); // 通过ref引用调用resetFields方法
+          this.src="";
+        },
+        showCertificate(){
+          console.log("--------"+this.VForm.certificate)
+          this.getFileByFileName(this.VForm.certificate);
+          // this.src="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
+          this.isShowFileCertificate=true;
+        },
+        showDiploma(){
+          // this.src="/static/redis.pdf";
+          console.log("////////////"+this.VForm.diploma)
+          this.getFileByFileName(this.VForm.diploma);
+          this.isShowFileDiploma=true;
+        },
+        getFileByFileName(fileName){
+          var type = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length);
+          if(type==="pdf"){
+            this.fileType=0;
+          }else{
+            this.fileType=1;
+          }
+          this.$http.get("/file/getFileByFileName",{
+            params:{
+              file:fileName
+            },
+            responseType:"arraybuffer"
+          }).then(response => {
+            console.log(response)
+            if (response.status===200){
+              var binaryData = [];
+              binaryData.push(response.data);
+              this.src = window.URL.createObjectURL(new Blob(binaryData, {
+                type: "application/pdf"
+              }));
+            }else {
+              this.$message.error("预览失败");
+            }
+          });
+        },
+        // 改变PDF页码,val传过来区分上一页下一页的值,0上一页,1下一页
+        changePdfPage (val) {
+          if (val === 0 && this.currentPage > 1) {
+            this.currentPage--;
+          }
+          if (val === 1 && this.currentPage < this.pageCount) {
+            this.currentPage++;
+          }
+        },
+
+        // pdf加载时
+        loadPdfHandler (e) {
+          this.currentPage = 1; // 加载的时候先加载第一页
+        },
+
         uploadFileHandler_diploma(res){
           this.uploadFileHandler(res,"diploma");
         },
@@ -212,8 +329,10 @@
             }else{
               if (type==="certificate"){
                 this.filePack.certificate=res.data;
+                this.isCanShowCertificate=true;
               }else {
                 this.filePack.diploma=res.data;
+                this.isCanShowDiploma=true;
               }
               this.$message.success(res.msg);
             }
@@ -248,6 +367,15 @@
 
   .special{
     float: left;
+  }
+
+  .showFile{
+    color:blue;
+    /*float: left;*/
+    /*margin-left: 15px;*/
+  }
+  a:hover{
+    cursor: pointer;
   }
 
   .option{

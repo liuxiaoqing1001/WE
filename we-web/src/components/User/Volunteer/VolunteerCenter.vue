@@ -59,19 +59,19 @@
         },
         toArticle:function(){
           this.$router.push("/VArticle");
-          this.$message.success('文章');
+          // this.$message.success('文章');
         },
         toConsulting:function () {
           this.$router.push("/VConsulting");
-          this.$message.success('咨询');
+          // this.$message.success('咨询');
         },
         intoC:function () {
           this.$router.push("/VCenter");
-          this.$message.success('个人中心');
+          // this.$message.success('个人中心');
         },
         comeBack:function () {
           this.$router.push("/Home");
-          this.$message.success('返回');
+          // this.$message.success('返回');
         },
         quit:function () {
           this.$router.push("/");

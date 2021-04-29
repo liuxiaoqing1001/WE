@@ -69,11 +69,11 @@
           <template slot-scope="scope">
             <!--详情-->
             <el-tooltip class="item" effect="dark" content="详情" placement="top" :enterable="false">
-              <el-button type="primary" size="mini" @click="showEditDialog(scope.row.name)">详情</el-button>
+              <el-button type="primary" round size="mini" @click="showEditDialog(scope.row.name)">详情</el-button>
             </el-tooltip>
             <!--审核通过-->
             <el-tooltip class="item" effect="dark" content="审核通过" placement="top" :enterable="false">
-              <el-button type="danger" size="mini" @click="changeUserRoleById(scope.row.name)">审核通过</el-button>
+              <el-button type="danger" round size="mini" @click="changeUserRoleById(scope.row.name)">审核通过</el-button>
             </el-tooltip>
           </template>
         </el-table-column>

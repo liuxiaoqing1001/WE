@@ -13,80 +13,52 @@
 
           <template slot-scope="scope">
             <el-tooltip class="item" effect="dark" content="修改" placement="top" :enterable="false">
-              <el-button type="primary" size="mini" icon="el-icon-edit" @click="edit(scope.row.id)"></el-button>
+              <el-button type="primary" circle size="small" icon="el-icon-edit" @click="edit(scope.row.id)"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="查看" placement="top" :enterable="false">
-              <el-button type="danger" size="mini" icon="el-icon-search" @click="showMore(scope.row.id)"></el-button>
+              <el-button type="info" circle size="small" icon="el-icon-view" @click="showMore(scope.row.id)"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="联系" placement="top" :enterable="false">
-              <el-button type="danger" size="mini" icon="el-icon-search" @click="toChat(scope.row.id)"></el-button>
+              <el-button type="success" circle size="small" class="el-icon-chat-line-round" @click="toChat(scope.row.id)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
 
-<!--      <el-pagination-->
-<!--        @size-change="handleSizeChange"-->
-<!--        @current-change="handleCurrentChange"-->
-<!--        :current-page="queryInfo.pageNum"-->
-<!--        :page-sizes="[10, 20, 50]"-->
-<!--        :page-size="queryInfo.pageSize"-->
-<!--        layout="total, sizes, prev, pager, next, jumper"-->
-<!--        :total="total">-->
-<!--      </el-pagination>-->
-
       <!--修改用户信息的对话框-->
-      <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%"  @close="editDialogClosed">
+      <el-dialog title="修改用户状态" :visible.sync="editDialogVisible" width="50%"  @close="editDialogClosed">
         <!--内容主体区域-->
-        <el-form :model="editForm" ref="editFormRef" label-width="70px">
-          <el-form-item label="ID">
-            <el-input v-model="editForm.id" :disabled="true"></el-input>
-          </el-form-item>
-          <el-form-item label="用户名" prop="name">
-            <el-input v-model="editForm.name"></el-input>
-          </el-form-item>
-          <el-form-item label="手机号" prop="phone">
-            <el-input v-model="editForm.phone"></el-input>
-          </el-form-item>
+        <el-form :model="userForm" ref="editFormRef" label-width="70px">
           <el-form-item label="状态">
-            <el-select v-model="editForm.state" style="float: left">
+            <el-select v-model="userForm.state" style="float: left">
               <el-option v-for="item in states" :key="item.label" :label="item.label" :value="item.label">
               </el-option>
             </el-select>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="editDialogVisible = false">取 消</el-button>
+<!--          <el-button @click="editDialogVisible = false">取 消</el-button>-->
           <el-button type="primary" @click="ediInfo">确 定</el-button>
         </span>
       </el-dialog>
 
-      <el-dialog title="修改用户" :visible.sync="showDialogVisible" width="50%"  @close="showDialogVisible">
+      <el-dialog title="详情" :visible.sync="showDialogVisible" width="50%" @close="editDialogClosed">
         <!--内容主体区域-->
-        <el-form :model="editForm" ref="editFormRef" label-width="70px">
-          <el-form-item label="ID">
-            <el-input v-model="editForm.id" :disabled="true"></el-input>
+        <el-form :model="userForm" ref="editFormRef" label-width="70px">
+          <el-form-item label="ID" class="inputDeep">
+            <el-input v-model="userForm.id" readonly></el-input>
           </el-form-item>
-          <el-form-item label="用户名" prop="name">
-            <el-input v-model="editForm.name"></el-input>
+          <el-form-item label="用户名" class="inputDeep">
+            <el-input v-model="userForm.name" readonly></el-input>
           </el-form-item>
-          <el-form-item label="手机号" prop="phone">
-            <el-input v-model="editForm.phone"></el-input>
+          <el-form-item label="手机号" class="inputDeep">
+            <el-input v-model="userForm.phone" readonly></el-input>
           </el-form-item>
-          <el-form-item label="状态">
-            <el-select v-model="editForm.state" style="float: left">
-              <el-option v-for="item in states" :key="item.label" :label="item.label" :value="item.label">
-              </el-option>
-            </el-select>
+          <el-form-item label="状态" class="inputDeep">
+            <el-input v-model="userForm.state" readonly></el-input>
           </el-form-item>
         </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="showDialogVisible = false">取 消</el-button>
-<!--          <el-button type="primary" @click="ediInfo">确 定</el-button>-->
-        </span>
       </el-dialog>
-
-
     </el-container>
 
   </div>
@@ -107,7 +79,7 @@
           },
           editDialogVisible: false,
           showDialogVisible:false,
-          editForm: {
+          userForm: {
             name: '',
             phone: '',
             state:'',
@@ -153,53 +125,53 @@
           this.$refs.editFormRef.resetFields() // 通过ref引用调用resetFields方法
         },
         getConsultantsById(){
-          console.log(window.sessionStorage.getItem("id"))
+          // console.log(window.sessionStorage.getItem("id"));
           this.$http.get("/user/getConsultantsById/"+window.sessionStorage.getItem("id")).then(response => {
             if (response.data.errorCode===0){
-              this.$message.success(response.data.msg);
+              // this.$message.success(response.data.msg);
               this.userList = response.data.data;
             }else {
               this.$message.error(response.data.msg);
             }
           });
         },
-        edit(id) {//...
-          // this.$http.get("/user/getById",{
-          //   params:{
-          //     id:id
-          //   }
-          // }).then(response => {
-          //   if (response.data.errorCode===0){
-              this.editDialogVisible = true;
-          //     this.editForm = response.data.data;
-          //   }else {
-          //     this.$message.error(response.data.msg);
-          //   }
-          // });
+        edit(id) {
+          this.getById(id);
+          this.editDialogVisible = true;
+        },
+        getById(id){
+          this.$http.get("/user/getById",{
+            params:{
+              id:id
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.userForm = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
         },
         ediInfo() {
-          // this.$refs.editFormRef.validate(valid => {
-          //   if (!valid){
-          //     this.$message.error('请填写信息！！！');
-          //   }else {
-          //     this.$http.post("/user/update",{
-          //       user:this.editForm
-          //     }).then(response => {
-          //       if (response.data.errorCode===0){
-          //         this.$message.success(response.data.msg);
-          //         this.editDialogVisible = false;
-          //         this.getUserList();
-          //       }else {
-          //         this.$message.error(response.data.msg);
-          //       }
-          //     });
-          //   }
-          // })
+          this.$http.post("/user/updateStateById",{
+            state:this.userForm.state,
+            id:this.userForm.id
+          }).then(response => {
+            if (response.data.errorCode===0){
+              this.$message.success(response.data.msg);
+              this.editDialogVisible = false;
+              this.getConsultantsById();
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
         },
         showMore(id){
+          this.getById(id);
           this.showDialogVisible = true;
         },
-        toChat(){
+        toChat(id){
+          window.sessionStorage.setItem("consultants",id);
           this.$router.push("/ChatRoom");
         }
       }
@@ -209,5 +181,14 @@
 <style scoped>
   .el-table{
     height: auto;
+  }
+
+  .inputDeep>>>.el-input__inner {
+    border: 0;
+  }
+  .inputDeep>>>.el-textarea__inner {
+    border: 0;
+    height: 400px;
+    /*resize: none;*/
   }
 </style>

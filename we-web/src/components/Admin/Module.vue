@@ -59,11 +59,11 @@
           <template slot-scope="scope">
             <!--修改-->
             <el-tooltip class="item" effect="dark" content="修改" placement="top" :enterable="false">
-              <el-button type="primary" size="mini" icon="el-icon-edit" @click="showEditDialog(scope.row.id)"></el-button>
+              <el-button type="primary" round size="mini" icon="el-icon-edit" @click="showEditDialog(scope.row.id)"></el-button>
             </el-tooltip>
             <!--删除-->
             <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">
-              <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeModuleById(scope.row.id)"></el-button>
+              <el-button type="danger" round size="mini" icon="el-icon-delete" @click="removeModuleById(scope.row.id)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>

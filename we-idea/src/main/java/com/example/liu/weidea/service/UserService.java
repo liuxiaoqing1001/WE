@@ -259,6 +259,21 @@ public interface UserService {
      */
     List<Say> getSayByTime(String time);
 
+    /**
+     * 获取咨询者
+     * @param id
+     * @return
+     */
+    Consultants getById(Integer id);
+
+    /**
+     * 根据id修改咨询者状态
+     * @param state
+     * @param id
+     * @return
+     */
+    Integer updateStateById(String state, Integer id);
+
 
 //    /**
 //     * 审核自愿者

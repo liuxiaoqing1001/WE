@@ -305,7 +305,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<Consultants> getConsultantsById(Integer vid) {
-        return consultantsDao.getConsultantsById(vid);
+        return consultantsDao.getConsultantsByVid(vid);
     }
 
     /**
@@ -563,6 +563,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Say> getSayByTime(String time) {
         return sayDao.getSayByTime(time);
+    }
+
+    /**
+     * 获取咨询者
+     * @param id
+     * @return
+     */
+    @Override
+    public Consultants getById(Integer id) {
+        return consultantsDao.getById(id);
+    }
+
+    /**
+     * 根据id修改咨询者状态
+     * @param state
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer updateStateById(String state, Integer id) {
+        return consultantsDao.updateStateById(state,id);
     }
 
 

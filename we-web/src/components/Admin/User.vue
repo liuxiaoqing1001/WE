@@ -61,11 +61,11 @@
             <!--修改-->
             <!--          enterable属性：表示鼠标是否可进入到 tooltip 中，默认是true开的，需要把它绑定为false，鼠标移到上面提示就消失了-->
             <el-tooltip class="item" effect="dark" content="修改" placement="top" :enterable="false">
-              <el-button type="primary" size="mini" icon="el-icon-edit" @click="showEditDialog(scope.row.id)"></el-button>
+              <el-button type="primary" round size="mini" icon="el-icon-edit" @click="showEditDialog(scope.row.id)"></el-button>
             </el-tooltip>
             <!--删除-->
             <el-tooltip class="item" effect="dark" content="删除" placement="top" :enterable="false">
-              <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeUserById(scope.row.id)"></el-button>
+              <el-button type="danger" round size="mini" icon="el-icon-delete" @click="removeUserById(scope.row.id)"></el-button>
             </el-tooltip>
             <!--          &lt;!&ndash;分配角色&ndash;&gt;-->
             <!--          <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">-->

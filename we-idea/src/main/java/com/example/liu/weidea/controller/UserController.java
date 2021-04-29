@@ -643,228 +643,35 @@ public class UserController {
         );
     }
 
-//    /**
-//     * 审核自愿者
-//     * @param name
-//     * @return
-//     */
-//    @PostMapping("/updateVState/{name}")
-//    public ResponseData updateVState(@PathVariable("name") String name) {
-//        int result = userService.updateVState(name) ;
-//        return  new ResponseData(
-//                result !=0 ? 0 : 1 ,
-//                result !=0 ? "审核通过" : "审核失败" ,
-//                result
-//        ) ;
-//    }
+    /**
+     * 获取咨询者
+     * @param id
+     * @return
+     */
+    @GetMapping("/getById")
+    public ResponseData getById(@RequestParam(value = "id",required = false) Integer id) {
+        Consultants consultants = userService.getById(id) ;
+        return new ResponseData(
+                consultants !=null ? 0 : 1 ,
+                consultants !=null ? "获取成功" : "获取失败" ,
+                consultants
+        );
+    }
 
+    /**
+     * 根据id修改咨询者状态
+     * @param map
+     * @return
+     */
+    @PostMapping("/updateStateById")
+    public ResponseData updateStateById(@RequestBody Map<String , Object> map){
+        Integer result = userService.updateStateById((String) map.get("state"),(Integer) map.get("id"));
+        System.out.println("/////////"+result);
+        return new ResponseData(
+                result !=0 ? 0 : 1 ,
+                result !=0 ? "修改成功" : "修改失败" ,
+                result
+        );
+    }
 
-//
-//    @GetMapping("RolePage/{curPage}/{size}")
-//    public Map<String , Object> page(@PathVariable("curPage") Integer curPage , @PathVariable("size")Integer size ){
-//        Page<User> page = userService.RolePage(curPage , size) ;
-//        Map<String  , Object> map = new HashMap<>() ;
-//        map.put("total" , page.getRowCount()) ;
-//        map.put("rows" , page.getData()) ;
-//        return map ;
-//    }
-//
-//    /**
-//     * 添加管理员
-//     * @param map
-//     * @return
-//     */
-//    @PostMapping("addRole/")
-//    public ResponseData addRole(@RequestBody Map<String , Object> map) {
-//        User user = new User() ;
-//        user.setName((String)map.get("name"));
-//        user.setPassword((String)map.get("password"));
-////        user.setAge(Integer.parseInt(map.get("age").toString()));
-//        user.setSex((String)map.get("sex"));
-//        user.setEmail((String)map.get("email"));
-//        user.setPhone((String)map.get("mobile"));
-////        user.setPhotourl((String)map.get("photourl"));
-//        Integer result = userService.addRole(user) ;
-//        String msg = "" ;
-//        switch (result) {
-//            case UserService.REG_MSG_OK :
-//                msg = "添加成功" ;
-//                break;
-//            case UserService.REG_MSG_FAIL_NAMEEXISTS :
-//                msg = "账户已存在，可从用户列表修改为管理员权限" ;
-//                break;
-//            case UserService.REG_MSG_FAIL_INFO_NON:
-//                msg = "信息不完整" ;
-//                break;
-//            default :
-//                msg = "添加失败" ;
-//                break;
-//        }
-//        return new ResponseData(
-//                result ,
-//                msg,
-//                result == 0
-//        ) ;
-//    }
-//
-//    @PutMapping("role/{id}")
-//    public ResponseData upRole(@PathVariable("id")Integer id){
-//        Integer r=userService.upRole(id);
-//        return new ResponseData(
-//                r != null ? 0 : 1 ,
-//                r != null ? "修改成功" : "修改失败" ,
-//                r
-//        );
-//    }
-//
-//    /**
-//     * 用户列表的分页实现
-//     * @param curPage
-//     * @param size
-//     * @param id
-//     * @param name
-//     * @param regdate
-//     * @return
-//     */
-//    @GetMapping("/page/{size}/{curPage}")
-//    public Map<String , Object> page(@PathVariable("curPage") Integer curPage , @PathVariable("size") Integer size ,
-//                                     Integer id , String name , @DateTimeFormat(pattern = "yyyy年MM月dd日") Date regdate){
-//        Page<User> page = userService.newsPage(id , name , regdate , curPage , size) ;
-//        Map<String  , Object> map = new HashMap<>() ;
-//        map.put("pageCount" , page.getPageCount()) ;   //总页数
-//        map.put("curPage",page.getCurPage()) ;  //当前页数
-//        map.put("total" , page.getRowCount()) ; //总行数
-//        map.put("rows" , page.getData()) ;  //本页数据
-//        return map ;
-//    }
-//
-//
-//
-//    private static String getFileType(String path){
-//        String fileType = "";
-//        try{
-//            InputStream file = new BufferedInputStream(new FileInputStream(path));
-//            fileType = URLConnection.guessContentTypeFromStream(file);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return fileType;
-//    }
-//
-//    //获取头像地址
-//    @GetMapping("/photoUrl/{name}")
-//    public String getVideos(HttpServletResponse response, @PathVariable("name") String name) throws Exception{
-//        String photoUrl=userService.getPhotoUrl(name);
-//        //获取resources文件夹的绝对地址
-//        String sourcePath = ClassUtils.getDefaultClassLoader().getResource("static/img/"+photoUrl).getPath();
-////        System.out.println(sourcePath);
-//        FileInputStream fis = null;
-//        OutputStream os = null ;
-//        fis = new FileInputStream(sourcePath);
-//        // 得到文件大小
-//        int size = fis.available();
-//        byte data[] = new byte[size];
-//        // 读数据
-//        fis.read(data);
-//        fis.close();
-////        fis = null;
-//        // 设置返回的文件类型
-//        String fileType=getFileType(sourcePath);
-////        System.out.println("................."+fileType);
-//        response.setContentType(fileType);
-//        os = response.getOutputStream();
-//        os.write(data);
-//        os.flush();
-//        os.close();
-////        os = null;
-//        return null;
-//    }
-//
-//    /**
-//     * 用户上传头像
-//     */
-//    @Value("${userphoto.path}")    // 从配置文件中读取 userphoto.path属性的值
-//    private String upPhotoPath ;
-//    @PostMapping("/photo")
-//    public ResponseData upPhoto(@RequestParam("userphoto") MultipartFile file, Integer id , HttpServletRequest request) {
-//        // 保存是否成功boolean
-//        boolean  result = false ;
-//        // 上传文件物理路径,构造文件名
-//        String photoPath , newFile , photoUri = null;
-//
-//        User userResult = null ;
-//        if(! file.isEmpty()) {
-//            // 构造上传文件新名字
-//            // 1）获取上传文件名
-//            String originName = file.getOriginalFilename() ;
-//            // 2）获取文件扩展名
-//            String extName = originName.substring(originName.lastIndexOf(".")) ;
-//            // 3）构造文件新名字
-//            newFile = new SimpleDateFormat("yyyyMMddHHmmssSSSS").format(new Date()) + "_" + id + extName ;
-//            System.out.println("-------------------"+newFile);
-//
-////            // 构造文件上传保存物理路径
-////            ServletContext app = request.getServletContext() ;
-////            photoPath = app.getRealPath(upPhotoPath) + "/" ;
-//
-//            String sourcePath = ClassUtils.getDefaultClassLoader().getResource("static/img/").getPath();
-//            System.out.println("sourcePath:"+sourcePath);
-//
-//            // 判断文件保存的物理路径是否存在，不存在创建
-//            File f = new File(sourcePath) ;
-//            if(! f.exists()) {
-//                f.mkdirs() ;
-//            }
-//            // 保存文件
-//            try {
-//                photoPath=sourcePath + newFile;
-//                file.transferTo(new File(photoPath));
-////                System.out.println(new File(photoPath  + "---ok"));
-////                result  = true ;
-////                // 构造所保存文件的基于http协议的uri
-////                photoUri = FileUtil.url(request , upPhotoPath , newFile) ;
-////                System.out.println(photoUri);
-////                photoUri =
-//                // 修改数据库
-//                User user = new User();
-//                user.setId(id);
-////                user.setAge(user.getAge());
-////                user.setSex(user.getSex());
-////                user.setEmail(user.getEmail());
-////                user.setMobile(user.getMobile());
-////                user.setAddress(user.getAddress());
-//                user.setPhotourl(newFile);
-//                userResult = userService.update(user) ;
-////                System.out.println("userResult-----"+userResult);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        return new ResponseData(
-//                userResult != null ? 0 : 1 ,
-//                userResult != null  ? "修改成功" : "修改失败" ,
-//                userResult
-//        ) ;
-//    }
-//
-//
-//
-//    //获取数据库全部信息
-//    @GetMapping("/getAll")
-//    public List<User> getAll() {
-//        return userService.getAll() ;
-//    }
-//
-//    @DeleteMapping("delRole/{id}")
-//    public ResponseData delRoleById(@PathVariable("id")Integer id){
-//        Integer r =userService.delById(id);
-//        return new ResponseData(
-//                r != null ? 0 : 1 ,
-//                r != null ? "删除" : "删除失败" ,
-//                r
-//        );
-//    }
 }

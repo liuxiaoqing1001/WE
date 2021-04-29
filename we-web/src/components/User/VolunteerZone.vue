@@ -72,8 +72,10 @@
                 class="special"
                 v-model="VForm.certificate"
                 action="http://127.0.0.1:8618/file/upload"
+                :limit="1"
                 :show-file-list="true"
                 :on-success="uploadFileHandler_certificate"
+                :on-remove="handleRemove_certificate"
                 :on-error="uploadFileErrorHandler"
                 :on-progress="uploadFileOnProgressHandler">
                 <el-button size="small" type="primary">选择文件</el-button>
@@ -85,8 +87,10 @@
                 class="special"
                 v-model="VForm.diploma"
                 action="http://127.0.0.1:8618/file/upload"
+                :limit="1"
                 :show-file-list="true"
                 :on-success="uploadFileHandler_diploma"
+                :on-remove="handleRemove_diploma"
                 :on-error="uploadFileErrorHandler"
                 :on-progress="uploadFileOnProgressHandler">
                 <el-button size="small" type="primary">选择文件</el-button>
@@ -272,6 +276,36 @@
             }
           });
         },
+        handleRemove_diploma(){
+          this.handleRemove("diploma");
+        },
+        handleRemove_certificate(){
+          this.handleRemove("certificate");
+        },
+        handleRemove(type){
+          var fileName="";
+          if(type==="certificate"){
+            fileName = this.filePack.certificate;
+          }else {
+            fileName = this.filePack.diploma;
+          }
+          this.$http.delete("/file/delFile",{
+            params:{
+              file:fileName
+            }
+          }).then(response=>{
+            if (response.data.errorCode===0){
+              this.$message.success(response.data.msg);
+              if(type==="certificate"){
+                this.filePack.certificate="";
+              }else {
+                this.filePack.diploma="";
+              }
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        },
         uploadFileHandler_diploma(res){
           this.uploadFileHandler(res,"diploma");
         },
@@ -279,7 +313,6 @@
           this.uploadFileHandler(res,"certificate");
         },
         uploadFileHandler(res,type){
-          console.log(res);
           setTimeout(() => {
             this.loading.close();
             if (res.code === 201) {

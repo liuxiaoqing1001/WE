@@ -40,13 +40,15 @@
 <!--        limit	最大允许上传个数	number	—	—-->
 
 <!--        未显示文件，可在线查看-->
-        <a v-if="!isCanShowCertificate" @click="showCertificate" class="showFile">在线查看</a>
+        <a v-if="!isCanShowCertificate" @click="showCertificate" class="showFile">预览</a>
         <el-upload
           class="special"
           v-model="VForm.certificate"
           action="http://127.0.0.1:8618/file/upload"
+          :limit="1"
           :show-file-list="true"
           :on-success="uploadFileHandler_certificate"
+          :on-remove="handleRemove_certificate"
           :on-error="uploadFileErrorHandler"
           :on-progress="uploadFileOnProgressHandler">
           <el-button size="small" type="primary">选择文件</el-button>
@@ -54,13 +56,15 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="学历学位证" prop="diploma">
-        <a v-if="!isCanShowDiploma" @click="showDiploma" class="showFile">在线查看</a>
+        <a v-if="!isCanShowDiploma" @click="showDiploma" class="showFile">预览</a>
         <el-upload
           class="special"
           v-model="VForm.diploma"
           action="http://127.0.0.1:8618/file/upload"
+          :limit="1"
           :show-file-list="true"
           :on-success="uploadFileHandler_diploma"
+          :on-remove="handleRemove_diploma"
           :on-error="uploadFileErrorHandler"
           :on-progress="uploadFileOnProgressHandler">
           <el-button size="small" type="primary">选择文件</el-button>
@@ -263,14 +267,12 @@
           this.src="";
         },
         showCertificate(){
-          console.log("--------"+this.VForm.certificate)
           this.getFileByFileName(this.VForm.certificate);
           // this.src="http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf";
           this.isShowFileCertificate=true;
         },
         showDiploma(){
           // this.src="/static/redis.pdf";
-          console.log("////////////"+this.VForm.diploma)
           this.getFileByFileName(this.VForm.diploma);
           this.isShowFileDiploma=true;
         },
@@ -313,7 +315,38 @@
         loadPdfHandler (e) {
           this.currentPage = 1; // 加载的时候先加载第一页
         },
-
+        handleRemove_diploma(){
+          this.handleRemove("diploma");
+        },
+        handleRemove_certificate(){
+          this.handleRemove("certificate");
+        },
+        handleRemove(type){
+          var fileName="";
+          if(type==="certificate"){
+            fileName = this.filePack.certificate;
+          }else {
+            fileName = this.filePack.diploma;
+          }
+          this.$http.delete("/file/delFile",{
+            params:{
+              file:fileName
+            }
+          }).then(response=>{
+            if (response.data.errorCode===0){
+              if(type==="certificate"){
+                this.isCanShowCertificate=false;
+                this.filePack.certificate="";
+              }else {
+                this.isCanShowDiploma=false;
+                this.filePack.diploma="";
+              }
+              this.$message.success(response.data.msg);
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        },
         uploadFileHandler_diploma(res){
           this.uploadFileHandler(res,"diploma");
         },

@@ -54,8 +54,6 @@ public class FileUploadAndDownController {
             jsonResult.put("msg","仅支持 .pdf/.png/.jpeg 文件上传");
             return jsonResult.toJSONString();
         }
-        System.out.println(fileType);
-//        String path = "D:/idea-workspace/upload-file-demo/src/main/resources/files/";
         String path = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/file/";
         // 判断文件保存的物理路径是否存在，不存在创建
         File f = new File(path) ;
@@ -65,7 +63,6 @@ public class FileUploadAndDownController {
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         String initFileName = uuid + "." +fileType;
         Path filePath = Paths.get(path + initFileName);
-        System.out.println("filePath-------------"+filePath);
         try {
             byte[] fileBytes = file.getBytes();
             Files.write(filePath, fileBytes);
@@ -118,9 +115,6 @@ public class FileUploadAndDownController {
         os.close();
     }
 
-
-
-
     private static String getFileType(String path){
         String fileType = "";
         try{
@@ -133,6 +127,36 @@ public class FileUploadAndDownController {
         }
         return fileType;
     }
+
+    /**
+     * 删除文件
+     * @return
+     */
+    @DeleteMapping("/delFile")
+     public ResponseData delFile(@RequestParam(value = "file",required = false) String file){
+        boolean result = false;
+        try {
+            String path = ClassUtils.getDefaultClassLoader().getResource("static/file/"+file).getPath();
+            // 判断文件保存的物理路径是否存在，不存在创建
+            File f = new File(path) ;
+            if(f.exists()) {
+                result = f.delete() ;
+            }
+            return new ResponseData(
+                    0,
+                    "删除成功",
+                    result
+            ) ;
+        }catch (NullPointerException npe){
+            return new ResponseData(
+                    1,
+                    "文件不存在",
+                    result
+            ) ;
+        }
+
+
+     }
 
 //    //获取头像地址
 //    @GetMapping("/photoUrl/{name}")

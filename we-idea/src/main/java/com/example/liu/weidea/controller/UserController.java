@@ -666,7 +666,6 @@ public class UserController {
     @PostMapping("/updateStateById")
     public ResponseData updateStateById(@RequestBody Map<String , Object> map){
         Integer result = userService.updateStateById((String) map.get("state"),(Integer) map.get("id"));
-        System.out.println("/////////"+result);
         return new ResponseData(
                 result !=0 ? 0 : 1 ,
                 result !=0 ? "修改成功" : "修改失败" ,

@@ -21,6 +21,14 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+@Configuration
+public class WebSocketConfig {
+    @Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
+    }
+}
+
 //@Configuration
 //@EnableWebSocketMessageBroker
 //public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
@@ -78,10 +86,4 @@ import java.util.List;
 //
 //}
 
-@Configuration
-public class WebSocketConfig {
-    @Bean
-    public ServerEndpointExporter serverEndpointExporter() {
-        return new ServerEndpointExporter();
-    }
-}
+

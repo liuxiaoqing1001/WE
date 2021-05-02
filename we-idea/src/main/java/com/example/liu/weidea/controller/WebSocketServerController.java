@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
-@ServerEndpoint("/groupChat/{sid}/{userId}")
+@ServerEndpoint("/chat/{sid}/{userId}")
 //@CrossOrigin
 //@RestController
 //@RequestMapping("/user")

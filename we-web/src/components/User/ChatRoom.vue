@@ -33,112 +33,207 @@
             callback: this.toolEvent
           },
           config: {
-            img: '../image/cover.png',
-            name: 'JwChat',
-            dept: '最简单、最便捷',
+            img: '../../../static/img/room.png',
+            name: '咨询室',
+            // dept: '最简单、最便捷',
             callback: this.bindCover,
-            historyConfig:{
-              show: true,
-              tip: '加载更多',
-              callback: this.bindLoadHistory,
-            },
-
+            // historyConfig:{
+            //   show: true,
+            //   tip: '加载更多',
+            //   callback: this.bindLoadHistory,
+            // }
           },
+          currentTime:"",
+          role:0
         };
       },
       methods: {
+        getCurrentTime() {
+          let yy = new Date().getFullYear();
+          var mm =
+            new Date().getMonth() < 10
+              ? "0" + (new Date().getMonth() + 1)
+              : new Date().getMonth() + 1;
+          var dd =
+            new Date().getDate() < 10
+              ? "0" + new Date().getDate()
+              : new Date().getDate();
+          let hh = new Date().getHours();
+          let mf =
+            new Date().getMinutes() < 10
+              ? "0" + new Date().getMinutes()
+              : new Date().getMinutes();
+          let ss =
+            new Date().getSeconds() < 10
+              ? "0" + new Date().getSeconds()
+              : new Date().getSeconds();
+          this.currentTime = yy + "-" + mm + "-" + dd + " " + hh + ":" + mf + ":" + ss;
+        },
         bindEnter () {
           const msg = this.inputMsg;
           if (!msg) return;
-          const msgObj = {
-            "date": "2020/05/10 23:19:07",
-            "text": { "text": msg },
-            "mine": true,
-            "name": "JwChat",
-            "img": "../../assets/logo/we_logo.png"
+          this.getCurrentTime();
+          var msgObj;
+          if (this.role===2){
+            msgObj = {
+              "date": this.currentTime,
+              "text": { "text": msg },
+              "mine": true,
+              // "name": "JwChat",
+              "img": "../../../static/img/volunteer.png"
+            };
+          }else{
+            msgObj = {
+              "date": this.currentTime,
+              "text": { "text": msg },
+              "mine": true,
+              // "name": "JwChat",
+              "img": "../../../static/img/consultants.png"
+            };
+          }
+
+          const other = {
+            "cid": 1,//动态  window.sessionStorage.getItem("cid")
+            "userId": window.sessionStorage.getItem("id"),
           };
-          this.list.push(msgObj)
+          this.$http.post("/msg/addMsg",{
+            msgObj:msgObj,
+            other:other
+          }).then(response => {
+            if (response.data.errorCode===1){
+              this.list.push(msgObj)
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
         },
         toolEvent (type, obj) {
           console.log('tools', type, obj)
         },
-        bindLoadHistory () {
-          const history = new Array(3).fill().map((i, j) => {
-            return {
-              "date": "2020/05/20 23:19:07",
-              "text": { "text": j + new Date() },
-              "mine": false,
-              "name": "JwChat",
-              "img": "image/three.jpeg"
-            }
-          });
-          let list = history.concat(this.list);
-          this.list = list;
-          console.log('加载历史', list, history);
-        },
+        // bindLoadHistory () {
+        //   this.getCurrentTime();
+        //   const history = new Array(3).fill().map((i, j) => {
+        //     return {
+        //       "date": this.currentTime,
+        //       "text": { "text": j + new Date() },
+        //       "mine": false,
+        //       // "name": "JwChat",
+        //       "img": "../../../static/img/consultants.png"
+        //     }
+        //   });
+        //   let list = history.concat(this.list);
+        //   this.list = list;
+        //   console.log('加载历史', list, history);
+        // },
         bindCover (type) {
           console.log('header', type);
         },
+        getRoleById(){
+          this.$http.get("/user/getRoleById",{
+            params:{
+              id:window.sessionStorage.getItem("id"),
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              if(response.data.data==="2"){
+                this.role=2;
+              }else{
+                this.role=1;
+              }
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        },
+        getAllByCid(cid){
+          this.$http.get("/msg/getAllByCid",{
+            params:{
+              cid:cid,
+              userId:window.sessionStorage.getItem("id")
+            }
+          }).then(response => {
+            if (response.data.errorCode===0){
+              // console.log(response);
+              this.list = response.data.data;
+              for (let i=0;i<this.list.length;i++){
+                if((this.list[i].mine===false&&this.role===2)||(this.list[i].mine===true&&this.role===1)){
+                  this.list[i].img="../../../static/img/consultants.png";
+                  // this.list[i].name = ""
+                }else {
+                  this.list[i].img="../../../static/img/volunteer.png";
+                  // this.list[i].name = ""
+                }
+                this.list[i].name = ""
+              }
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        }
       },
       mounted () {
-        const img = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
-        const list = [
-          {
-            "date": "2020/04/25 21:19:07",
-            "text": { "text": "起床不" },
-            "mine": false,
-            "name": "留恋人间不羡仙",
-            "img": "/image/one.jpeg"
-          },
-          {
-            "date": "2020/04/25 21:19:07",
-            "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
-            "mine": false,
-            "name": "只盼流星不盼雨",
-            "img": "/image/two.jpeg"
-          },
-          {
-            "date": "2020/04/25 21:19:07",
-            "text": { "text": "<img data-src='"+img+"'/>" },
-            "mine": false,
-            "name": "只盼流星不盼雨",
-            "img": "/image/two.jpeg"
-          },
-          {
-            "date": "2020/04/16 21:19:07",
-            "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
-            "mine": true,
-            "name": "JwChat",
-            "img": "/image/three.jpeg"
-          },
-          {
-            "date": "2021/03/02 13:14:21",
-            "mine": false,
-            "name": "留恋人间不羡仙",
-            "img": "/image/one.jpeg",
-            "text": {
-              system: {
-                title: '在接入人工前，智能助手将为您首次应答。',
-                subtitle: '猜您想问:',
-                content: [
-                  {
-                    id: `system1`,
-                    text: '组件如何使用'
-                  },
-                  {
-                    id: `system2`,
-                    text: '组件参数在哪里查看'
-                  },
-                  {
-                    id: 'system',
-                    text: '我可不可把组件用在商业'
-                  }
-                ]
-              }
-            }
-          }
-        ];
-        this.list = list
+        var cid = window.sessionStorage.getItem("cid");
+        console.log(cid);
+        this.getRoleById();
+        this.getAllByCid(cid);
+
+        // const list = [
+        //   {
+        //     "date": "2020/04/25 21:19:07",
+        //     "text": { "text": "起床不" },
+        //     "mine": false,
+        //     "name": "留恋人间不羡仙",
+        //     "img": "/image/one.jpeg"
+        //   },
+        //   {
+        //     "date": "2020/04/25 21:19:07",
+        //     "text": { "text": "<audio data-src='https://www.w3school.com.cn/i/horse.mp3'/>" },
+        //     "mine": false,
+        //     "name": "只盼流星不盼雨",
+        //     "img": "/image/two.jpeg"
+        //   },
+        //   {
+        //     "date": "2020/04/25 21:19:07",
+        //     "text": { "text": "<img data-src='"+img+"'/>" },
+        //     "mine": false,
+        //     "name": "只盼流星不盼雨",
+        //     "img": "/image/two.jpeg"
+        //   },
+        //   {
+        //     "date": "2020/04/16 21:19:07",
+        //     "text": { "text": "<video data-src='https://www.w3school.com.cn/i/movie.mp4' controls='controls' />" },
+        //     "mine": true,
+        //     "name": "JwChat",
+        //     "img": "/image/three.jpeg"
+        //   },
+        //   {
+        //     "date": "2021/03/02 13:14:21",
+        //     "mine": false,
+        //     "name": "留恋人间不羡仙",
+        //     "img": "/image/one.jpeg",
+        //     "text": {
+        //       system: {
+        //         title: '在接入人工前，智能助手将为您首次应答。',
+        //         subtitle: '猜您想问:',
+        //         content: [
+        //           {
+        //             id: `system1`,
+        //             text: '组件如何使用'
+        //           },
+        //           {
+        //             id: `system2`,
+        //             text: '组件参数在哪里查看'
+        //           },
+        //           {
+        //             id: 'system',
+        //             text: '我可不可把组件用在商业'
+        //           }
+        //         ]
+        //       }
+        //     }
+        //   }
+        // ];
+        // this.list = list
       }
     }
 </script>

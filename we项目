@@ -410,14 +410,16 @@ insert into consultants values('1','10011','liu','16600274434','轻微',now());
 
 CREATE TABLE msg  (
   id int(11) NOT NULL AUTO_INCREMENT,
-  cid int(5) DEFAULT NULL COMMENT 'consultantsId',
-  text varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  mine varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  sender varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  receiver varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  cid int(11) DEFAULT NULL COMMENT 'consultantsId',
+  userId int(11) DEFAULT NULL COMMENT '用户id',
+  content varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   date datetime(0) NOT NULL,
   PRIMARY KEY (id) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+insert into msg values('1','1','10011','测试',now());
+insert into msg values('2','1','10015','测试222',now());
+insert into msg values('3','1','10015','测试9999999999',now());
 
 ---------------------------------------------------------------------------------
 1. 绑定事件

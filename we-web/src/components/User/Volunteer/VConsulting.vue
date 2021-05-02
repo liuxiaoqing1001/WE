@@ -171,7 +171,7 @@
           this.showDialogVisible = true;
         },
         toChat(id){
-          window.sessionStorage.setItem("consultants",id);
+          window.sessionStorage.setItem("cid",id);
           this.$router.push("/ChatRoom");
         }
       }

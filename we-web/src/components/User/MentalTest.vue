@@ -220,6 +220,16 @@
       }
     },
     mounted() {
+      //test表，判断当前用户是否已做过题，是则直接chatroom，否则做题
+      //获取question题库的随机10条  question（题号，题干，选项，正确答案）
+
+      //提交检测consultants表中存在此用户的name吗？
+      // 存在就弹框，询问是否继续上次咨询，否则随机匹配咨询师
+      // 继续：拿到cid，否则创建一行consultants数据，拿到cid
+
+      //题保存在test中，test保存用户id，题号，作答，结果 （java：题干）
+
+
     }
   }
 </script>

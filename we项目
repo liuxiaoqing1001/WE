@@ -408,6 +408,17 @@ CREATE TABLE consultants (
 
 insert into consultants values('1','10011','liu','16600274434','轻微',now());
 
+CREATE TABLE msg  (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  cid int(5) DEFAULT NULL COMMENT 'consultantsId',
+  text varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  mine varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  sender varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  receiver varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  date datetime(0) NOT NULL,
+  PRIMARY KEY (id) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
 ---------------------------------------------------------------------------------
 1. 绑定事件
 <el-button type="info" @click="resetLoginForm">重置</el-button>

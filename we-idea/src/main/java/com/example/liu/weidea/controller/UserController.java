@@ -332,9 +332,9 @@ public class UserController {
      * @param vid
      * @return
      */
-    @GetMapping("/getConsultantsById/{vid}")
-    public ResponseData getConsultantsById(@PathVariable("vid") Integer vid) {
-        List<Consultants> consultants = userService.getConsultantsById(vid) ;
+    @GetMapping("/getConsultantsByVId/{vid}")
+    public ResponseData getConsultantsByVId(@PathVariable("vid") Integer vid) {
+        List<Consultants> consultants = userService.getConsultantsByVId(vid) ;
         return new ResponseData(
                 consultants !=null ? 0 : 1 ,
                 consultants !=null ? "查询成功" : "查询失败" ,
@@ -648,9 +648,9 @@ public class UserController {
      * @param id
      * @return
      */
-    @GetMapping("/getById")
-    public ResponseData getById(@RequestParam(value = "id",required = false) Integer id) {
-        Consultants consultants = userService.getById(id) ;
+    @GetMapping("/getByCId")
+    public ResponseData getByCId(@RequestParam(value = "id",required = false) Integer id) {
+        Consultants consultants = userService.getByCId(id) ;
         return new ResponseData(
                 consultants !=null ? 0 : 1 ,
                 consultants !=null ? "获取成功" : "获取失败" ,

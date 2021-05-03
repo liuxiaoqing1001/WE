@@ -24,9 +24,10 @@
           </span>
         </ul>
       </div>
+      <router-link v-if="checkingResult" target="_blank" class="testTips" :to="{path:'/ChatRoom'}">{{tips}}</router-link>
       <div class="exam-box">
         <h3 class="title">
-          <span class="badge badge-dark">{{question.id}}. </span>
+<!--          <span class="badge badge-dark">{{question.qid}}. </span>-->
           {{question.title}}
         </h3>
 
@@ -48,8 +49,7 @@
         <div class="op">
           <button v-if="progress===0" disabled type="button" class="ui-raised-button btn btn-danger btn-block disabled">上一题</button>
           <button v-else @click="prev()" type="button" class="ui-raised-button btn btn-danger btn-block">上一题</button>
-<!--          <button v-if="isLast" @click="submit()" type="button" class="ui-raised-button btn btn-primary btn-block">提交</button>-->
-          <router-link v-if="isLast" target="_blank" class="ui-raised-button submit" :to="{path:'/ChatRoom'}">提交</router-link>
+          <button v-if="isLast" @click="submit()" type="button" class="ui-raised-button btn btn-primary btn-block">提交</button>
           <button v-else @click="next()" type="button" class="ui-raised-button btn btn-success btn-block">下一题</button>
         </div>
 
@@ -78,6 +78,8 @@
     name: "MentalTest",
     data(){
       return{
+        tips:"检测到您曾做过基础测试, 现在您可以直接点击进入咨询室>>>",
+        checkingResult:false,
         score:0,
         isFinish: false,
         progress: 0,
@@ -87,84 +89,93 @@
         itemIndexes: ['A', 'B', 'C', 'D', 'E', 'F'],
         questionList: [
           {
-            id: 1,
-            title: '最好的编程语言?',
-            items: ['PHP', 'C', 'JS', 'Java', 'GO'],
-            answer: 'A'
-          },
-          {
-            id: 2,
-            title: '最高级的数据库？',
-            items: ['Redit', 'MySQL', 'postgreSQL', 'MongDB'],
-            answer: 'C'
-          },
-          {
-            id: 3,
-            title: '开源数据是？',
-            items: ['DB2', 'Oracle', 'SQL Server', 'MySQL'],
-            answer: 'A'
-          },
-          {
-            id: 4,
-            title: '市值最高的公司？',
-            items: ['微软', '亚马逊', '苹果', '中国建行'],
-            answer: 'C'
-          },
-          {
-            id: 5,
-            title: '最好的前端框架？',
-            items: ['Angular', 'Vue', 'React', 'Java'],
-            answer: 'B'
-          },
-          {
-            id: 6,
-            title: '平均每天的睡眠时间',
-            items: ['小于4小时', '4-6小时', '7-8小时', '大于8小时'],
-            answer: 'C'
-          },
-          {
-            id: 7,
-            title: '关于睡眠，您属于下列哪种情况',
-            items: ['无', '经常失眠', '依靠药物才能入眠'],
-            answer: 'A'
-          },
-          {
-            id: 8,
-            title: '关于运动，您属于下列哪种情况',
-            items: ['经常运动','中度运动', '轻度运动', '极轻度运动'],
-            answer: 'A'
-          },
-          {
-            id: 9,
-            title: '您是否有以下吸烟情况',
-            items: ['无','不得已情况才吸烟', '每天少于一包', '每天多于一包'],
-            answer: 'A'
-          },
-          {
-            id: 10,
-            title: '您是否有以下饮酒情况',
-            items: ['无','不得已情况才饮酒', '偶尔小酌几杯', '不喝难受'],
-            answer: 'A'
+            id: '',
+            qid:'',
+            title: '',
+            items: [],
+            answer: ''
           }
-        ]
+        ],
       }
     },
     methods: {
-      submit:function(){
+      checking(){
+        this.$http.get("/test/getByUid",{
+          params:{
+            uid:window.sessionStorage.getItem("id"),
+          }
+        }).then(response => {
+          if (response.data.errorCode===0){
+            window.sessionStorage.setItem("cid",response.data.data.cid);
+            this.checkingResult=true;
+          }else {
+            this.checkingResult=false;
+          }
+        });
+      },
+      submit(){
         // 答题完毕，提交答案
         // this.isFinish=true;
+        var check =0;
+        var score = 0;
+        var qIds = "";
+        var item = "";
         for (const q of this.questionList) {
           if(q.answer===this.answers.get(q.id)){
-            this.score+=10;
+            score+=10;
           }
+          if(this.answers.get(q.id)===undefined){
+            check++;
+          }
+          qIds += q.qid+",";
+          item += this.answers.get(q.id)+",";
         }
-        if(this.score===0){
+        if(check===10){
           this.$message.error('为了更好地为您开启心灵之旅，请认真对待人生的每一次测试');
         }else {
-          this.isFinish=true;
-          this.$message.success('已为您成功匹配咨询师');
-          this.$router.push("/ChatRoom");
+          // this.isFinish=true;
+          this.$http.post("/test/addConsultants",{
+            uid:window.sessionStorage.getItem("id")
+          }).then(response => {
+            if (response.data.errorCode===0){
+              var cid = response.data.data;
+              var testObj = {
+                "uid": window.sessionStorage.getItem("id"),
+                "cid": cid,
+                "qIds": qIds,
+                "item": item,
+                "result": score
+              };
+              this.$http.post("/test/addTest",{
+                testObj:testObj
+              }).then(response => {
+                if (response.data.errorCode===1){
+
+                  //导出文件？
+                  //保存msg，文件？
+
+                  window.sessionStorage.setItem("cid",cid);
+                  this.$message.success('已为您成功匹配咨询师');
+                  window.open("/#/ChatRoom","_blank");
+                }else {
+                  this.$message.error(response.data.msg);
+                }
+              });
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
         }
+      },
+      getRand(){
+        this.$http.get("/test/getRand").then(response => {
+          if (response.data.errorCode===0){
+            this.questionList = response.data.data;
+            console.log(this.questionList)
+          }else {
+            this.$message.error(response.data.msg);
+          }
+        });
       },
       skip:function(i){
         this.progress=i;
@@ -217,19 +228,12 @@
       },
       progressStyle: function () {
         return `width:${this.progressBar}%;`;
-      }
+      },
+
     },
     mounted() {
-      //test表，判断当前用户是否已做过题，是则直接chatroom，否则做题
-      //获取question题库的随机10条  question（题号，题干，选项，正确答案）
-
-      //提交检测consultants表中存在此用户的name吗？
-      // 存在就弹框，询问是否继续上次咨询，否则随机匹配咨询师
-      // 继续：拿到cid，否则创建一行consultants数据，拿到cid
-
-      //题保存在test中，test保存用户id，题号，作答，结果 （java：题干）
-
-
+      this.getRand();
+      this.checking();
     }
   }
 </script>
@@ -249,6 +253,15 @@
   .ui-page-container {
     margin: 0 auto;
     padding: 16px;
+  }
+
+  .testTips{
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .testTips:hover{
+    cursor: pointer;
   }
 
   .submit{

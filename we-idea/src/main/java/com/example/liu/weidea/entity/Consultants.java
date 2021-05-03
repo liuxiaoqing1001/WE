@@ -15,6 +15,7 @@ import java.util.Date;
 public class Consultants implements Serializable {
     private Integer id;
     private Integer vid;
+    private Integer uid;
     private String name;
     private String phone;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

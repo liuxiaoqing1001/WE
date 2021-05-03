@@ -73,11 +73,15 @@
               <span slot="title">模块管理</span>
             </el-menu-item>
             <el-menu-item index="/ArticleManager" >
-              <i class="el-icon-menu"></i>
+              <i class="el-icon-document"></i>
               <span slot="title">文章管理</span>
             </el-menu-item>
+            <el-menu-item index="/QuestionManager" >
+              <i class="el-icon-box"></i>
+              <span slot="title">基础题库</span>
+            </el-menu-item>
             <el-menu-item index="/Data" >
-              <i class="el-icon-document"></i>
+              <i class="el-icon-data-analysis"></i>
               <span slot="title">数据统计</span>
             </el-menu-item>
             <el-submenu index="4">

@@ -2,6 +2,7 @@ package com.example.liu.weidea.dao;
 
 import com.example.liu.weidea.entity.Consultants;
 import com.example.liu.weidea.entity.Type;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -42,4 +43,16 @@ public interface ConsultantsDao {
      */
     @Update("update consultants set state=#{state} where id=#{id}")
     int updateStateById(String state,Integer id);
+
+    /**
+     * 匹配咨询师
+     * @param vid
+     * @param uid
+     * @return
+     */
+    @Insert("insert into consultants(vid,uid,time) values(#{vid},#{uid},now())")
+    Integer addConsultants(Integer vid, Integer uid);
+
+    @Select("select last_insert_id();")
+    Integer last_insert_id();
 }

@@ -97,7 +97,7 @@
               }
             }).then(response => {
               if (response.data.errorCode===0){
-                this.$message.success(response.data.msg);
+                // this.$message.success(response.data.msg);
                 // 将登录成功之后的用户id保存到客户端的sessionStorage中
                 if(response.data.data.name===null){
                   window.sessionStorage.setItem('token',response.data.data.phone);

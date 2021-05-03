@@ -399,14 +399,13 @@ CREATE TABLE collect (
 CREATE TABLE consultants (
   id int(11) NOT NULL AUTO_INCREMENT,
   vid int(11) NOT NULL COMMENT '自愿者id',
-  name varchar(255) DEFAULT NULL COMMENT '姓名',
-  phone varchar(255) NOT NULL COMMENT '电话',
-  state varchar(255) DEFAULT NULL COMMENT '状态',
+  uid int(11) NOT NULL COMMENT '用户id',
+  state varchar(255) DEFAULT '无' COMMENT '状态',
   time datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '时间',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
 
-insert into consultants values('1','10011','liu','16600274434','轻微',now());
+insert into consultants values('1','10011','10015','无',now());
 
 CREATE TABLE msg  (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -420,6 +419,41 @@ CREATE TABLE msg  (
 insert into msg values('1','1','10011','测试',now());
 insert into msg values('2','1','10015','测试222',now());
 insert into msg values('3','1','10015','测试9999999999',now());
+
+CREATE TABLE test  (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  uid int(11) DEFAULT NULL COMMENT '用户id',
+  cid int(11) DEFAULT NULL COMMENT 'consultantsId',
+  qIds varchar(255) DEFAULT NULL COMMENT '题号',
+  item varchar(255) DEFAULT NULL,
+  result varchar(255) DEFAULT NULL,
+  date datetime(0) NOT NULL,
+  PRIMARY KEY (id) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+CREATE TABLE question  (
+  qid int(11) NOT NULL AUTO_INCREMENT,
+  title varchar(255) DEFAULT NULL,
+  item varchar(255) DEFAULT NULL,
+  answer varchar(255) DEFAULT NULL,
+  date datetime(0) NOT NULL,
+  PRIMARY KEY (qid) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+
+
+
+insert into question values('1','平均每天的睡眠时间','小于4小时;4-6小时;7-8小时;大于8小时','C',now());
+insert into question values('2','关于睡眠，您属于下列哪种情况','无;经常失眠;依靠药物才能入眠','',now());
+insert into question values('3','关于运动，您属于下列哪种情况','经常运动;中度运动;轻度运动;极轻度运动','A',now());
+insert into question values('4','您是否有以下吸烟情况','无;不得已情况才吸烟;每天少于一包;每天多于一包','A',now());
+insert into question values('5','您是否有以下饮酒情况','无;不得已情况才饮酒;偶尔小酌几杯;不喝难受','A',now());
+insert into question values('6','无缘无故感觉疲乏？','没有或很少时间;小部分时间;相当多时间;绝大部分或全部时间','A',now());
+insert into question values('7','常常觉得不安而平静不下来','没有或很少时间;小部分时间;相当多时间;绝大部分或全部时间','A',now());
+insert into question values('8','很容易作出决定','没有或很少时间;小部分时间;相当多时间;绝大部分或全部时间','D',now());
+insert into question values('9','容易生气激动','没有或很少时间;小部分时间;相当多时间;绝大部分或全部时间','A',now());
+insert into question values('10','觉得自己是个有用的人，有人需要我','没有或很少时间;小部分时间;相当多时间;绝大部分或全部时间','D',now());
+insert into question values('11','对未来怀有希望','没有或很少时间;小部分时间;相当多时间;绝大部分或全部时间','D',now());
 
 ---------------------------------------------------------------------------------
 1. 绑定事件
@@ -572,7 +606,8 @@ https://blog.csdn.net/weixin_43120613/article/details/108171999
 第二次进入咨询中心，直接匹配咨询师（可选择原咨询师，可重新换）
 
 
-
+跳转
+https://blog.csdn.net/Shivy_/article/details/115486800
 
 
 

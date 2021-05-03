@@ -4,7 +4,7 @@
       <el-header>
         <!--面包屑导航区域-->
         <el-breadcrumb >
-          <el-breadcrumb-item :to="{ path: '/Article' }">文章管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/ArticleManager' }">文章管理</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
 
@@ -79,7 +79,7 @@
 
 <script>
   export default {
-    name: "Article",
+    name: "ArticleManager",
     data(){
       return{
         mList:[],//文章列表

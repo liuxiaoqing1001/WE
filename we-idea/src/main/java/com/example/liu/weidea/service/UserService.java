@@ -138,7 +138,7 @@ public interface UserService {
      * @param vid
      * @return
      */
-    List<Consultants> getConsultantsById(Integer vid);
+    List<Consultants> getConsultantsByVId(Integer vid);
 
     /**
      * 查询数据库中所有管理员数量
@@ -264,7 +264,7 @@ public interface UserService {
      * @param id
      * @return
      */
-    Consultants getById(Integer id);
+    Consultants getByCId(Integer id);
 
     /**
      * 根据id修改咨询者状态

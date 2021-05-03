@@ -93,7 +93,7 @@
           }
 
           const other = {
-            "cid": 1,//动态  window.sessionStorage.getItem("cid")
+            "cid": window.sessionStorage.getItem("cid"),
             "userId": window.sessionStorage.getItem("id"),
           };
           this.$http.post("/msg/addMsg",{

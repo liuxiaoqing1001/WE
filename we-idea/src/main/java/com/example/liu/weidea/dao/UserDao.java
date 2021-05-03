@@ -235,6 +235,12 @@ public interface UserDao {
     @Select("select role from user where id=#{id}")
     String getRoleById(Integer id);
 
+    /**
+     * 随机获取自愿者的id
+     * @return
+     */
+    @Select("select id from user where role=2 order by RAND() limit 1")
+    Integer getRandV();
 
 
 //    /**

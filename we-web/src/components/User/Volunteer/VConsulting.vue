@@ -86,6 +86,10 @@
           },
           states: [
             {
+              value: '0',
+              label: '无'
+            },
+            {
               value: '1',
               label: '轻微'
             },
@@ -125,10 +129,8 @@
           this.$refs.editFormRef.resetFields() // 通过ref引用调用resetFields方法
         },
         getConsultantsById(){
-          // console.log(window.sessionStorage.getItem("id"));
-          this.$http.get("/user/getConsultantsById/"+window.sessionStorage.getItem("id")).then(response => {
+          this.$http.get("/user/getConsultantsByVId/"+window.sessionStorage.getItem("id")).then(response => {
             if (response.data.errorCode===0){
-              // this.$message.success(response.data.msg);
               this.userList = response.data.data;
             }else {
               this.$message.error(response.data.msg);
@@ -140,7 +142,7 @@
           this.editDialogVisible = true;
         },
         getById(id){
-          this.$http.get("/user/getById",{
+          this.$http.get("/user/getByCId",{
             params:{
               id:id
             }

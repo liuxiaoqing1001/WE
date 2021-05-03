@@ -73,6 +73,7 @@ public class MsgController {
             result = msgService.addMsg(msgObject) ;
             msg = "发送成功";
         }catch (Exception e){
+            result = 0;
             msg = "发送失败："+e;
         }
         return new ResponseData(

@@ -304,8 +304,14 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<Consultants> getConsultantsById(Integer vid) {
-        return consultantsDao.getConsultantsByVid(vid);
+    public List<Consultants> getConsultantsByVId(Integer vid) {
+        List<Consultants> consultants = consultantsDao.getConsultantsByVid(vid) ;
+        for (int i=0;i<consultants.size();i++){
+            User user = userDao.getUserById(consultants.get(i).getUid());
+            consultants.get(i).setName(user.getName());
+            consultants.get(i).setPhone(user.getPhone());
+        }
+        return consultants;
     }
 
     /**
@@ -571,8 +577,12 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Consultants getById(Integer id) {
-        return consultantsDao.getById(id);
+    public Consultants getByCId(Integer id) {
+        Consultants consultants = consultantsDao.getById(id);
+        User user = userDao.getUserById(consultants.getUid());
+        consultants.setName(user.getName());
+        consultants.setPhone(user.getPhone());
+        return consultants;
     }
 
     /**

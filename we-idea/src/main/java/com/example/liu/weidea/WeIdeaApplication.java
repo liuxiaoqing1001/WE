@@ -13,22 +13,22 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
-//@ServletComponentScan("com")
-//@EntityScan(basePackages = {"com"})
-//@EnableScheduling
-//// 允许通过AopContext.currentProxy() 获取代理类
-//@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
-//@EnableAsync
+@ServletComponentScan("com")
+@EntityScan(basePackages = {"com"})
+@EnableScheduling
+// 允许通过AopContext.currentProxy() 获取代理类
+@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
+@EnableAsync
 public class WeIdeaApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(WeIdeaApplication.class, args);
-//        // 启动netty服务器
-//        try {
-//            new NettyServer(8091).start();
-//        } catch (Exception e) {
-//            System.out.println("NettyServerError:" + e.getMessage());
-//        }
+        // 启动netty服务器
+        try {
+            new NettyServer(8619).start();
+        } catch (Exception e) {
+            System.out.println("NettyServerError:" + e.getMessage());
+        }
     }
 
 

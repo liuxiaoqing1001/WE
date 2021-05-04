@@ -1,5 +1,7 @@
 package com.example.liu.weidea.handler;
 
+import com.example.liu.weidea.entity.Msg;
+import com.example.liu.weidea.service.MsgService;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -15,6 +17,12 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
+//package com.xm.ggn.netty;
+
+import com.alibaba.fastjson.JSONObject;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 自定义服务器端处理handler，继承SimpleChannelInboundHandler，处理WebSocket 连接数据
@@ -44,6 +52,7 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
             channel.writeAndFlush("[SERVER]-"+incomming.remoteAddress()+"加入\n");
         }*/
         channelGroup.add(incomming);
+        log.info("添加新的channel, incomming: {}", incomming);
     }
 
     /**
@@ -88,9 +97,9 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
             String uri = request.uri();
             log.info("uri: " + uri);
             if (StringUtils.isNotBlank(uri)) {
-                String path = StringUtils.substringBefore(uri, "?");
-                log.info("path: {}", path);
-                String username = StringUtils.substringAfterLast(path, "/");
+//                String path = StringUtils.substringBefore(uri, "?");
+//                log.info("path: {}", path);
+                String username = StringUtils.substringAfterLast(uri, "=");
                 log.info(username);
                 channelMap.put(username, ctx.channel());
                 log.info("channelMap: {}", channelMap);
@@ -116,8 +125,7 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
         log.info("netty客户端收到服务器数据, 客户端地址: {}, msg: {}", ctx.channel().remoteAddress(), msg.text());
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         //消息处理类
-        message(ctx, msg.text(), date);
-
+        handleMessage(ctx, msg.text(), date);
         //channelGroup.writeAndFlush( new TextWebSocketFrame(msg.text()));
     }
 
@@ -136,16 +144,35 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
         ctx.close();
     }
 
-    //消息处理类
-    public void message(ChannelHandlerContext ctx, String msg, String date) {
+    /**
+     * 处理读取到的消息
+     *
+     * @param ctx
+     * @param msg
+     * @param date
+     */
+    private void handleMessage(ChannelHandlerContext ctx, String msg, String date) {
         try {
-            // 消息转发给在线的其他用户
-            Channel channel = ctx.channel();
-            for (Channel tmpChannel : channelGroup) {
-                if (!tmpChannel.equals(channel)) {
-                    String sendedMsg = date + "：" + msg;
-                    log.info("服务器转发消息,客户端地址: {}, msg: {}", ctx.channel().remoteAddress(), sendedMsg);
-                    tmpChannel.writeAndFlush(new TextWebSocketFrame(sendedMsg));
+            // 消息入库
+            System.out.println("*******"+msg);
+            Msg msgObj = JSONObject.parseObject(msg, Msg.class);
+//            log.info("chatLog: {}", msgObj);
+//            ChatLogService chatLogService = SpringBootUtils.getBean(MsgService.class);
+//            chatLogService.insert(msgObj);
+
+            String receiveUsername = "liu";
+            String sendUsername = "zhouzhou";
+
+            // 消息转发给对应用户(发给发送者和接收者)
+//            String receiveUsername = msgObj.getReceiveUsername();
+//            String sendUsername = msgObj.getSendUsername();
+            Set<Map.Entry<String, Channel>> entries = channelMap.entrySet();
+            String key = null;
+            for (Map.Entry<String, Channel> entry : entries) {
+                key = entry.getKey();
+                if (key.equals(receiveUsername) || key.equals(sendUsername)) {
+                    log.info("服务器转发消息, key： {}, msg: {}", key, JSONObject.toJSONString(msgObj));
+                    entry.getValue().writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(msgObj)));
                 }
             }
         } catch (Exception e) {

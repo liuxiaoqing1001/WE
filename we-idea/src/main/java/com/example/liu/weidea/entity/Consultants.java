@@ -18,6 +18,7 @@ public class Consultants implements Serializable {
     private Integer uid;
     private String name;
     private String phone;
+    private String testStr;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss" , timezone = "Asia/Shanghai")
     private Date time ;

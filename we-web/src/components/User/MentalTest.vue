@@ -150,10 +150,7 @@
                 testObj:testObj
               }).then(response => {
                 if (response.data.errorCode===1){
-
-                  //导出文件？
-                  //保存msg，文件？
-
+                  //导出文件？保存msg，文件？
                   window.sessionStorage.setItem("cid",cid);
                   this.$message.success('已为您成功匹配咨询师');
                   window.open("/#/ChatRoom","_blank");

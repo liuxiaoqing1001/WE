@@ -57,6 +57,10 @@
           <el-form-item label="状态" class="inputDeep">
             <el-input v-model="userForm.state" readonly></el-input>
           </el-form-item>
+          <el-form-item label="基础测试" class="inputDeep">
+            <el-input type="textarea" v-model="userForm.testStr" readonly></el-input>
+<!--            <el-input v-model="userForm.testStr" readonly></el-input>-->
+          </el-form-item>
         </el-form>
       </el-dialog>
     </el-container>
@@ -83,6 +87,7 @@
             name: '',
             phone: '',
             state:'',
+            testStr:''
           },
           states: [
             {
@@ -123,7 +128,8 @@
         },
         editDialogClosed() {
           // 表单内容重置为空
-          this.$refs.editFormRef.resetFields() // 通过ref引用调用resetFields方法
+          this.$refs.editFormRef.resetFields(); // 通过ref引用调用resetFields方法
+          this.userForm ={};
         },
         showDialogVisible(){
           this.$refs.editFormRef.resetFields() // 通过ref引用调用resetFields方法
@@ -149,6 +155,24 @@
           }).then(response => {
             if (response.data.errorCode===0){
               this.userForm = response.data.data;
+
+              // this.$http.get("/test/getByCId",{
+              //   params:{
+              //     id:id
+              //   }
+              // }).then(res => {
+              //   if (res.data.errorCode===0){
+              //     var testStr ="";
+              //     for (var i=0;i<res.data.data.length;i++){
+              //       testStr += (i+1)+": "+res.data.data[i].title+"\n"+"\t回答："+res.data.data[i].answer+"\n";
+              //     }
+              //     this.userForm = response.data.data;
+              //     this.userForm.testStr = testStr;
+              //   }else {
+              //     this.$message.error(res.data.msg);
+              //   }
+              // });
+
             }else {
               this.$message.error(response.data.msg);
             }
@@ -174,7 +198,8 @@
         },
         toChat(id){
           window.sessionStorage.setItem("cid",id);
-          this.$router.push("/ChatRoom");
+          // this.$router.push("/ChatRoom");
+          window.open("/#/ChatRoom","_blank");
         }
       }
     }

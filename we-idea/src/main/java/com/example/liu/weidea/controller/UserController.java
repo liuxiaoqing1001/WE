@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
 import com.example.liu.weidea.entity.*;
+import com.example.liu.weidea.service.TestService;
 import com.example.liu.weidea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,6 +23,9 @@ import java.util.*;
 public class UserController {
     @Autowired
     UserService userService ;
+
+    @Autowired
+    TestService testService;
 
     /**
      * 登录
@@ -651,11 +655,28 @@ public class UserController {
     @GetMapping("/getByCId")
     public ResponseData getByCId(@RequestParam(value = "id",required = false) Integer id) {
         Consultants consultants = userService.getByCId(id) ;
+        List<Question> list = getQListByCId(id);
+        if (list!=null){
+            String testStr ="";
+            for (int i=0;i<list.size();i++){
+                testStr += (i+1)+": "+list.get(i).getTitle()+"\n"+"  （回答）"+list.get(i).getAnswer()+"\n";
+            }
+            consultants.setTestStr(testStr);
+        }
         return new ResponseData(
                 consultants !=null ? 0 : 1 ,
                 consultants !=null ? "获取成功" : "获取失败" ,
                 consultants
         );
+    }
+
+    /**
+     * 根据id获取测试情况
+     * @param id
+     * @return
+     */
+    public List<Question> getQListByCId(Integer id){
+        return testService.getByCId(id);
     }
 
     /**

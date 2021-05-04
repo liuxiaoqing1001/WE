@@ -31,6 +31,6 @@ public interface TestDao {
      * @param id
      * @return
      */
-    @Select("select * from test where id=#{id}")
+    @Select("select * from test where cid=#{cid}")
     Test getById(Integer id);
 }

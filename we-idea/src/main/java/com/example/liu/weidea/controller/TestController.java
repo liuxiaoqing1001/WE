@@ -3,14 +3,12 @@ package com.example.liu.weidea.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
-import com.example.liu.weidea.entity.Module;
 import com.example.liu.weidea.entity.Question;
 import com.example.liu.weidea.entity.Test;
 import com.example.liu.weidea.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @CrossOrigin
@@ -60,9 +58,9 @@ public class TestController {
      * @param id
      * @return
      */
-    @GetMapping("/getById")
-    public ResponseData getById(@RequestParam(value="id" ,required =false) Integer id){
-        List<Question> list = testService.getById(id);
+    @GetMapping("/getByCId")
+    public ResponseData getByCId(@RequestParam(value="id" ,required =false) Integer id){
+        List<Question> list = testService.getByCId(id);
         return new ResponseData(
                 list != null?0:1,
                 list != null?"查询成功":"查询失败",

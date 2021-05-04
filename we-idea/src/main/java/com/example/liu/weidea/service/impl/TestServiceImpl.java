@@ -75,15 +75,47 @@ public class TestServiceImpl implements TestService {
      * @return
      */
     @Override
-    public List<Question> getById(Integer id) {
+    public List<Question> getByCId(Integer id) {
         Test test = testDao.getById(id);
-        List<String> strList = Arrays.asList(test.getQIds().split(","));
+        List<String> qList = Arrays.asList(test.getQIds().split(","));
+        List<String> aList = Arrays.asList(test.getItem().split(","));
         List<Question> questionList = new ArrayList<>();
-        for (int i=0;i<strList.size();i++){
-            Question question = questionDao.getByQId(Integer.parseInt(strList.get(i)));
+        for (int i=0;i<qList.size();i++){
+            Question question = questionDao.getByQId(Integer.parseInt(qList.get(i)));
+            List<String> list = Arrays.asList(question.getItem().split(";"));
+            if(aList.get(i).equals("undefined")){
+                question.setAnswer("未作答");
+            }else {
+                question.setAnswer(list.get(indexNum(aList.get(i))));
+            }
+//            System.out.println(question);
             questionList.add(question);
         }
         return questionList;
+    }
+
+    public Integer indexNum(String str){
+        Integer index =0;
+        switch(str){
+            case "A" :
+                break;
+            case "B" :
+                index = 1;
+                break;
+            case "C" :
+                index = 2;
+                break;
+            case "D" :
+                index = 3;
+                break;
+            case "E" :
+                index = 4;
+                break;
+            case "F" :
+                index = 5;
+                break;
+        }
+        return index;
     }
 
     /**

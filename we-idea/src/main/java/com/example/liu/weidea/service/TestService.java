@@ -39,7 +39,7 @@ public interface TestService {
      * @param id
      * @return
      */
-    List<Question> getById(Integer id);
+    List<Question> getByCId(Integer id);
 
     /**
      * 获得题详情

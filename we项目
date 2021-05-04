@@ -602,6 +602,7 @@ https://blog.csdn.net/weixin_43120613/article/details/108171999
 获得咨询者
 试题导出文件（带有咨询者姓名和电话）并发送文件（聊天框）//详情查看
 聊天（记录的保存，删除）
+https://www.cnblogs.com/qlqwjy/p/14470517.html
 咨询结束给一个评定（健康，轻微，一般，严重）
 第二次进入咨询中心，直接匹配咨询师（可选择原咨询师，可重新换）
 
@@ -633,6 +634,12 @@ https://vd2.bdstatic.com/mda-ijiqckncw23fx73z/sc/mda-ijiqckncw23fx73z.mp4?v_from
 
 用户修改用户名和手机号，其他数据库跟着修改
 CONSTRAINT fk_uname FOREIGN KEY (uname) REFERENCES tb_user (name)，外键约束
+
+
+
+
+粒子文字
+https://www.html5tricks.com/10-cool-html5-text-animation.html
 
 
 

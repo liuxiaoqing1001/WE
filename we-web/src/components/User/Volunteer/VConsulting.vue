@@ -59,7 +59,6 @@
           </el-form-item>
           <el-form-item label="基础测试" class="inputDeep">
             <el-input type="textarea" v-model="userForm.testStr" readonly></el-input>
-<!--            <el-input v-model="userForm.testStr" readonly></el-input>-->
           </el-form-item>
         </el-form>
       </el-dialog>

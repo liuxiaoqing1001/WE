@@ -154,14 +154,15 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
     private void handleMessage(ChannelHandlerContext ctx, String msg, String date) {
         try {
             // 消息入库
-            System.out.println("*******"+msg);
             Msg msgObj = JSONObject.parseObject(msg, Msg.class);
-//            log.info("chatLog: {}", msgObj);
+//            log.info("chatLog: {}", msgObj);//sendUserId改为userId；setCid
 //            ChatLogService chatLogService = SpringBootUtils.getBean(MsgService.class);
 //            chatLogService.insert(msgObj);
+            msgObj.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date));
+            System.out.println(msgObj);
 
-            String receiveUsername = "liu";
-            String sendUsername = "zhouzhou";
+            String receiveUsername = String.valueOf(msgObj.getReceiveUserId());
+            String sendUsername = String.valueOf(msgObj.getUserId());
 
             // 消息转发给对应用户(发给发送者和接收者)
 //            String receiveUsername = msgObj.getReceiveUsername();

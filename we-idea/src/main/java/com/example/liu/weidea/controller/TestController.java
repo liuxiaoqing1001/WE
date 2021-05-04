@@ -29,7 +29,7 @@ public class TestController {
             List<String> strList = Arrays.asList(lists.get(i).getItem().split(";"));
             lists.get(i).setItems(strList);
             lists.get(i).setId(i+1);
-            System.out.println(lists.get(i));
+//            System.out.println(lists.get(i));
         }
         return new ResponseData(
                 lists != null?0:1,

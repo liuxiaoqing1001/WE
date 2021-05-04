@@ -19,6 +19,7 @@ public class Msg {
 
 //    @ApiModelProperty(value = "用户id")
     private Integer userId;
+    private Integer receiveUserId;
 
 //    @ApiModelProperty(value = "用户名")
     private String username;
@@ -28,6 +29,8 @@ public class Msg {
 
 //    @ApiModelProperty(value = "消息")
     private String msg;
+
+    private boolean readed;
 
 //    @ApiModelProperty(value = "在线人数")
     private int count;

@@ -160,14 +160,9 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
 //            chatLogService.insert(msgObj);
 //            Date msgDate =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
 //            msgObj.setDate(msgDate);
-            System.out.println(msgObj);
-
+            // 消息转发给对应用户(发给发送者和接收者)
             String receiveUsername = String.valueOf(msgObj.getReceiveUserId());
             String sendUsername = String.valueOf(msgObj.getUserId());
-
-            // 消息转发给对应用户(发给发送者和接收者)
-//            String receiveUsername = msgObj.getReceiveUsername();
-//            String sendUsername = msgObj.getSendUsername();
             Set<Map.Entry<String, Channel>> entries = channelMap.entrySet();
             String key = null;
             for (Map.Entry<String, Channel> entry : entries) {

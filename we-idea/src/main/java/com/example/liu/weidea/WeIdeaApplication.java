@@ -30,19 +30,4 @@ public class WeIdeaApplication {
             System.out.println("NettyServerError:" + e.getMessage());
         }
     }
-
-
-
-}
-
-class Text {
-    public static void main(String[] args) {
-//        String str="a;b;c;d;e";
-//        List<String> strArray = Arrays.asList(str.split(";"));
-//        for (int a = 0; a < strArray.size(); a++) {
-//            System.out.print(strArray.get(a) + "\t");
-//        }
-
-
-    }
 }

@@ -15,6 +15,7 @@ import java.util.Date;
 public class Article implements Serializable {
     private Integer id;
     private String sender;
+    private String senderName;
     private String title;
     private String content;
     private String type;

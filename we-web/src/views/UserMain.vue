@@ -49,43 +49,25 @@
         return {
           user:window.sessionStorage.getItem("token"),
           activeIndex: 'Home',
-          links: [
-            {
-              text: '首页',
-              name: 'Home',
-              route: '/Home'
-            },
-            {
-              text: '广场',
-              name: 'Square',
-              route: '/Square'
-            },
-            {
-              text: '树洞',
-              name: 'TreeHole',
-              route: '/TreeHole'
-            },
-            {
-              text: '咨询中心',
-              name: 'Consulting',
-              route: '/Consulting'
-            },
-            {
-              text: '自愿者专区',
-              name: 'VolunteerZone',
-              route: '/VolunteerZone'
-            },
-            // {
-            //   text: '其他',
-            //   name: 'Other',
-            //   route: '/Other'
-            // }
-          ]
+          links: []
         }
+      },
+
+      created() {
+        this.initLi_links();
       },
 
       // 点击菜单使用的函数
       methods: {
+        initLi_links(){
+          this.$http.get("/module/getAll").then(response => {
+            if (response.data.errorCode===0){
+              this.links = response.data.data;
+            }else {
+              this.$message.error(response.data.msg);
+            }
+          });
+        },
         makeActive: function(item){
           // 模型改变，视图会自动更新
           this.activeIndex = item;

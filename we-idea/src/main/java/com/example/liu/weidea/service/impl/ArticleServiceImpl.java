@@ -1,13 +1,7 @@
 package com.example.liu.weidea.service.impl;
 
-import com.example.liu.weidea.dao.ArticleDao;
-import com.example.liu.weidea.dao.CommentDao;
-import com.example.liu.weidea.dao.PraiseDao;
-import com.example.liu.weidea.dao.TypeDao;
-import com.example.liu.weidea.entity.Article;
-import com.example.liu.weidea.entity.Comment;
-import com.example.liu.weidea.entity.Praise;
-import com.example.liu.weidea.entity.Volunteer;
+import com.example.liu.weidea.dao.*;
+import com.example.liu.weidea.entity.*;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +21,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     CommentDao commentDao;
+
+    @Autowired
+    UserDao userDao;
 
     /**
      * 添加文章
@@ -74,7 +71,20 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public List<Article> getAll() {
-        return articleDao.getAll();
+        List<Article> list= articleDao.getAll();
+        return getArticlesSenderName(list);
+    }
+
+    private List<Article> getArticlesSenderName(List<Article> list) {
+        for (int i=0;i<list.size();i++){
+            User user=userDao.getUserById(Integer.valueOf(list.get(i).getSender()));
+            String name = user.getName();
+            if(name.equals("null")){
+                name = "佚名";
+            }
+            list.get(i).setSenderName(name);
+        }
+        return list;
     }
 
     /**
@@ -118,7 +128,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getArticleByType(Integer id) {
         String type = typeDao.getNameById(id);
-        return articleDao.getArticleByType(type);
+        List<Article> list= articleDao.getArticleByType(type);
+        return getArticlesSenderName(list);
     }
 
     /**

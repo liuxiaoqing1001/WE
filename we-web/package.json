@@ -13,7 +13,6 @@
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.21.1",
-    "docxtemplater": "^3.21.1",
     "echarts": "^4.9.0",
     "element-ui": "^2.14.1",
     "file-saver": "^2.0.5",

@@ -25,6 +25,10 @@ import VCharts from 'v-charts'
 
 import pdf from 'vue-pdf'
 
+import Video from 'video.js'
+import 'video.js/dist/video-js.css'
+
+
 Vue.use(pdf);
 
 Vue.use(VCharts);

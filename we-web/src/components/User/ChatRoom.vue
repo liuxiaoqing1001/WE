@@ -195,12 +195,7 @@
           console.log(element.userId==window.sessionStorage.getItem("id"))
           if (element.userId == window.sessionStorage.getItem("id")) {
             element.mine = true;
-            // if (this.role===2){
-              element.img = "../../../static/img/volunteer.png";
-            // }else{
-            //   element.img = "../../../static/img/consultants.png";
-            // }
-
+            element.img = "../../../static/img/volunteer.png";
           } else {
             element.mine = false;
             element.img = "../../../static/img/consultants.png";

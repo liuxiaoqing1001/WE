@@ -61,6 +61,11 @@ export default new Router({
       component: ChatRoom
     },
     {
+      name: Detail,
+      path: '/Detail',
+      component: Detail
+    },
+    {
       // 用户首页
       path: '/UserMain',
       name: 'UserMain',
@@ -81,19 +86,19 @@ export default new Router({
           name: Square,
           path: '/Square',
           component: Square,
-          redirect: "/Article",
-          children:[
-            {
-              name: Article,
-              path: '/Article',
-              component: Article
-            },
-            {
-              name: Detail,
-              path: '/Detail',
-              component: Detail
-            }
-          ]
+          // redirect: "/Article",
+          // children:[
+          //   {
+          //     name: Article,
+          //     path: '/Article',
+          //     component: Article
+          //   },
+          //   {
+          //     name: Detail,
+          //     path: '/Detail',
+          //     component: Detail
+          //   }
+          // ]
         },
         {
           name: Consulting,
@@ -125,12 +130,6 @@ export default new Router({
           path: '/MyMsg',
           name: 'MyMsg',
           component: MyMsg
-        },
-        ,
-        {
-          name: Detail,
-          path: '/Detail',
-          component: Detail
         },
         {
           name: MentalTest,

@@ -5,7 +5,7 @@
       <el-main>
         <div class="banner">
           <div class="item">
-            <img :src="dataList[currentIndex]">
+            <img :src="dataList[currentIndex]" @click="go(currentIndex)"/>
           </div>
           <div class="page" v-if="this.dataList.length > 1">
             <ul>
@@ -21,6 +21,7 @@
             <img src="../../assets/iconfont/right.png" @click="gotoPage(nextIndex)"/>
           </div>
         </div>
+
         <div class="banner_theme">
           <div class="item_theme">
             <img src="../../assets/image/1.jpeg" height="640" width="1024"/>
@@ -38,7 +39,8 @@
         </div>
         <div class="banner_theme">
           <div class="item_theme">
-<!--            <video src="https://vd2.bdstatic.com/mda-ijiqckncw23fx73z/sc/mda-ijiqckncw23fx73z.mp4?v_from_s=gz_haokan_4469&auth_key=1617383202-0-0-11716dc8b14f31e7141b1112a414b6ae&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000165_2"/>-->
+            <video height="640" width="1024" src="../../../static/video/ineed.mp4"/>
+            <!--            <video height="640" width="1024" src="http://vd2.bdstatic.com/mda-ijiqckncw23fx73z/sc/mda-ijiqckncw23fx73z.mp4?v_from_s=gz_haokan_4469&auth_key=1617383202-0-0-11716dc8b14f31e7141b1112a414b6ae&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000165_2"/>-->
 <!--            <img src="../../assets/image/1.jpeg" height="640" width="1024"/>-->
           </div>
         </div>
@@ -89,6 +91,21 @@
       }, 3000);
     },
     methods: {
+      go(index){
+        var url = "";
+        switch (index) {
+          case 0:
+            url="https://www.xinli001.com/info/100472532";
+            break;
+            case 1:
+              url="https://www.xinli001.com/info/100472191";
+              break;
+              case 2:
+                url = "https://www.xinli001.com/info/100472544?source=pc-home";
+                break;
+        }
+        window.open(url,"_blank")
+      },
       gotoPage(index) {
         this.currentIndex = index;
       },

@@ -1,24 +1,33 @@
 <template>
-  <div class="dashboard-container">
-    <div class="dashboard-text">
+  <div class="chat">
+    <div class="chat-box">
+      <!--    v-model		输入框中的文字-->
+      <!--    taleList	要渲染的数据-->
+      <!--    toolConfig 工具栏配置	:toolConfig="tool"-->
+      <!--    width		  聊天框宽度	-->
+      <!--    height		聊天框高度-->
+      <!--    config		组件配置项	-->
+      <!--    scrollType 消息自动到低	-->
+      <!--    quickList	自动匹配快捷回复	-->
       <JwChat-index
         :config="config"
-        :showRightBox="false"
+        :showRightBox='false'
+        scrollType="scroll"
         :taleList="list"
         @enter="bindEnter"
         v-model="inputMsg"
-        :toolConfig="tool"
-        scrollType="scroll"/>
+        :toolConfig="tool"/>
     </div>
   </div>
 </template>
 
 <script>
   // other.png 表示对方头像; myself.png 表示我自己
-  import { MessageBox } from "element-ui";
+  // import { MessageBox } from "element-ui";
   // import {findCurrentUsername} from "@/utils/auth"
 
   export default {
+    name: "ChatRoom",
     data() {
       return {
         // 输入框内默认的消息
@@ -94,7 +103,8 @@
       webSocket() {
         // 先记录this对象
         if (typeof WebSocket == "undefined") {
-          MessageBox.alert("浏览器暂不支持聊天", "提示信息");
+          this.$message.error("浏览器暂不支持聊天");
+          // MessageBox.alert("浏览器暂不支持聊天", "提示信息");
         } else {
           // 实例化socket，这里我把用户名传给了后台，使后台能判断要把消息发给哪个用户，其实也可以后台直接获取用户IP来判断并推送
           const socketUrl = "ws://127.0.0.1:8619/ws?id="+window.sessionStorage.getItem("id");
@@ -106,11 +116,12 @@
           // 监听socket消息接收
           this.socket.onmessage = function (messageEvent) {
             // 转换为json对象然后添加到chatlogTaleList
+            console.log("----------"+messageEvent.data)
             let receivedLog = JSON.parse(messageEvent.data);
             var msgObj;
             if (this.role===2){
               msgObj = {
-                "date": this.currentTime,
+                "date": receivedLog.date,
                 "text": { "text": receivedLog.content },
                 "mine": true,
                 // "name": "",
@@ -118,13 +129,14 @@
               };
             }else{
               msgObj = {
-                "date": this.currentTime,
+                "date": receivedLog.date,
                 "text": { "text": receivedLog.content },
                 "mine": true,
                 // "name": "",
                 "img": "../../../static/img/consultants.png"
               };
             }
+            console.log("----------"+msgObj)
             this.list.push(msgObj);
 
             // let receivedLogs = new Array();
@@ -138,10 +150,13 @@
             // this.list = this.list.concat(receivedLogs);
           };
           // 监听socket错误
-          this.socket.onerror = function () {};
+          this.socket.onerror = function () {
+            this.$message.error("连接失败");
+          };
           // 监听socket关闭
           this.socket.onclose = function () {
-            MessageBox.alert("WebSocket已关闭");
+            // MessageBox.alert("WebSocket已关闭");
+            this.$message.error("端开连接");
           };
         }
       },
@@ -170,7 +185,9 @@
           socket.send(JSON.stringify(chatLog));
           this.addMsg(message);
         } else {
-          MessageBox.alert("WebSocket 连接没有建立成功！");
+          this.$message.error("连接建立失败");
+          window.alert("连接建立失败");
+          // MessageBox.alert("WebSocket 连接没有建立成功！");
         }
       },
       addMsg(msg){
@@ -265,6 +282,8 @@
             element.img = "../../../static/img/consultants.png";
           }
         });
+
+        console.log(chatLogs);
         return chatLogs;
       },
 
@@ -273,10 +292,11 @@
       //   console.log(obj);
       // },
       // 点击发送或者回车事件
-      bindEnter(obj) {
+      bindEnter() {
         const msg = this.inputMsg;
         if (!msg) {
-          MessageBox.alert("您不能发送空消息");
+          // MessageBox.alert("您不能发送空消息");
+          this.$message.error("消息发送失败，消息为空");
           return;
         }
 
@@ -376,3 +396,25 @@
     },
   };
 </script>
+<style scoped>
+  .chat{
+    width: 100%;
+    min-width: 1200px;
+    height: 920px;
+    /*background-color: #fff;*/
+    /*background: radial-gradient(ellipse at bottom, #090a0f 0%, #000000 100%);*/
+    background-image: url("https://img.zcool.cn/community/010d1d57620dde0000012e7e2aa1e7.jpg@3000w_1l_0o_100sh.jpg");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+    overflow: hidden;
+    filter: drop-shadow(0 0 10px white);
+    /*position: relative;*/
+  }
+
+  .chat-box{
+    margin-top: 6%;
+    /*background-color: darkseagreen;*/
+  }
+
+</style>

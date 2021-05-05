@@ -158,7 +158,8 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<TextWebSocke
 //            log.info("chatLog: {}", msgObj);//sendUserId改为userId；setCid
 //            ChatLogService chatLogService = SpringBootUtils.getBean(MsgService.class);
 //            chatLogService.insert(msgObj);
-            msgObj.setDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date));
+//            Date msgDate =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+//            msgObj.setDate(msgDate);
             System.out.println(msgObj);
 
             String receiveUsername = String.valueOf(msgObj.getReceiveUserId());

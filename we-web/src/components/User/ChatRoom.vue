@@ -22,10 +22,6 @@
 </template>
 
 <script>
-  // other.png 表示对方头像; myself.png 表示我自己
-  // import { MessageBox } from "element-ui";
-  // import {findCurrentUsername} from "@/utils/auth"
-
   export default {
     name: "ChatRoom",
     data() {
@@ -56,22 +52,12 @@
         },
         currentTime:"",
         role:0,
-        // timer:'',
-
-        // // 当前用户信息
-        // currentUser: {
-        //   username: "",
-        //   fullname: "",
-        // },
-
         socket: new Object(),
         receiveUserId:0
       };
     },
 
     created() {
-      // this.listOnlineUsers();
-      // this.findCurrentUserInfo();
       this.getRoleById();
       this.getByCId();
       this.getAllByCid();
@@ -102,6 +88,7 @@
       },
       webSocket() {
         // 先记录this对象
+        const that = this;
         if (typeof WebSocket == "undefined") {
           this.$message.error("浏览器暂不支持聊天");
           // MessageBox.alert("浏览器暂不支持聊天", "提示信息");
@@ -116,38 +103,14 @@
           // 监听socket消息接收
           this.socket.onmessage = function (messageEvent) {
             // 转换为json对象然后添加到chatlogTaleList
-            console.log("----------"+messageEvent.data)
             let receivedLog = JSON.parse(messageEvent.data);
-            var msgObj;
-            if (this.role===2){
-              msgObj = {
-                "date": receivedLog.date,
-                "text": { "text": receivedLog.content },
-                "mine": true,
-                // "name": "",
-                "img": "../../../static/img/volunteer.png"
-              };
-            }else{
-              msgObj = {
-                "date": receivedLog.date,
-                "text": { "text": receivedLog.content },
-                "mine": true,
-                // "name": "",
-                "img": "../../../static/img/consultants.png"
-              };
+            let receivedLogs = new Array();
+            receivedLogs.push(receivedLog);
+            receivedLogs = that.reHandleChatLogs(receivedLogs);
+            if (!that.list) {
+              that.list = new Array();
             }
-            console.log("----------"+msgObj)
-            this.list.push(msgObj);
-
-            // let receivedLogs = new Array();
-            // receivedLogs.push(receivedLog);
-            // console.log("----------"+receivedLogs)
-            // receivedLogs = this.rehandleChatLogs(receivedLogs);
-            // console.log("*************"+receivedLogs)
-            // if (!this.list) {
-            //   this.list = new Array();
-            // }
-            // this.list = this.list.concat(receivedLogs);
+            that.list = that.list.concat(receivedLogs);
           };
           // 监听socket错误
           this.socket.onerror = function () {
@@ -160,19 +123,11 @@
           };
         }
       },
-      // // 查询当前用户信息
-      // findCurrentUserInfo() {
-      //   let url = "/user/getInfo";
-      //   this.$http.post(url).then((res) => {
-      //     this.currentUser = res.data;
-      //   });
-      // },
       // 发送websocket 消息
       send(message) {
         if (!window.WebSocket) {
           return;
         }
-
         // 封装消息，然后发送消息
         const chatLog = {
           userId: window.sessionStorage.getItem("id"),
@@ -210,7 +165,6 @@
             "img": "../../../static/img/consultants.png"
           };
         }
-
         const other = {
           "cid": window.sessionStorage.getItem("cid"),
           "userId": window.sessionStorage.getItem("id"),
@@ -220,78 +174,40 @@
           other:other
         }).then(response => {
           if (response.data.errorCode===1){
-            this.list.push(msgObj)
+            // this.list.push(msgObj)
           }else {
             this.$message.error(response.data.msg);
           }
         });
       },
-
-      // // 获取在线用户(有在线用户的情况下赋值到右边窗口)
-      // listOnlineUsers() {
-      //   let url = "/user/listOnlineUser";
-      //   this.$http.get(url).then((res) => {
-      //     var onlineUsers = res.data;
-      //     if (!onlineUsers || onlineUsers.length < 1) {
-      //       return;
-      //     }
-      //
-      //     onlineUsers.forEach((element) => {
-      //       element.name = element.username;
-      //       element.img = "/images/cover.png";
-      //     });
-      //     this.onlineUsers.list = onlineUsers;
-      //   });
-      // },
-      // // 点击在线人事件
-      // rightClick(type) {
-      //   // 1.赋值给聊天人信息
-      //   let chatUser = type.value;
-      //   this.config.name = chatUser.fullname;
-      //   this.config.username = chatUser.username;
-      //   this.config.fullname = chatUser.fullname;
-      //   // 2. 查询聊天记录
-      //   let listChatlogurl = "/chat/log/list";
-      //   let requestVO = {
-      //     sendUsername: this.currentUser.username,
-      //     receiveUsername: this.config.username,
-      //     queryChangeRole: true,
-      //   };
-      //   this.$http.post(listChatlogurl, requestVO).then((res) => {
-      //     this.list = this.rehandleChatLogs(res.data);
-      //   });
-      // },
       // 重新处理聊天记录， 主要是做特殊标记以及设置图像等操作
-      rehandleChatLogs(chatLogs) {
-        console.log(chatLogs)
-        if (!chatLogs || chatLogs.length < 1) {
+      reHandleChatLogs(receivedLogs) {
+        if (!receivedLogs || receivedLogs.length < 1) {
           return new Array();
         }
-
-        chatLogs.forEach((element) => {
-          element.date=this.getCurrentTime();
+        receivedLogs.forEach((element) => {
+          this.getCurrentTime()
+          element.date=this.currentTime;
           element.name = "";
           // 聊天内容（如下为设置文本，也可以设置其他video、图片等）
           element.text = new Object();
           element.text.text = element.content;
-          if (element.userId === window.sessionStorage.getItem("id")) {
+          console.log(element.userId==window.sessionStorage.getItem("id"))
+          if (element.userId == window.sessionStorage.getItem("id")) {
             element.mine = true;
-            element.img = "../../../static/img/volunteer.png";
+            // if (this.role===2){
+              element.img = "../../../static/img/volunteer.png";
+            // }else{
+            //   element.img = "../../../static/img/consultants.png";
+            // }
+
           } else {
             element.mine = false;
             element.img = "../../../static/img/consultants.png";
           }
         });
-
-        console.log(chatLogs);
-        return chatLogs;
+        return receivedLogs;
       },
-
-      // // 点击左上角用户名称事件
-      // clickTalk(obj) {
-      //   console.log(obj);
-      // },
-      // 点击发送或者回车事件
       bindEnter() {
         const msg = this.inputMsg;
         if (!msg) {
@@ -299,7 +215,6 @@
           this.$message.error("消息发送失败，消息为空");
           return;
         }
-
         // 发送消息
         this.send(msg);
       },
@@ -317,18 +232,20 @@
       //  * @param {*}
       //  * @return {*}
       //  */
-      // bindLoadHistory() {
+      // bindLoadHistory () {
+      //   this.getCurrentTime();
       //   const history = new Array(3).fill().map((i, j) => {
       //     return {
-      //       date: "2020/05/20 23:19:07",
-      //       text: { text: j + new Date() },
-      //       mine: false,
-      //       name: "JwChat",
-      //       img: "image/three.jpeg",
-      //     };
+      //       "date": this.currentTime,
+      //       "text": { "text": j + new Date() },
+      //       "mine": false,
+      //       // "name": "JwChat",
+      //       "img": "../../../static/img/consultants.png"
+      //     }
       //   });
       //   let list = history.concat(this.list);
       //   this.list = list;
+      //   console.log('加载历史', list, history);
       // },
       bindCover(type) {
         console.log("header", type);
@@ -376,7 +293,6 @@
           }
         }).then(response => {
           if (response.data.errorCode===0){
-            // console.log(response);
             this.list = response.data.data;
             for (let i=0;i<this.list.length;i++){
               if((this.list[i].mine===false&&this.role===2)||(this.list[i].mine===true&&this.role===1)){

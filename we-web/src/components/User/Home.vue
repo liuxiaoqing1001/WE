@@ -21,7 +21,6 @@
             <img src="../../assets/iconfont/right.png" @click="gotoPage(nextIndex)"/>
           </div>
         </div>
-
         <div class="banner_theme">
           <div class="item_theme">
               <img src="../../assets/image/1.jpeg" height="640" width="1024"/>
@@ -39,13 +38,11 @@
         </div>
         <div class="banner_theme">
           <div class="item_theme">
-
             <video id="myVideo" class="video-js" loop="loop">
               <source  style="margin: 10px 10% 10px 10%;"
                 src="../../../static/video/ineed.mp4"
                 type="video/mp4">
             </video>
-
             <p class="tip_video">
               <span class="span_need"  @click="intoChat()">I NEED TO GO >>>  </span><br><br>
               我需要食物，我需要一张床，我需要一所房子，我需要一辆车，我需要拥抱，我需要爱情，我需要一个家，我需要停下来，我...需要你。

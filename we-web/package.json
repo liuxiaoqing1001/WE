@@ -23,6 +23,7 @@
     "pizzip": "^3.0.6",
     "sass-loader": "^7.3.1",
     "v-charts": "^1.19.0",
+    "video.js": "^7.11.8",
     "vue": "^2.5.2",
     "vue-axios": "^3.2.0",
     "vue-echarts": "^6.0.0-rc.4",

@@ -2,27 +2,43 @@
   <div class="detail">
     <div id="content">
       <h3>{{articleList.title}}</h3>
-      <h6>{{articleList.sender}}</h6>
+      <hr>
+
       <div>
-        <span style="font-size:15px;margin-right: 30px">{{articleList.sendDate}}</span>
-        <span style="font-size:18px">
-          <i v-if="!isPraise" class="el-icon-star-off" @click="changeP(articleList.id)" style="margin-right: 10px">{{praiseNum}}</i>
-          <i v-else class="el-icon-star-on " @click="changeP(articleList.id)" style="margin-right: 10px">{{praiseNum}}</i>
-          <i class="el-icon-edit">{{commentNum}}</i>
+        <span class="span_div">
+          <span class="span_tip">作者：</span>
+          {{articleList.sender}}
+        </span>
+        <span class="span_div">
+          <span class="span_tip">发布时间：</span>
+          {{articleList.sendDate}}
+        </span>
+        <span style="font-size:16px">
+          <i v-if="!isPraise" class="el-icon-star-off" @click="changeP(articleList.id)" style="margin-right: 10px">
+             <span class="span_num">{{praiseNum}}</span>
+          </i>
+          <i v-else class="el-icon-star-on " @click="changeP(articleList.id)" style="margin-right: 10px">
+            <span class="span_num">{{praiseNum}}</span>
+          </i>
+          <i class="el-icon-edit">
+            <span class="span_num">{{commentNum}}</span>
+          </i>
         </span>
       </div>
       <!-- 用v-html解析后台传来的HTML代码 -->
-      <div v-html="articleList.content"></div>
+      <div class="span_content" v-html="articleList.content"></div>
     </div>
     <div class="commentArea">
+      <hr>
       <div class="send">
         <textarea v-model="comment.content" class="write" placeholder="说点什么吧！"></textarea>
         <button @click="send(articleList.id)" type="button" class="btn_say">发送</button>
       </div>
-      <span v-if="!isComment" class="noComment">暂无评论</span>
-      <ul v-else class="list-group">
-        <li class="list-group-item" v-for="cItem in cList" :key="cItem.id">
-          <span class="badge">{{ cItem.sender }}</span>
+
+      <ul class="list-group">
+        <li v-if="!isComment"><span class="noComment">暂无评论</span></li>
+        <li v-else class="list-group-item" v-for="cItem in cList" :key="cItem.id">
+          <span class="badge"> {{ cItem.sender }} >> </span>
           {{ cItem.content }}
         </li>
       </ul>
@@ -171,32 +187,67 @@
 
 <style scoped>
   .detail{
-    width: 1100px;
-    margin-right: 100px;
-    margin-top: 60px;
+    /*width: 1100px;*/
+    min-height: 855px;
+    /*background: "../../assets/image/1.jpeg";*/
+    background-image: url("../../assets/image/1.jpeg") ;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    /*margin-right: 100px;*/
+    /*margin-top: 60px;*/
   }
-
 
   #content {
     padding: 1rem;
     line-height: 2;
   }
+
+  .span_tip{
+    font-size: 13px;
+    color: #4a5064
+  }
+
+  .span_div{
+    font-size: 15px;
+    margin-right: 20px;
+    color: #42b983;
+    font-weight: bold;
+  }
+
+  .span_num{
+    color: #42b983;
+    font-weight: bold;
+  }
+
+  .span_content{
+    text-align: left;
+    width: 50%;
+    font-size: 18px;
+    /*float: left;*/
+    margin-left: 25%;
+    margin-right: 25%;
+    text-indent: 2em;
+    background: beige;
+  }
+
   img{
     max-width: 100%;
   }
 
   .commentArea{
     margin-top: 10%;
-    /*width: 66%;*/
+    width: 100%;
+    /*margin-bottom: 20%;*/
     /*!*margin-right: 30%;*!*/
     /*!*text-align: center;*!*/
-    margin-left: 16%;
+    /*margin-left: 16%;*/
     font-size: 15px;
-    background:rgba(312,500,500,0.5);
-    width: 500px;
+    /*background:rgba(312,500,500,0.5);*/
+    /*background: #42b983;*/
+    /*width: 500px;*/
     /*height: 400px;*/
     border-radius: 10px;
-    position: absolute;
+    /*position: absolute;*/
     /*left: 25%;*/
     /*top: 30%;*/
   }
@@ -220,9 +271,9 @@
 
   .write{
     float: left;
-    width: 75%;
+    width: 50%;
     max-height: 80%;
-    margin-left: 30px;
+    margin-left: 20%;
     margin-top: 15px;
     border: 1px solid #DCDFE6;
     border-radius: 5px;
@@ -263,7 +314,7 @@
     /*margin: 0;*/
     margin-top: 15px;
     /*margin-left: 15px;*/
-    /*margin-right: 5px;*/
+    margin-right: 15%;
     outline: 0;
     padding: 0;
     cursor: pointer;
@@ -272,9 +323,9 @@
 
   .list-group-item{
     margin-top: 20px;
-    margin-bottom: 15px;
-    margin-left: 18%;
-    width: 50%;
+    /*margin-bottom: 10%;*/
+    margin-left: 30%;
+    width: 30%;
     /*width: auto;*/
     padding: 5px 12px 0;
     background: beige;
@@ -282,17 +333,21 @@
     text-align: left;
     font-size: 15px;
     list-style: none;
-    box-shadow: 0 1px 2px rgba(151,151,151,0.58);
+    box-shadow: 0 3px 3px rgba(151,151,151,0.58);
+  }
+
+  li{
+    list-style: none;
   }
 
   .noComment{
-    float:left;
-    margin-left: 40%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background: beige;
-    padding: 5px 12px 0;
-    border-radius: 3px;
-    box-shadow: 0 1px 2px rgba(151,151,151,0.58);
+    /*float:left;*/
+    /*margin-left: 10%;*/
+    /*margin-top: 20px;*/
+    /*margin-bottom: 20px;*/
+    /*background: beige;*/
+    /*padding: 5px 122px 0;*/
+    /*border-radius: 3px;*/
+    /*box-shadow: 0 1px 2px rgba(151,151,151,0.58);*/
   }
 </style>

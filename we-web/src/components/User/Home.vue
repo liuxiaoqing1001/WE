@@ -24,7 +24,7 @@
 
         <div class="banner_theme">
           <div class="item_theme">
-            <img src="../../assets/image/1.jpeg" height="640" width="1024"/>
+              <img src="../../assets/image/1.jpeg" height="640" width="1024"/>
           </div>
         </div>
         <div class="banner_theme">
@@ -39,9 +39,18 @@
         </div>
         <div class="banner_theme">
           <div class="item_theme">
-            <video height="640" width="1024" src="../../../static/video/ineed.mp4"/>
-            <!--            <video height="640" width="1024" src="http://vd2.bdstatic.com/mda-ijiqckncw23fx73z/sc/mda-ijiqckncw23fx73z.mp4?v_from_s=gz_haokan_4469&auth_key=1617383202-0-0-11716dc8b14f31e7141b1112a414b6ae&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000165_2"/>-->
-<!--            <img src="../../assets/image/1.jpeg" height="640" width="1024"/>-->
+
+            <video id="myVideo" class="video-js" loop="loop">
+              <source  style="margin: 10px 10% 10px 10%;"
+                src="../../../static/video/ineed.mp4"
+                type="video/mp4">
+            </video>
+
+            <p class="tip_video">
+              <span class="span_need"  @click="intoChat()">I NEED TO GO >>>  </span><br><br>
+              我需要食物，我需要一张床，我需要一所房子，我需要一辆车，我需要拥抱，我需要爱情，我需要一个家，我需要停下来，我...需要你。
+              <br><br>
+            </p>
           </div>
         </div>
         <div class="banner_theme">
@@ -89,8 +98,25 @@
       this.timer = setInterval(() => {
         this.gotoPage(this.nextIndex)
       }, 3000);
+
+      this.initVideo();
     },
     methods: {
+      initVideo() {
+        //初始化视频方法
+        let myPlayer = this.$video(myVideo, {
+          //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
+          controls: true,
+          //自动播放属性,muted:静音播放
+          autoplay: "muted",
+          //建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
+          preload: "auto",
+          //设置视频播放器的显示宽度（以像素为单位）
+          width: "800px",
+          //设置视频播放器的显示高度（以像素为单位）
+          height: "400px"
+        });
+      },
       go(index){
         var url = "";
         switch (index) {
@@ -111,6 +137,9 @@
       },
       intoTH:function () {
         this.$router.push("/TreeHole");
+      },
+      intoChat:function(){
+        this.$router.push("/Consulting");
       },
       intoV:function () {
         this.$router.push("/VolunteerZone");
@@ -232,7 +261,7 @@
   }
   .item_theme{
     width: 100%;
-    max-height: 960px;
+    max-height: 1960px;
     background-color: black;
     overflow: hidden;
   }
@@ -244,10 +273,27 @@
     left: 20%;
     top: 40%;
   }
+  .tip_video{
+    color: white;
+    font-size: 18px;
+    text-align: right;
+    position: absolute;
+    left: 60%;
+    right: 10px;
+    top: 40%;
+  }
+  .span_need{
+    font-weight: bolder;
+    font-size: 25px
+  }
+  .span_need:hover{
+    cursor: pointer;
+  }
   .tipV{
     color: white;
     float: left;
     font-size: 30px;
+    text-indent: 2em;
     position: absolute;
     left: 8%;
     top: 18%;

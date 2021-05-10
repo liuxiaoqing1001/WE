@@ -3,7 +3,6 @@
     <div id="content">
       <h3>{{articleList.title}}</h3>
       <hr>
-
       <div>
         <span class="span_div">
           <span class="span_tip">作者：</span>

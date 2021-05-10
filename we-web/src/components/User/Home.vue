@@ -23,7 +23,22 @@
         </div>
         <div class="banner_theme">
           <div class="item_theme">
-              <img src="../../assets/image/1.jpeg" height="640" width="1024"/>
+            <div class="DetailsContent">
+              <div class="poster_dv">
+                <swiper ref="mySwiper" :options="swiperOption" v-if="posterObj.length > 0">
+                  <swiper-slide class="poster_item" v-for="(item, index) in posterObj" :key="index">
+                    <img :src="item.imgUrl" alt="" />
+                  </swiper-slide>
+                </swiper>
+                <!--以下看需要添加-->
+                <!--      <div class="swiper-pagination"></div>-->
+                <!-- 下一页 -->
+                <div class="swiper-button-next"></div>
+                <!-- 上一页 -->
+                <div class="swiper-button-prev"></div>
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="banner_theme">
@@ -69,9 +84,17 @@
 </template>
 
 <script>
+  import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+  import "swiper/dist/css/swiper.css";
+
   export default {
+    components: {
+      Swiper,
+      SwiperSlide,
+    },
     name: "Home",
     data() {
+      let that = this;
       return{
         dataList:[
           'https://ossimg.xinli001.com/20210331/8b9bb5fa1668eabcb49fc99e06383c40.jpeg?x-oss-process=image/quality,Q_80',
@@ -86,7 +109,50 @@
         // https://www.xinli001.com/info/100472605  心理课
         // https://www.xinli001.com/info/100472532 关于自我
         currentIndex: 0,   //默认显示图片
-        timer: null    //定时器
+        timer: null,    //定时器
+        posterObj: [
+          {imgUrl:"https://ossimg.xinli001.com/20210331/8b9bb5fa1668eabcb49fc99e06383c40.jpeg?x-oss-process=image/quality,Q_80"},
+          {imgUrl:"https://ossimg.xinli001.com/20210326/18012ce2485d8729be81f5c989c9c05d.jpeg?x-oss-process=image/quality,Q_80"},
+          {imgUrl:"https://ossimg.xinli001.com/20210402/b5c744482c660101988e4020e5c0a8ee.jpeg?x-oss-process=image/quality,Q_80"},
+        ],
+        swiperOption: {
+          effect: "coverflow",
+          coverflowEffect: {
+            rotate:80,
+            stretch: 10,
+            depth: 60,
+            modifier: 2,
+            slideShadows : true
+          },
+          loop: true, // 无限循环
+          observer: false, //修改swiper自己或子元素时，自动初始化swiper
+          observeParents: false, //修改swiper的父元素时，自动初始化swiper
+          slidesPerView: "auto", // 设置可视区一共显示几张图片,设置auto,设置auto为自适应;
+          centeredSlides: true, // 设置为true时,带有active-slide类名的图片会居中
+          loopAdditionalSlides: 0, //loop模式下会在slides前后复制若干个slide,，前后复制的个数不会大于原总个数。默认为0，前后各复制1个。0,1,2 --> 2,0,1,2,0
+          //  页码
+          pagination: {
+            el: '.swiper-pagination',
+            type: 'bullets',
+            dynamicMainBullets: 2, //动态分页器的主指示点的数ss量
+            clickable: true, //此参数设置为true时，点击分页器的指示点分页器会控制Swiper切换。
+          },
+          //  点击上一页 下一页
+          navigation: {
+            nextEl: '.swiper-button-next', //前进按钮的css选择器或HTML元素。
+            prevEl: '.swiper-button-prev', //后退按钮的css选择器或HTML元素。
+            hideOnClick: true, //点击slide时显示/隐藏按钮
+            disabledClass: 'my-button-disabled', //前进后退按钮不可用时的类名。
+            hiddenClass: 'my-button-hidden', //按钮隐藏时的Class
+          },
+          on: {
+            slideChangeTransitionEnd: function() {
+              // console.log('当前index+',this.realIndex)
+              that.realIndex = this.realIndex;
+            }
+          },
+        },
+        realIndex: 0,
       }
 
     },
@@ -140,6 +206,10 @@
       },
       intoV:function () {
         this.$router.push("/VolunteerZone");
+      },
+      // 跳转到指定页面
+      swiperSlideTo(index){
+        // this.$refs.mySwiper.$swiper.slideTo(index, 0, true);
       }
     },
     computed: {
@@ -314,5 +384,77 @@
   }
   a:hover{
     cursor: pointer;
+  }
+
+  .DetailsContent {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-container-3d {
+    perspective: 600px;
+    height: 369px;
+    padding-top: 18px;
+  }
+  .swiper-slide-prev {
+    transform: translate3d(78px, 0px, 138px) rotateX(0deg) rotateY(65deg) scale(1) !important;
+  }
+  .swiper-slide-next {
+    transform: translate3d(-78px, 0px, 138px) rotateX(0deg) rotateY(-65deg) scale(1) !important;
+  }
+  .poster_dv {
+    width: 100%;
+    height: 369px;
+    position: relative;
+  }
+  .poster_item {
+    width: 395px;
+    height: 315px;
+  }
+  .poster_item img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .swiper-pagination {
+    padding: 0 12px 0 7px;
+    height: 13px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 7px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+  .swiper-pagination-bullet-active {
+    background: #fff !important;
+  }
+  .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    opacity: 1;
+    background: #d3b987;
+    border-radius: 50%;
+    display: block;
+    margin-left: 5px;
+  }
+  .swiper-button-next {
+    width: 32px;
+    height: 269px;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
+  }
+  .swiper-button-prev {
+    width: 32px;
+    height: 269px;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
   }
 </style>

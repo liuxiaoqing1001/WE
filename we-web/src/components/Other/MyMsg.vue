@@ -1,6 +1,6 @@
 <template>
   <div class="msg">
-    <div v-if="!showArticle" lass="index-wrapper">
+    <div v-if="!showArticle" class="index-wrapper">
       <ul>
         <li class="msg-wrapper" v-for="item in list" :key="item.id" v-on:click="toDetail(item.aid,item.sid)">
           <p class="msg-sender" style="color: blue">{{item.sender}}</p>
@@ -10,7 +10,7 @@
           <div class="msg-tag">
             <ul>
               <li>
-                <p style="text-indent: 2em">{{item.content}}</p>
+                <span style="text-indent: 2em">{{item.content}}</span>
               </li>
             </ul>
           </div>
@@ -77,8 +77,14 @@
       methods:{
         toDetail(aid,sid){
           if(sid===null){
-            this.showArticle=true;
-            this.requestData(aid);
+            // this.showArticle=true;
+            // this.requestData(aid);
+            this.$router.push({
+              path: 'Detail',
+              query: {
+                id:aid
+              }
+            })
           }
         },
         getMsgList(id){
@@ -231,7 +237,8 @@
     text-align: left;
     list-style: none;
     box-shadow: 0 1px 2px rgba(151,151,151,0.58);
-    max-width: 100%;
+    /*max-width: 100%;*/
+    min-width: 700px;
   }
   .msg-sender,.msg-sendDate{
     line-height: 24px;
@@ -242,7 +249,7 @@
     overflow: hidden;
   }
   .msg-msgContent{
-    line-height: 24px;
+    /*line-height: 24px;*/
     font-size: 15px;
     /*font-weight: bold;*/
     color: black;

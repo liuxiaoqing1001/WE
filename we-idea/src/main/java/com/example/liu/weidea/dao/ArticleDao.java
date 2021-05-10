@@ -122,6 +122,13 @@ public interface ArticleDao {
     @Select("select * from article where date_format(sendDate,'%Y-%m-%d') = #{time}")
     List<Article> getArticleByTime(String time);
 
+    /**
+     * 随机获取
+     * @return
+     */
+    @Select("select id from article order by rand() limit 1")
+    Integer getRandArticle();
+
 //    /**
 //     * 根据id改变显示状态
 //     * @param id

@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.liu.weidea.bean.ResponseData;
-import com.example.liu.weidea.entity.Article;
-import com.example.liu.weidea.entity.Comment;
-import com.example.liu.weidea.entity.Praise;
-import com.example.liu.weidea.entity.Volunteer;
+import com.example.liu.weidea.entity.*;
 import com.example.liu.weidea.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -292,6 +289,20 @@ public class ArticleController {
                 0,
                 "获取成功",
                 jsonArray
+        );
+    }
+
+    /**
+     * 随机获取
+     * @return
+     */
+    @GetMapping("/getRandArticle")
+    public ResponseData getRandArticle(){
+        Integer aid = articleService.getRandArticle();
+        return new ResponseData(
+                aid != null?0:1,
+                aid != null?"获取成功":"获取失败",
+                aid
         );
     }
 

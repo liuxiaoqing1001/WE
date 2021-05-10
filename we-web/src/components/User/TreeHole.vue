@@ -174,6 +174,7 @@
     width: 100%;
     min-width: 1200px;
     height: 100%;
+    min-height: 910px;
     /*background-color: #fff;*/
     /*background: radial-gradient(ellipse at bottom, #090a0f 0%, #000000 100%);*/
     background-image: url("https://img.zcool.cn/community/010d1d57620dde0000012e7e2aa1e7.jpg@3000w_1l_0o_100sh.jpg");
@@ -181,7 +182,7 @@
     background-size:100% 100%;
     -moz-background-size:100% 100%;
     overflow: hidden;
-    filter: drop-shadow(0 0 10px white);
+    filter: drop-shadow(0 0 0px white);
     /*position: relative;*/
   }
   .tips{
@@ -190,7 +191,7 @@
     text-align: left;
     position: absolute;
     left: 3%;
-    bottom: 5%;
+    bottom: 10%;
   }
   .listen_say{
     color: white;

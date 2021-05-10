@@ -241,6 +241,15 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.getArticleByTime(time);
     }
 
+    /**
+     * 随机获取
+     * @return
+     */
+    @Override
+    public Integer getRandArticle() {
+        return articleDao.getRandArticle();
+    }
+
 //    /**
 //     * 根据id改变显示状态
 //     * @param id

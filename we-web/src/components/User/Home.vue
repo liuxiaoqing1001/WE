@@ -27,7 +27,7 @@
               <div class="poster_dv">
                 <swiper ref="mySwiper" :options="swiperOption" v-if="posterObj.length > 0">
                   <swiper-slide class="poster_item" v-for="(item, index) in posterObj" :key="index">
-                    <img :src="item.imgUrl" alt="" />
+                    <img :src="item.imgUrl" alt="" @click="goArticle(index)"/>
                   </swiper-slide>
                 </swiper>
                 <!--以下看需要添加-->
@@ -111,9 +111,11 @@
         currentIndex: 0,   //默认显示图片
         timer: null,    //定时器
         posterObj: [
-          {imgUrl:"https://ossimg.xinli001.com/20210331/8b9bb5fa1668eabcb49fc99e06383c40.jpeg?x-oss-process=image/quality,Q_80"},
-          {imgUrl:"https://ossimg.xinli001.com/20210326/18012ce2485d8729be81f5c989c9c05d.jpeg?x-oss-process=image/quality,Q_80"},
-          {imgUrl:"https://ossimg.xinli001.com/20210402/b5c744482c660101988e4020e5c0a8ee.jpeg?x-oss-process=image/quality,Q_80"},
+          {imgUrl:"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.wenzhangba.com%2Fallimg%2F181121%2F1Q121204002-5094-0.png&refer=http%3A%2F%2Fimg.wenzhangba.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623258612&t=667b55882aaf419de1cf25c997da41fb"},
+          {imgUrl:"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.huicheimg.com%2Fedpic_360_360%2Fc7%2Fda%2F55%2Fc7da55532fc6c80b34ea4635224f1de0.jpg&refer=http%3A%2F%2Fup.huicheimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623258655&t=bce36b9d953470704d4ab467185b88fe"},
+          {imgUrl:"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201505%2F23%2F20150523190529_sVRz8.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623258553&t=8abe4b081bfa9846d34c838e76db3a3b"},
+          {imgUrl:"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F4837802862dfe5cbd5bdcbec93a01fa055e81f775f52-f3q13U_fw658&refer=http%3A%2F%2Fhbimg.b0.upaiyun.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623258172&t=1cb206f066306c63c29019a4f5b18081"},
+          {imgUrl:"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202003%2F28%2F20200328221700_cguxd.thumb.400_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623258421&t=8788a95d3ec829b537d7c708b746840f"},
         ],
         swiperOption: {
           effect: "coverflow",
@@ -194,6 +196,15 @@
                 break;
         }
         window.open(url,"_blank")
+      },
+      goArticle(index){
+        this.$http.get("/article/getRandArticle").then(response => {
+          if (response.data.errorCode===0){
+            window.open("/#/Detail?id="+response.data.data,"_blank");
+          }else {
+            this.$message.error(response.data.msg);
+          }
+        });
       },
       gotoPage(index) {
         this.currentIndex = index;
@@ -392,23 +403,23 @@
   }
   .swiper-container-3d {
     perspective: 600px;
-    height: 369px;
+    height: 469px;
     padding-top: 18px;
   }
   .swiper-slide-prev {
-    transform: translate3d(78px, 0px, 138px) rotateX(0deg) rotateY(65deg) scale(1) !important;
+    transform: translate3d(78px, 0px, 100px) rotateX(0deg) rotateY(65deg) scale(1) !important;
   }
   .swiper-slide-next {
-    transform: translate3d(-78px, 0px, 138px) rotateX(0deg) rotateY(-65deg) scale(1) !important;
+    transform: translate3d(-78px, 0px, 100px) rotateX(0deg) rotateY(-65deg) scale(1) !important;
   }
   .poster_dv {
     width: 100%;
-    height: 369px;
+    height: 469px;
     position: relative;
   }
   .poster_item {
-    width: 395px;
-    height: 315px;
+    width: 495px;
+    height: 415px;
   }
   .poster_item img {
     width: 100%;

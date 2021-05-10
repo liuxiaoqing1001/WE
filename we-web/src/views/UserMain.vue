@@ -114,6 +114,7 @@
     z-index: 1;
     width: 100%;
     left: 0;
+    margin-top: 10px;
   }
 
   .el-header {
@@ -150,6 +151,7 @@
     display: inline-block;
     margin-right: 10px;
   }
+
 
   /*a:hover可用于设置当鼠标悬停在超链接之上时超链接的样式*/
   ul li a:hover{

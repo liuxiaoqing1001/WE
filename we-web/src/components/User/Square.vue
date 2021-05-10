@@ -279,7 +279,7 @@
   .msg{
     width: 1100px;
     margin-right: 100px;
-    margin-top: 60px;
+    margin-top: 88px;
   }
   .explain{
     margin-top: 100px;

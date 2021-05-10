@@ -132,6 +132,12 @@ public interface ArticleService {
      */
     List<Article> getArticleByTime(String time);
 
+    /**
+     * 随机获取
+     * @return
+     */
+    Integer getRandArticle();
+
 //    /**
 //     * 根据id改变显示状态
 //     * @param id

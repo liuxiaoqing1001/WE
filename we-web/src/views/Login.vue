@@ -31,12 +31,12 @@
       </div>
     </el-form>
 
-    <el-dialog title="温馨提示" :visible.sync="dialogVisible" width="30%">
-      <span>请输入正确的账号和密码</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
+<!--    <el-dialog title="温馨提示" :visible.sync="dialogVisible" width="30%">-->
+<!--      <span>请输入正确的账号和密码</span>-->
+<!--      <span slot="footer" class="dialog-footer">-->
+<!--        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>-->
+<!--      </span>-->
+<!--    </el-dialog>-->
   </div>
 
 </template>
@@ -79,8 +79,8 @@
             }
           ]
         },
-        // 对话框显示和隐藏
-        dialogVisible: false
+        // // 对话框显示和隐藏
+        // dialogVisible: false
       }
     },
     methods: {

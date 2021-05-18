@@ -229,8 +229,12 @@
 
     },
     mounted() {
-      this.getRand();
-      this.checking();
+      if(window.sessionStorage.getItem("id")===null){
+        this.$message.error("未登录");
+      }else {
+        this.getRand();
+        this.checking();
+      }
     }
   }
 </script>

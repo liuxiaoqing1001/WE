@@ -123,37 +123,45 @@
           this.myComment='';
         },
         send1:function () {
-          this.$http.post("/user/sendSay",{
-            sender:window.sessionStorage.getItem("id"),
-            content:this.myContent
-          }).then(response => {
-            if (response.data.errorCode===0){
-              this.$message.success(response.data.msg);
-              this.showIndex=0;
-              this.myContent='';
-            }else {
-              this.$message.error(response.data.msg);
-            }
-          });
+          if(window.sessionStorage.getItem("id")===null){
+            this.$message.error("未登录");
+          }else {
+            this.$http.post("/user/sendSay", {
+              sender: window.sessionStorage.getItem("id"),
+              content: this.myContent
+            }).then(response => {
+              if (response.data.errorCode === 0) {
+                this.$message.success(response.data.msg);
+                this.showIndex = 0;
+                this.myContent = '';
+              } else {
+                this.$message.error(response.data.msg);
+              }
+            });
+          }
         },
         send2:function (sid,receiver) {
-          //发送评论
-          this.$http.post("/comment/addS",{
-            sid:sid,
-            content:this.myComment,
-            sender:window.sessionStorage.getItem("id"),
-            receiver:receiver
-          }).then(response => {
-            if (response.data.errorCode===0){
-              this.isWrite=false;
-              this.showIndex=0;
-              this.$message.success(response.data.msg);
-              this.myComment='';
-              this.reload();
-            }else {
-              this.$message.error(response.data.msg);
-            }
-          });
+          if(window.sessionStorage.getItem("id")===null){
+            this.$message.error("未登录");
+          }else {
+            //发送评论
+            this.$http.post("/comment/addS", {
+              sid: sid,
+              content: this.myComment,
+              sender: window.sessionStorage.getItem("id"),
+              receiver: receiver
+            }).then(response => {
+              if (response.data.errorCode === 0) {
+                this.isWrite = false;
+                this.showIndex = 0;
+                this.$message.success(response.data.msg);
+                this.myComment = '';
+                this.reload();
+              } else {
+                this.$message.error(response.data.msg);
+              }
+            });
+          }
         },
         comment:function () {
           if(!this.isShowWrite){

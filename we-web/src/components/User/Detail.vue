@@ -135,50 +135,58 @@
           });
         },
         changeP(aid){
-          if(this.isPraise===false){
-            this.$http.post("/article/addP",{
-              aid:aid,
-              uid:window.sessionStorage.getItem("id")
+          if(window.sessionStorage.getItem("id")===null){
+            this.$message.error("未登录");
+          }else {
+            if(this.isPraise===false){
+              this.$http.post("/article/addP",{
+                aid:aid,
+                uid:window.sessionStorage.getItem("id")
+              }).then(response => {
+                if (response.data.errorCode===0){
+                  this.isPraise=true;
+                  this.reload();
+                }else {
+                  this.isPraise=false;
+                  this.$message.error(response.data.msg);
+                }
+              });
+            }else {
+              this.$http.delete("/article/delP/",{
+                params:{
+                  aid:aid,
+                  uid:window.sessionStorage.getItem("id")
+                }
+              }).then(response => {
+                if (response.data.errorCode===0){
+                  this.isPraise=false;
+                  this.reload();
+                }else {
+                  this.isPraise=true;
+                }
+              });
+            }
+          }
+        },
+        send(aid) {
+          if (window.sessionStorage.getItem("id") === null) {
+            this.$message.error("未登录");
+          } else {
+            //发送评论
+            this.$http.post("/comment/addA", {
+              aid: aid,
+              content: this.comment.content,
+              sender: window.sessionStorage.getItem('token'),
+              receiver: this.articleList.sender
             }).then(response => {
-              if (response.data.errorCode===0){
-                this.isPraise=true;
+              if (response.data.errorCode === 0) {
+                this.$message.success(response.data.msg);
                 this.reload();
-              }else {
-                this.isPraise=false;
+              } else {
                 this.$message.error(response.data.msg);
               }
             });
-          }else {
-            this.$http.delete("/article/delP/",{
-              params:{
-                aid:aid,
-                uid:window.sessionStorage.getItem("id")
-              }
-            }).then(response => {
-              if (response.data.errorCode===0){
-                this.isPraise=false;
-                this.reload();
-              }else {
-                this.isPraise=true;
-              }
-            });
           }
-        },
-        send(aid){
-          //发送评论
-          this.$http.post("/comment/addA",{
-            aid:aid,
-            content:this.comment.content,
-            sender:window.sessionStorage.getItem('token'),
-            receiver:this.articleList.sender
-          }).then(response => {
-            if (response.data.errorCode===0){
-              this.$message.success(response.data.msg);
-              this.reload();
-            }else {
-              this.$message.error(response.data.msg);
-            }
-          });
         }
       }
     }

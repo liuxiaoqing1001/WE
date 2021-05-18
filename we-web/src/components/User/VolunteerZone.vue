@@ -227,29 +227,33 @@
                 this.$router.push("/VolunteerCenter");
               }
             }else {
-              this.$message.error(response.data.msg);
+              // this.$message.error(response.data.msg);
             }
           });
         },
         into:function () {
-          this.applyV=true;
-          if(window.sessionStorage.getItem("name")==="null"){
-            this.VForm.name = "未设置用户名，请先前往个人中心设置用户名，否则申请无效";
-            this.vFormNameColor = "#ff0000";
+          if(window.sessionStorage.getItem("id")===null){
+            this.$message.error("未登录");
           }else {
-            // this.VForm.name = window.sessionStorage.getItem("name");
-            // 根据name从用户表中获取sender/birth/phoneNum
-            this.$http.get("/user/getUserByName",{
-              params:{
-                name:window.sessionStorage.getItem("name"),
-              }
-            }).then(response => {
-              if (response.data.errorCode===0){
-                this.VForm = response.data.data;
-              }else {
-                this.$message.error(response.data.msg);
-              }
-            });
+            this.applyV = true;
+            if (window.sessionStorage.getItem("name") === "null") {
+              this.VForm.name = "未设置用户名，请先前往个人中心设置用户名，否则申请无效";
+              this.vFormNameColor = "#ff0000";
+            } else {
+              // this.VForm.name = window.sessionStorage.getItem("name");
+              // 根据name从用户表中获取sender/birth/phoneNum
+              this.$http.get("/user/getUserByName", {
+                params: {
+                  name: window.sessionStorage.getItem("name"),
+                }
+              }).then(response => {
+                if (response.data.errorCode === 0) {
+                  this.VForm = response.data.data;
+                } else {
+                  this.$message.error(response.data.msg);
+                }
+              });
+            }
           }
         },
         del:function () {

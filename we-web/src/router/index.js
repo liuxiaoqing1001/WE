@@ -38,36 +38,8 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      // 登录页
-      path: '/',        //访问路径
-      name: 'Login',
-      component: Login  //跳转页面
-    },
-    {
-      // 忘记密码
-      path: '/ForgetPwd',
-      name: 'ForgetPwd',
-      component: ForgetPwd
-    },
-    {
-      // 修改密码
-      path: '/ModifyPwd',
-      name: 'ModifyPwd',
-      component: ModifyPwd
-    },
-    {
-      name: ChatRoom,
-      path: "/ChatRoom",
-      component: ChatRoom
-    },
-    {
-      name: Detail,
-      path: '/Detail',
-      component: Detail
-    },
-    {
       // 用户首页
-      path: '/UserMain',
+      path: '/',
       name: 'UserMain',
       component: UserMain,
       redirect: "/Home",
@@ -138,6 +110,34 @@ export default new Router({
         },
 
       ]
+    },
+    {
+      // 登录页
+      path: '/Login',        //访问路径
+      name: 'Login',
+      component: Login  //跳转页面
+    },
+    {
+      // 忘记密码
+      path: '/ForgetPwd',
+      name: 'ForgetPwd',
+      component: ForgetPwd
+    },
+    {
+      // 修改密码
+      path: '/ModifyPwd',
+      name: 'ModifyPwd',
+      component: ModifyPwd
+    },
+    {
+      name: ChatRoom,
+      path: "/ChatRoom",
+      component: ChatRoom
+    },
+    {
+      name: Detail,
+      path: '/Detail',
+      component: Detail
     },
     {
       // 管理首页

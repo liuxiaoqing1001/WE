@@ -27,7 +27,7 @@
       <!-- 主体 -->
       <el-container>
         <!-- 侧边栏 -->
-        <el-aside :width="isCollapse ? '64px' : '180px'">
+        <el-aside :width="isCollapse ? '64px' : '200px'">
           <div class="toggle-button" @click="toggleCollapse">...</div>
 
 <!--          @open="handleOpen"-->
@@ -140,7 +140,7 @@
 
 <style scoped>
   .home-container {
-    min-height: 910px;
+    min-height: 860px;
     height: 100%;
   }
 

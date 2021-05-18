@@ -74,6 +74,8 @@
           // this.$message.success('返回');
         },
         quit:function () {
+          // 清空token
+          window.sessionStorage.clear();
           this.$router.push("/");
           this.$message.success('已注销');
         }

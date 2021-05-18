@@ -180,7 +180,6 @@
 <style scoped>
   .main {
     width: 100%;
-    min-width: 1200px;
     height: 100%;
     min-height: 910px;
     /*background-color: #fff;*/
@@ -189,7 +188,7 @@
     background-repeat:no-repeat;
     background-size:100% 100%;
     -moz-background-size:100% 100%;
-    overflow: hidden;
+    overflow: auto;
     filter: drop-shadow(0 0 0px white);
     /*position: relative;*/
   }

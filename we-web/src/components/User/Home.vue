@@ -21,6 +21,7 @@
             <img src="../../assets/iconfont/right.png" @click="gotoPage(nextIndex)"/>
           </div>
         </div>
+        <hr class="hr_style1">
         <div class="banner_theme">
           <div class="item_theme">
             <div class="DetailsContent">
@@ -41,6 +42,7 @@
 
           </div>
         </div>
+        <hr class="hr_style2">
         <div class="banner_theme">
           <div class="item_theme">
             <img src="https://img.zcool.cn/community/010d1d57620dde0000012e7e2aa1e7.jpg@3000w_1l_0o_100sh.jpg"
@@ -51,6 +53,7 @@
             <a class="intoTH" @click="intoTH()">>>>前往树洞</a>
           </div>
         </div>
+        <hr class="hr_style3">
         <div class="banner_theme">
           <div class="item_theme">
             <video id="myVideo" class="video-js" loop="loop">
@@ -65,6 +68,7 @@
             </p>
           </div>
         </div>
+        <hr class="hr_style4">
         <div class="banner_theme">
           <div class="item_theme">
             <img src="../../assets/background/background.jpeg" height="700" width="80%" style="float: right"/>
@@ -248,6 +252,7 @@
   .home-container {
     min-height: 910px;
     height: 100%;
+    background: beige;
   }
   .el-footer {
     background-color: silver;
@@ -332,10 +337,74 @@
     background: #ff6700;
   }
 
+  /*hr{*/
+  /*  margin-top:60px;*/
+  /*  !*border:2px dashed mediumseagreen;*!*/
+  /*  !*height:30px;*!*/
+  /*  text-align:center;*/
+  /*  line-height:0px;*/
+  /*  !*background:mediumseagreen;*!*/
+
+  /*  !*BORDER-BOTTOM-STYLE: dotted;*!*/
+  /*  !*BORDER-LEFT-STYLE: dotted;*!*/
+  /*  !*BORDER-RIGHT-STYLE: dotted;*!*/
+  /*  !*BORDER-TOP-STYLE: dotted;*!*/
+  /*  color:mediumseagreen;*/
+  /*  !*size:5px;*!*/
+  /*}*/
+
+  /*hr:after{*/
+  /*  content:"这里加字";*/
+  /*  font-weight:bold;*/
+  /*  font-size:18px;*/
+  /*  background:white;*/
+  /*  z-index:2;*/
+  /*}*/
+
+  hr{
+    margin-top:60px;
+    text-align:center;
+    line-height:20px;
+    BORDER-BOTTOM-STYLE: dotted;
+    BORDER-LEFT-STYLE: dotted;
+    BORDER-RIGHT-STYLE: dotted;
+    BORDER-TOP-STYLE: dotted;
+    color: white;
+    /*background:mediumseagreen;*/
+  }
+
+  hr:after{
+    font-weight:bold;
+    font-size:18px;
+    color: mediumseagreen;
+    /*background:mediumseagreen;*/
+    z-index:2;
+  }
+
+  .hr_style1:after{
+    content:"凡事不要想的太复杂，手握的太紧，东西会碎，手会疼";
+
+  }
+
+  .hr_style2:after{
+    content:"每个人都有自己故事，只是演绎的方式不同";
+
+  }
+
+  .hr_style3:after{
+    content:"人生无须太多的准备，上帝给了我们腿与脚，就是让我们不停地前行";
+
+  }
+
+  .hr_style4:after{
+    content:"心中有光的人，终会冲破一切黑暗和荆棘";
+
+  }
+
   .banner_theme{
     width: 100%;
     position: relative;
-    margin-top: 130px;
+    margin-top: 60px;
   }
   .item_theme{
     width: 100%;

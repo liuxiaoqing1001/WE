@@ -25,7 +25,7 @@
         </span>
       </div>
       <!-- 用v-html解析后台传来的HTML代码 -->
-      <div class="span_content" v-html="articleList.content"></div>
+      <p class="span_content" v-html="articleList.content"></p>
     </div>
     <div class="commentArea">
       <hr>
@@ -35,10 +35,12 @@
       </div>
 
       <ul class="list-group">
-        <li v-if="!isComment"><span class="noComment">暂无评论</span></li>
+        <li v-if="!isComment">
+          <span class="noComment">暂无评论</span>
+        </li>
         <li v-else class="list-group-item" v-for="cItem in cList" :key="cItem.id">
-          <span class="badge"> {{ cItem.sender }} >> </span>
-          {{ cItem.content }}
+          <span class="badge"> {{ cItem.sender }} 评论： </span>
+          <p>{{ cItem.content }}</p>
         </li>
       </ul>
     </div>
@@ -237,12 +239,18 @@
     background: beige;
   }
 
+  p{
+    text-indent: 2em;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
   img{
     max-width: 100%;
   }
 
   .commentArea{
-    margin-top: 10%;
+    margin-top: 5%;
     width: 100%;
     /*margin-bottom: 20%;*/
     /*!*margin-right: 30%;*!*/
@@ -328,14 +336,22 @@
     box-shadow: 0 1px 6px rgba(0,0,0,.117647), 0 1px 4px rgba(0,0,0,.117647);
   }
 
+  .list-group{
+    background: beige;
+    width: 30%;
+    margin-left: 30%;
+    padding: 5px 20px 15px;
+  }
+
   .list-group-item{
     margin-top: 20px;
     /*margin-bottom: 10%;*/
-    margin-left: 30%;
-    width: 30%;
+    /*margin-left: 30%;*/
+    margin-right: 10px;
+    /*width: 30%;*/
     /*width: auto;*/
     padding: 5px 12px 0;
-    background: beige;
+    background: white;
     border-radius: 3px;
     text-align: left;
     font-size: 15px;
@@ -356,5 +372,8 @@
     /*padding: 5px 122px 0;*/
     /*border-radius: 3px;*/
     /*box-shadow: 0 1px 2px rgba(151,151,151,0.58);*/
+  }
+  .badge{
+    color: blue;
   }
 </style>

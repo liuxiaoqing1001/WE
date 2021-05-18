@@ -119,7 +119,7 @@
         this.initLi_links();
         console.log(window.sessionStorage.getItem("token"));
         if(window.sessionStorage.getItem("token")===null){
-          this.user='游客';
+          this.user='未登录';
           this.loginState=0;
         }else{
           this.loginState=1;
@@ -219,8 +219,8 @@
     overflow: hidden;
   }
 
-  .mainContainer{
-
+  .el-main{
+    padding: 0;
   }
 
   .navHeader{

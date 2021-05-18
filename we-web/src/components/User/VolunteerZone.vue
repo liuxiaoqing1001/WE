@@ -352,8 +352,9 @@
 <style scoped>
   .main{
     width: 100%;
-    min-width: 1200px;
-    height: 900px;
+    /*min-width: 1200px;*/
+    height: 100%;
+    min-height: 910px;
     background-image: url("../../assets/background/background.jpeg");
     background-repeat:no-repeat;
     background-size:100% 100%;

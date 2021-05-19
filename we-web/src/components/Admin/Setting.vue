@@ -5,6 +5,7 @@
         <!--面包屑导航区域-->
         <el-breadcrumb >
           <el-breadcrumb-item :to="{ path: '/Setting' }">系统设置</el-breadcrumb-item>
+          <el-breadcrumb-item>关于平台</el-breadcrumb-item>
         </el-breadcrumb>
       </el-header>
 

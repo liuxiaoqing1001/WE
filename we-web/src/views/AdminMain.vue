@@ -91,7 +91,7 @@
               </template>
               <el-menu-item index="/Setting" >
                 <template slot="title">
-                  <span class="secondNav">xxx</span>
+                  <span class="secondNav">关于平台</span>
                 </template>
               </el-menu-item>
             </el-submenu>

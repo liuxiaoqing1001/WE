@@ -154,8 +154,6 @@ public class FileUploadAndDownController {
                     result
             ) ;
         }
-
-
      }
 
 //    //获取头像地址

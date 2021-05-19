@@ -133,7 +133,6 @@
       </el-dialog>
 
       <el-dialog title="执业资格证书" :visible.sync="isShowFileCertificate" width="60%" @close="showDialogClosed">
-<!--        <pdf ref="pdf" :src="src" v-for="i in numPages" :key="i" :page="i"></pdf>-->
         <div v-if="fileType===1">
           <img :src="src" />
         </div>

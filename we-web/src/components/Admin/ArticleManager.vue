@@ -145,14 +145,6 @@
           if (response.data.errorCode===0){
             this.mList = response.data.data;
             this.total = response.data.data.length;
-            // for (let i=0;i<this.total;i++){
-            //   console.log(this.mList[i].state)
-            //   if(this.mList[i].state===0){
-            //     this.mList[i].state=0
-            //   }else {
-            //     this.mList[i].state=1
-            //   }
-            // }
           }else {
             this.$message.error(response.data.msg);
           }

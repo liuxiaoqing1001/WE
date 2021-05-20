@@ -115,7 +115,6 @@
       },
       submit(){
         // 答题完毕，提交答案
-        // this.isFinish=true;
         var check =0;
         var score = 0;
         var qIds = "";

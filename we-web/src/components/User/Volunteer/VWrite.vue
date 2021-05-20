@@ -66,10 +66,6 @@
                 if (response.data.errorCode===0){
                   this.$message.success(response.data.msg);
                   this.$router.push("/VArticle");
-                  // // 隐藏添加用户的对话框
-                  // this.addDialogVisible = false;
-                  // // 重新发起请求用户列表
-                  // this.getUserList();
                 }else {
                   this.$message.error(response.data.msg);
                 }

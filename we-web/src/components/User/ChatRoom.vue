@@ -87,7 +87,6 @@
         this.currentTime = yy + "-" + mm + "-" + dd + " " + hh + ":" + mf + ":" + ss;
       },
       webSocket() {
-        // 先记录this对象
         const that = this;
         if (typeof WebSocket == "undefined") {
           this.$message.error("浏览器暂不支持聊天");
@@ -118,7 +117,6 @@
           };
           // 监听socket关闭
           this.socket.onclose = function () {
-            // MessageBox.alert("WebSocket已关闭");
             this.$message.error("端开连接");
           };
         }
@@ -142,7 +140,6 @@
         } else {
           this.$message.error("连接建立失败");
           window.alert("连接建立失败");
-          // MessageBox.alert("WebSocket 连接没有建立成功！");
         }
       },
       addMsg(msg){
@@ -174,7 +171,6 @@
           other:other
         }).then(response => {
           if (response.data.errorCode===1){
-            // this.list.push(msgObj)
           }else {
             this.$message.error(response.data.msg);
           }
@@ -206,7 +202,6 @@
       bindEnter() {
         const msg = this.inputMsg;
         if (!msg) {
-          // MessageBox.alert("您不能发送空消息");
           this.$message.error("消息发送失败，消息为空");
           return;
         }

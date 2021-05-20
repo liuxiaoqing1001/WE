@@ -154,24 +154,6 @@
           }).then(response => {
             if (response.data.errorCode===0){
               this.userForm = response.data.data;
-
-              // this.$http.get("/test/getByCId",{
-              //   params:{
-              //     id:id
-              //   }
-              // }).then(res => {
-              //   if (res.data.errorCode===0){
-              //     var testStr ="";
-              //     for (var i=0;i<res.data.data.length;i++){
-              //       testStr += (i+1)+": "+res.data.data[i].title+"\n"+"\t回答："+res.data.data[i].answer+"\n";
-              //     }
-              //     this.userForm = response.data.data;
-              //     this.userForm.testStr = testStr;
-              //   }else {
-              //     this.$message.error(res.data.msg);
-              //   }
-              // });
-
             }else {
               this.$message.error(response.data.msg);
             }
@@ -197,7 +179,6 @@
         },
         toChat(id){
           window.sessionStorage.setItem("cid",id);
-          // this.$router.push("/ChatRoom");
           window.open("/#/ChatRoom","_blank");
         }
       }

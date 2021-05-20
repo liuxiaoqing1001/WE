@@ -132,7 +132,6 @@
               this.isPraise=true;
             }else {
               this.isPraise=false;
-              // this.$message.error(response.data.msg);
             }
           });
         },

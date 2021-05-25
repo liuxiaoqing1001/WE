@@ -67,15 +67,15 @@
           rows: []
         },
         chartArticleData: {
-          columns: ['发布时间', '发布数量'],
+          columns: ['发布日期', '发布数量'],
           rows: []
         },
         chartSayData: {
-          columns: ['发布时间', '发布数量'],
+          columns: ['发布日期', '发布数量'],
           rows: []
         },
         chartVolunteerData: {
-          columns: ['申请时间', '申请人数','审核通过人数'],
+          columns: ['申请日期', '申请人数','审核通过人数'],
           rows: []
         },
       }

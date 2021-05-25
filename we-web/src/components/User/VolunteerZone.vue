@@ -381,8 +381,8 @@
     height: 850px;
     /*border-radius: 10px;*/
     position: absolute;
-    left: 8%;
-    top: 5%;
+    left: 5%;
+    top: 10%;
     text-align: center;
   }
 

@@ -16,7 +16,6 @@ import java.util.List;
 @ServletComponentScan("com")
 @EntityScan(basePackages = {"com"})
 @EnableScheduling
-// 允许通过AopContext.currentProxy() 获取代理类
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @EnableAsync
 public class WeIdeaApplication {

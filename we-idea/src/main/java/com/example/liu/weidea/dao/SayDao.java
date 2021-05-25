@@ -35,7 +35,6 @@ public interface SayDao {
             "(select ROUND(RAND()*((select MAX(id) from say)-(select MIN(id) from say))+(select MIN(id) from say)) " +
             "AS id) AS t2 " +
             "WHERE t1.id >= t2.id ORDER BY t1.id LIMIT 1")
-//    @Select("select * from say order by rand() limit 1")
     Say getRandSay();
 
     /**

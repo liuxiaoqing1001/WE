@@ -396,7 +396,7 @@ public class UserController {
         String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
         for(int i=0;i<7;i++){
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("申请时间", time);
+            jsonObject.put("申请日期", time);
             List<Volunteer> volunteers = userService.getVolunteerByTime(time);
             jsonObject.put("申请人数", volunteers.size());
             List<Volunteer> volunteersPass = userService.getVolunteerPassByTime(time);
@@ -428,7 +428,7 @@ public class UserController {
         String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
         for(int i=0;i<7;i++){
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("发布时间", time);
+            jsonObject.put("发布日期", time);
             List<Say> say = userService.getSayByTime(time);
             jsonObject.put("发布数量", say.size());
             jsonArray.add(i, jsonObject);

@@ -274,7 +274,7 @@ public class ArticleController {
         String time = new SimpleDateFormat("yyyy-MM-dd").format(date);
         for(int i=0;i<7;i++){
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("发布时间", time);
+            jsonObject.put("发布日期", time);
             List<Article> article = articleService.getArticleByTime(time);
             jsonObject.put("发布数量", article.size());
             jsonArray.add(i, jsonObject);

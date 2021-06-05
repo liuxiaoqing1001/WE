@@ -72,7 +72,7 @@
               <el-button type="primary" round size="mini" @click="showEditDialog(scope.row.name)">详情</el-button>
             </el-tooltip>
             <!--审核通过-->
-            <el-tooltip class="item" effect="dark" content="审核通过" placement="top" :enterable="false">
+            <el-tooltip v-if="!isPass" class="item" effect="dark" content="审核通过" placement="top" :enterable="false">
               <el-button type="danger" round size="mini" @click="changeUserRoleById(scope.row.name)">审核通过</el-button>
             </el-tooltip>
           </template>
@@ -186,6 +186,7 @@
     name: "Volunteer",
     data(){
       return{
+        isPass:false,
         fileType:0,
         src:"",
         currentPage: 0, // pdf文件页码
@@ -254,6 +255,14 @@
           if (response.data.errorCode===0){
             this.userList = response.data.data;
             this.total = response.data.data.length;
+            // for(let i=0;i<this.userList.length;i++){
+            //   if(this.userList[i].state==="通过"){
+            //     console.log(this.userList[i].state);
+            //     this.isPass=false;
+            //   }else{
+            //     this.isPass=true;
+            //   }
+            // }
           }else {
             this.$message.error(response.data.msg);
           }

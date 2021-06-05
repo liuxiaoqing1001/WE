@@ -173,7 +173,6 @@
           if (window.sessionStorage.getItem("id") === null) {
             this.$message.error("未登录");
           } else {
-            //发送评论
             this.$http.post("/comment/addA", {
               aid: aid,
               content: this.comment.content,
